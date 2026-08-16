@@ -150,7 +150,6 @@ header.appbar .badge{font-size:11px;color:var(--gold-light);font-weight:600;max-
 .license-status.active{background:#e6f7ec;color:#1a7a3c;}
 .license-status.warning{background:#fff6e0;color:#8a6100;}
 .license-status.expired{background:#fdeaea;color:#b3261e;}
-#licenseKeyInput{text-transform:uppercase;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.02em;}
 
 .sticky-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.9);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--border);padding:10px 14px;display:flex;align-items:center;gap:12px;z-index:25;box-shadow:0 -4px 16px rgba(15,23,42,.1);}
 .sticky-bar .grand-label{font-size:11px;color:var(--muted);}
@@ -176,7 +175,9 @@ header.appbar .badge{font-size:11px;color:var(--gold-light);font-weight:600;max-
 .plan-features li::before{content:"✓";position:absolute;left:0;color:var(--gold);font-weight:800;}
 .pricing-footnote{font-size:11.5px;color:var(--muted);text-align:center;margin-top:4px;padding:0 8px;}
 .plan-card .subscribe-btn{margin-top:12px;}
-#subscriptionWhatsappBtn{margin-top:10px;}
+.donate-amount-row{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 12px;}
+.donate-amt-btn{flex:1 1 70px;padding:10px 8px;border-radius:9px;border:1.5px solid var(--border);background:#fbfbfc;font-size:14px;font-weight:700;color:var(--navy);cursor:pointer;transition:all .15s ease;}
+.donate-amt-btn.active{border-color:var(--gold);background:var(--gold);color:#fff;}
 
 /* App footer */
 .app-footer{max-width:720px;margin:6px auto 90px;padding:16px 18px;text-align:center;}
@@ -315,7 +316,7 @@ header.appbar .badge{font-size:11px;color:var(--gold-light);font-weight:600;max-
 <div class="tabs">
   <button class="tab-btn active" data-tab="tab-invoice">New Invoice</button>
   <button class="tab-btn" data-tab="tab-summary">Summary</button>
-  <button class="tab-btn" data-tab="tab-pricing">Pricing</button>
+  <button class="tab-btn" data-tab="tab-pricing">Support</button>
   <button class="tab-btn" data-tab="tab-settings">Settings</button>
 </div>
 
@@ -507,58 +508,40 @@ header.appbar .badge{font-size:11px;color:var(--gold-light);font-weight:600;max-
   </div>
 </div>
 
-<!-- ============ PRICING TAB ============ -->
+<!-- ============ SUPPORT / DONATE TAB ============ -->
 <div class="tab-panel" id="tab-pricing">
 
-  <div class="plan-card highlighted" data-plan="monthly">
-    <div class="badge">Popular</div>
+  <div class="plan-card highlighted" data-plan="donate">
+    <div class="badge">Free App</div>
     <div class="plan-head">
-      <div class="plan-name">Monthly Plan</div>
-      <div class="plan-price"><span class="amount">₹199</span><span class="period">/Month</span></div>
+      <div class="plan-name">Support This App</div>
     </div>
-    <div class="plan-tagline">Everything you need to invoice with confidence</div>
+    <div class="plan-tagline">This app is free to use, with no restrictions. If it's helping your business, consider chipping in whatever you feel it's worth to help keep it maintained and improved.</div>
     <ul class="plan-features">
-      <li>Unlimited invoices</li>
-      <li>GST invoice</li>
-      <li>Customer database</li>
-      <li>PDF generation</li>
-      <li>WhatsApp sharing</li>
+      <li>Unlimited invoices, always free</li>
+      <li>No license key needed</li>
+      <li>Give any amount you wish</li>
+      <li>100% optional</li>
     </ul>
-    <button type="button" class="btn btn-primary subscribe-btn" id="subscribeMonthlyBtn" data-amount="199">Subscribe — Pay via UPI</button>
+
+    <div class="donate-amount-row" id="donateAmountRow">
+      <button type="button" class="donate-amt-btn" data-amount="49">₹49</button>
+      <button type="button" class="donate-amt-btn" data-amount="99">₹99</button>
+      <button type="button" class="donate-amt-btn" data-amount="199">₹199</button>
+      <button type="button" class="donate-amt-btn" data-amount="499">₹499</button>
+    </div>
+    <div class="field">
+      <label>Or enter any amount you wish (₹)</label>
+      <input type="number" id="donateCustomAmount" placeholder="e.g. 25" min="1" step="1" inputmode="numeric">
+    </div>
+    <button type="button" class="btn btn-primary subscribe-btn" id="donateBtn">💛 Donate via UPI</button>
   </div>
 
-  <div class="plan-card" data-plan="annual">
-    <div class="plan-head">
-      <div class="plan-name">Annual Plan</div>
-      <div class="plan-price"><span class="amount">₹999</span><span class="period">/Year</span></div>
-    </div>
-    <div class="plan-tagline">Best value for regular billers</div>
-    <ul class="plan-features">
-      <li>Everything in Monthly</li>
-      <li>Priority support</li>
-      <li>Unlimited updates</li>
-    </ul>
-    <button type="button" class="btn btn-primary subscribe-btn" id="subscribeAnnualBtn" data-amount="999">Subscribe — Pay via UPI</button>
-  </div>
-
-  <p class="pricing-footnote">Prices shown in Indian Rupees (₹). Tapping Subscribe opens your UPI app to pay <span class="upi-badge">8463083061@sbi</span>. After paying, send the payment screenshot on WhatsApp so we can activate your plan.</p>
-  <button type="button" class="btn btn-outline" id="subscriptionWhatsappBtn">💬 Send Payment Screenshot on WhatsApp</button>
+  <p class="pricing-footnote">Tapping Donate opens your UPI app to pay <span class="upi-badge">8463083061@sbi</span>. Thank you for supporting independent development — every contribution helps.</p>
 </div>
 
 <!-- ============ COMPANY SETTINGS TAB ============ -->
 <div class="tab-panel" id="tab-settings">
-  <div class="card" id="licenseCard">
-    <h3>Subscription License</h3>
-    <div class="license-status none" id="licenseStatus">No license key applied — using Free plan features.</div>
-    <div class="license-status none" id="trialStatus"></div>
-    <div class="field">
-      <label>Enter License Key</label>
-      <input type="text" id="licenseKeyInput" placeholder="IMP-PRO-XXXX-XXXX-XXXX-XXXX" autocomplete="off" autocapitalize="characters" spellcheck="false">
-    </div>
-    <button type="button" class="btn btn-outline" id="activateKeyBtn">Activate Key</button>
-    <div class="status-msg" id="licenseMsg"></div>
-  </div>
-
   <div class="card">
     <h3>Company / Seller Details (set once)</h3>
     <div class="field"><label>Company Name</label><input type="text" id="set_company_name"></div>
@@ -26712,155 +26695,10 @@ if (typeof module !== "undefined") {
   }
 
   // ---------------------------------------------------------------
-  // License key engine
+  // Date helper (still used by ledger due-date / receipt-history display)
   // ---------------------------------------------------------------
-  // IMPORTANT: this SECRET must match the one in your key-generator tool
-  // exactly. Change it to your own private string before selling keys,
-  // and keep the generator tool offline / for your eyes only. This is a
-  // lightweight tamper-check, not military-grade DRM — a determined user
-  // could read this SECRET out of the page source, so don't rely on it
-  // to stop a truly motivated attacker, only casual key sharing/typos.
-  const LICENSE_SECRET = "IMP-2026-CHANGE-THIS-SECRET-BEFORE-SELLING";
-  const LICENSE_EPOCH = Date.UTC(2025, 0, 1); // day 0 for expiry encoding
-  const LICENSE_STORAGE_KEY = "invoiceapp_license_v1";
-  const PLAN_NAMES = { BAS: "Basic", PRO: "Professional", BUS: "Business" };
-
-  function keyHash(str) {
-    // Deterministic, dependency-free 16-hex-char signature (FNV/xmur3 style).
-    // Not cryptographically secure — good enough to catch typos/tampering.
-    let h1 = 0x811c9dc5, h2 = 0x1000193;
-    for (let i = 0; i < str.length; i++) {
-      const c = str.charCodeAt(i);
-      h1 = (h1 ^ c) >>> 0; h1 = Math.imul(h1, 16777619) >>> 0;
-      h2 = (h2 + c) >>> 0;
-      h2 = Math.imul(h2 ^ (h2 >>> 15), 2246822519) >>> 0;
-      h2 = Math.imul(h2 ^ (h2 >>> 13), 3266489917) >>> 0;
-      h2 = (h2 ^ (h2 >>> 16)) >>> 0;
-    }
-    return (h1.toString(16).padStart(8, "0") + h2.toString(16).padStart(8, "0")).toUpperCase();
-  }
-
-  function daysFromEpoch(date) {
-    return Math.floor((Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) - LICENSE_EPOCH) / 86400000);
-  }
-  function dateFromDays(days) {
-    return new Date(LICENSE_EPOCH + days * 86400000);
-  }
   function formatDMY(date) {
     return String(date.getUTCDate()).padStart(2, "0") + "-" + String(date.getUTCMonth() + 1).padStart(2, "0") + "-" + date.getUTCFullYear();
-  }
-
-  // Key format: IMP-<PLAN3>-<EXPIRY4base36>-<SIG12hex split in 3 groups of 4>
-  // e.g. IMP-PRO-6N2X-8F3A-6B2C-1D4E
-  function validateLicenseKey(rawKey) {
-    const cleaned = (rawKey || "").trim().toUpperCase().replace(/\s+/g, "");
-    const parts = cleaned.split("-");
-    if (parts.length !== 6 || parts[0] !== "IMP") {
-      return { ok: false, reason: "That doesn't look like a valid license key." };
-    }
-    const planCode = parts[1];
-    const expiryB36 = parts[2];
-    const sig = parts[3] + parts[4] + parts[5];
-    if (!PLAN_NAMES[planCode]) {
-      return { ok: false, reason: "Unrecognized plan code in key." };
-    }
-    if (!/^[0-9A-Z]{4}$/.test(expiryB36) || !/^[0-9A-F]{12}$/.test(sig)) {
-      return { ok: false, reason: "That doesn't look like a valid license key." };
-    }
-    const expectedSig = keyHash(planCode + expiryB36 + LICENSE_SECRET).slice(0, 12);
-    if (sig !== expectedSig) {
-      return { ok: false, reason: "This key is invalid or has been altered." };
-    }
-    const expiryDays = parseInt(expiryB36, 36);
-    return { ok: true, plan: planCode, expiryDays, key: cleaned };
-  }
-
-  function loadLicense() {
-    try {
-      const raw = localStorage.getItem(LICENSE_STORAGE_KEY);
-      if (!raw) return null;
-      const stored = JSON.parse(raw);
-      const result = validateLicenseKey(stored.key);
-      return result.ok ? result : null; // silently drop tampered/corrupt keys
-    } catch (e) {
-      return null;
-    }
-  }
-
-  function saveLicense(keyString) {
-    localStorage.setItem(LICENSE_STORAGE_KEY, JSON.stringify({ key: keyString }));
-  }
-
-  // Task 3/4: single source of truth for subscription state. Every other
-  // function below (isLicenseExpired, hasValidLicense, updateLicenseUI,
-  // updateGenerateButton, updateTrialStatus, canGeneratePdf) reads from
-  // this instead of separately recomputing daysFromEpoch/expiryDays —
-  // that duplication was the root cause of the license/UI state
-  // disagreeing with each other. "current date <= expiry date" is always
-  // treated as active (never marks an active subscription as expired),
-  // and daysFromEpoch() already normalizes both sides to a UTC midnight
-  // boundary from the local calendar date, so there's no off-by-one-day
-  // drift from time-of-day or timezone.
-  function getSubscriptionStatus() {
-    if (!license) {
-      return { active: false, expired: false, daysRemaining: null, expiryDate: null, plan: null };
-    }
-    const todayDays = daysFromEpoch(new Date());
-    const daysRemaining = license.expiryDays - todayDays;
-    const expired = daysRemaining < 0;
-    return {
-      active: !expired,
-      expired: expired,
-      daysRemaining: daysRemaining,
-      expiryDate: dateFromDays(license.expiryDays),
-      plan: license.plan,
-    };
-  }
-
-  function isLicenseExpired() {
-    return getSubscriptionStatus().expired;
-  }
-
-  function updateLicenseUI() {
-    const el = document.getElementById("licenseStatus");
-    const status = getSubscriptionStatus();
-    if (!license) {
-      el.className = "license-status none";
-      el.textContent = "No license key applied — using Free plan features.";
-    } else {
-      const daysLeft = status.daysRemaining;
-      const expiryStr = formatDMY(status.expiryDate);
-      const planLabel = PLAN_NAMES[status.plan] || status.plan;
-      if (status.expired) {
-        el.className = "license-status expired";
-        el.innerHTML = planLabel + " plan — expired on " + expiryStr + "<span class=\"sub\">Enter a new key above to keep generating invoices.</span>";
-      } else if (daysLeft <= 7) {
-        el.className = "license-status warning";
-        el.innerHTML = planLabel + " plan — valid until " + expiryStr + "<span class=\"sub\">Expires in " + daysLeft + " day(s). Renew soon to avoid interruption.</span>";
-      } else {
-        el.className = "license-status active";
-        el.innerHTML = planLabel + " plan — valid until " + expiryStr;
-      }
-    }
-    updateGenerateButton();
-    updateTrialStatus();
-  }
-
-  // ---------------------------------------------------------------
-  // Free trial (one free PDF before a license is required)
-  // ---------------------------------------------------------------
-  // Single source of truth for whether PDF generation is allowed:
-  // canGeneratePdf() below. It combines the existing license engine
-  // (hasValidLicense / isLicenseExpired) with the one-time free trial.
-  const FREE_TRIAL_STORAGE_KEY = "IMP_FREE_PDF_USED";
-
-  function hasUsedFreeTrial() {
-    return localStorage.getItem(FREE_TRIAL_STORAGE_KEY) === "1";
-  }
-
-  // Only call this AFTER a PDF has actually been saved successfully.
-  function markFreeTrialUsed() {
-    localStorage.setItem(FREE_TRIAL_STORAGE_KEY, "1");
   }
 
   // ---------------------------------------------------------------
@@ -27076,67 +26914,17 @@ if (typeof module !== "undefined") {
     }, rec);
   }
 
-  function hasValidLicense() {
-    return getSubscriptionStatus().active;
-  }
-
-  // The single source of truth: is the user allowed to generate a PDF right now?
+  // The purchase/license gate has been removed — the app is free and
+  // unrestricted, so PDF generation is always allowed.
   function canGeneratePdf() {
-    return hasValidLicense() || !hasUsedFreeTrial();
+    return true;
   }
 
   function updateGenerateButton() {
     const genBtn = document.getElementById("generateBtn");
     if (!genBtn) return;
-    const status = getSubscriptionStatus();
-    if (status.active) {
-      genBtn.textContent = "📄 Generate PDF Invoice";
-    } else if (status.expired) {
-      genBtn.textContent = "🔒 Renew License to Continue";
-    } else if (hasUsedFreeTrial()) {
-      genBtn.textContent = "🔒 Upgrade to Continue";
-    } else {
-      genBtn.textContent = "📄 Generate PDF Invoice";
-    }
+    genBtn.textContent = "📄 Generate PDF Invoice";
   }
-
-  function updateTrialStatus() {
-    const el = document.getElementById("trialStatus");
-    if (!el) return;
-    const status = getSubscriptionStatus();
-    if (status.active) {
-      el.className = "license-status active";
-      el.textContent = "✅ Licensed Version";
-    } else if (hasUsedFreeTrial()) {
-      el.className = "license-status expired";
-      el.textContent = "🔒 Free Trial Used";
-    } else {
-      el.className = "license-status none";
-      el.textContent = "🎁 One Free PDF Remaining";
-    }
-  }
-
-  let license = loadLicense();
-
-  document.getElementById("activateKeyBtn").addEventListener("click", () => {
-    const input = document.getElementById("licenseKeyInput");
-    const msg = document.getElementById("licenseMsg");
-    const result = validateLicenseKey(input.value);
-    if (!result.ok) {
-      msg.textContent = result.reason;
-      msg.className = "status-msg error show";
-      return;
-    }
-    saveLicense(result.key);
-    license = result;
-    input.value = "";
-    msg.textContent = "";
-    msg.className = "status-msg";
-    updateLicenseUI();
-  });
-  document.getElementById("licenseKeyInput").addEventListener("keydown", (e) => {
-    if (e.key === "Enter") document.getElementById("activateKeyBtn").click();
-  });
 
   let seller = loadSeller();
   let itemIdCounter = 0;
@@ -28154,20 +27942,6 @@ if (typeof module !== "undefined") {
   // Generate PDF
   // ---------------------------------------------------------------
   document.getElementById("generateBtn").addEventListener("click", () => {
-    const subscriptionStatus = getSubscriptionStatus();
-    if (subscriptionStatus.expired) {
-      const planLabel = PLAN_NAMES[subscriptionStatus.plan] || subscriptionStatus.plan;
-      const expiryStr = formatDMY(subscriptionStatus.expiryDate);
-      alert("Your " + planLabel + " license expired on " + expiryStr + ". Enter a new key in Settings to keep generating invoices.");
-      document.querySelector('.tab-btn[data-tab="tab-settings"]').click();
-      document.getElementById("licenseKeyInput").focus();
-      return;
-    }
-    if (!canGeneratePdf()) {
-      alert("Your free trial has ended.\nPlease purchase and activate a license key to continue generating PDF invoices.");
-      document.querySelector('.tab-btn[data-tab="tab-pricing"]').click();
-      return;
-    }
     const buyerName = document.getElementById("buyer_name").value.trim();
     if (!buyerName) {
       alert("Please enter the buyer's name.");
@@ -28239,17 +28013,11 @@ if (typeof module !== "undefined") {
       const doc = window.buildInvoicePDF(window.jspdf.jsPDF, window.autoTable, window.qrcode, seller, invoice);
       const filename = (invoice.invoice_no || "invoice").replace(/\s+/g, "_") + ".pdf";
       doc.save(filename);
-      // Only consume the free trial after a successful save, and only
-      // when the user isn't already covered by a valid license.
-      if (!hasValidLicense() && !hasUsedFreeTrial()) {
-        markFreeTrialUsed();
-      }
       // Advance the auto-incrementing invoice series and load the
       // next number into the field for the following invoice.
       commitInvoiceNumber();
       document.getElementById("invoice_no").value = peekNextInvoiceNumber();
       updateGenerateButton();
-      updateTrialStatus();
 
       // Record this invoice for the ledger-wise Summary tab & GST reports.
       recordInvoiceInHistory(invoice, grandTotalValue);
@@ -28342,54 +28110,56 @@ if (typeof module !== "undefined") {
   document.getElementById("whatsappBtn").addEventListener("click", shareInvoiceOnWhatsApp);
 
   // ---------------------------------------------------------------
-  // Pricing tab — UPI subscription payment
+  // Support tab — voluntary "give as you wish" UPI donation
   // ---------------------------------------------------------------
-  const SUBSCRIPTION_UPI_ID = "8463083061@sbi";
-  const SUBSCRIPTION_PAYEE_NAME = "Singh Tax & Accounting Services";
+  // No purchase, no license, no activation — the app itself is always
+  // fully unlocked. This just opens the UPI app with an optional amount
+  // pre-filled so a supporter can adjust or send it as-is.
+  const DONATION_UPI_ID = "8463083061@sbi";
+  const DONATION_PAYEE_NAME = "Singh Tax & Accounting Services";
 
-  // Builds the UPI deep link for a given plan amount:
-  // upi://pay?pa=<id>&pn=<name>&am=<amount>&cu=INR
-  function buildSubscriptionUpiLink(amount) {
+  // Builds the UPI deep link: upi://pay?pa=<id>&pn=<name>[&am=<amount>]&cu=INR
+  // Amount is optional — if none/invalid is given, the UPI app opens with
+  // the amount field blank so the supporter can type in any figure.
+  function buildDonationUpiLink(amount) {
     const params = [
-      "pa=" + SUBSCRIPTION_UPI_ID,
-      "pn=" + encodeURIComponent(SUBSCRIPTION_PAYEE_NAME),
-      "am=" + encodeURIComponent(amount),
+      "pa=" + DONATION_UPI_ID,
+      "pn=" + encodeURIComponent(DONATION_PAYEE_NAME),
       "cu=INR",
     ];
+    const amt = parseFloat(amount);
+    if (Number.isFinite(amt) && amt > 0) {
+      params.splice(2, 0, "am=" + encodeURIComponent(amt));
+    }
     return "upi://pay?" + params.join("&");
   }
 
-  // Opens the UPI app for payment, then reminds the user to confirm via
-  // WhatsApp for activation (manual activation, as keys are handed out
-  // after the payment screenshot is verified).
-  function handleSubscribeClick(amount) {
-    window.location.href = buildSubscriptionUpiLink(amount);
-    setTimeout(() => {
-      alert("Please send payment screenshot on WhatsApp for activation.");
-    }, 800);
+  const donateAmountRow = document.getElementById("donateAmountRow");
+  const donateCustomAmount = document.getElementById("donateCustomAmount");
+
+  if (donateAmountRow) {
+    donateAmountRow.addEventListener("click", (e) => {
+      const btn = e.target.closest(".donate-amt-btn");
+      if (!btn) return;
+      donateAmountRow.querySelectorAll(".donate-amt-btn").forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      if (donateCustomAmount) donateCustomAmount.value = btn.dataset.amount;
+    });
+  }
+  // Typing a custom amount deselects any preset button, so the two
+  // controls never disagree about what will actually be sent.
+  if (donateCustomAmount) {
+    donateCustomAmount.addEventListener("input", () => {
+      if (!donateAmountRow) return;
+      donateAmountRow.querySelectorAll(".donate-amt-btn").forEach((b) => b.classList.remove("active"));
+    });
   }
 
-  const subscribeMonthlyBtn = document.getElementById("subscribeMonthlyBtn");
-  if (subscribeMonthlyBtn) {
-    subscribeMonthlyBtn.addEventListener("click", () => handleSubscribeClick(subscribeMonthlyBtn.dataset.amount));
-  }
-  const subscribeAnnualBtn = document.getElementById("subscribeAnnualBtn");
-  if (subscribeAnnualBtn) {
-    subscribeAnnualBtn.addEventListener("click", () => handleSubscribeClick(subscribeAnnualBtn.dataset.amount));
-  }
-
-  // Subscription verification WhatsApp number is fixed and must NEVER be
-  // sourced from Company Settings, Seller Phone, Buyer Phone, or any other
-  // editable field — payment screenshots always go to this number.
-  const SUBSCRIPTION_WHATSAPP_NUMBER = "918463083061";
-
-  const subscriptionWhatsappBtn = document.getElementById("subscriptionWhatsappBtn");
-  if (subscriptionWhatsappBtn) {
-    subscriptionWhatsappBtn.addEventListener("click", () => {
-      const message = encodeURIComponent(
-        "Hello,\nI have completed the payment for Invoice Manager Pro.\nPlease find my payment screenshot attached.\nKindly activate my subscription."
-      );
-      window.open("https://wa.me/" + SUBSCRIPTION_WHATSAPP_NUMBER + "?text=" + message, "_blank");
+  const donateBtn = document.getElementById("donateBtn");
+  if (donateBtn) {
+    donateBtn.addEventListener("click", () => {
+      const amount = donateCustomAmount ? donateCustomAmount.value : "";
+      window.location.href = buildDonationUpiLink(amount);
     });
   }
 
@@ -28965,7 +28735,7 @@ if (typeof module !== "undefined") {
   }
 
   fillSettingsForm();
-  updateLicenseUI();
+  updateGenerateButton();
   document.getElementById("invoice_date").value = todayStr();
   document.getElementById("due_date").value = todayStr();
   document.getElementById("invoice_no").value = peekNextInvoiceNumber();
