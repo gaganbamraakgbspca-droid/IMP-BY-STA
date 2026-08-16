@@ -4179,12 +4179,22 @@ function buildInvoicePDF(JsPDFCtor, autoTableFn, qrcodeGen, seller, invoice) {
 
   const sameState = invoice.same_state;
   const totalsLines = [["Taxable Value", money(totalTaxable)]];
+  // Bug fix: this used to read invoice.items[0].gst_rate and print that
+  // as *the* rate for the whole invoice — correct only when every item
+  // happens to share item 0's rate. On a mixed-rate invoice (e.g. one
+  // item at 5%, another at 12%) it silently mislabeled the printed %,
+  // even though the CGST/SGST/IGST amount itself (totalTax, already a
+  // sum across all items) was always correct. Only show a single "@ X%"
+  // when every item truly shares that rate; otherwise omit the % and
+  // let the amount speak for itself.
+  const itemGstRates = (invoice.items || []).map((it) => it.gst_rate);
+  const uniformGstRate = itemGstRates.length && itemGstRates.every((r) => r === itemGstRates[0]) ? itemGstRates[0] : null;
   if (sameState) {
-    const half = invoice.items[0].gst_rate / 2;
-    totalsLines.push([`CGST @ ${half}%`, money(totalTax / 2)]);
-    totalsLines.push([`SGST @ ${half}%`, money(totalTax / 2)]);
+    const half = uniformGstRate !== null ? uniformGstRate / 2 : null;
+    totalsLines.push([`CGST${half !== null ? ` @ ${half}%` : ""}`, money(totalTax / 2)]);
+    totalsLines.push([`SGST${half !== null ? ` @ ${half}%` : ""}`, money(totalTax / 2)]);
   } else {
-    totalsLines.push([`IGST @ ${invoice.items[0].gst_rate}%`, money(totalTax)]);
+    totalsLines.push([`IGST${uniformGstRate !== null ? ` @ ${uniformGstRate}%` : ""}`, money(totalTax)]);
   }
   totalsLines.push(["Round Off", (roundInfo.roundOff >= 0 ? "+ " : "- ") + money(Math.abs(roundInfo.roundOff))]);
   const totalsRowH = 6.2;
@@ -28968,33 +28978,51 @@ if (typeof module !== "undefined") {
     setTimeout(() => URL.revokeObjectURL(url), 4000);
   }
 
-  // Section A: B2B + SEZ + Export(DE) — one row per invoice.
+  // Section A: B2B + SEZ + Export(DE) — one row per (invoice, GST rate).
+  // Bug fix: this previously emitted exactly one row per invoice, using
+  // rec.items[0].gst_rate as "the" rate and rec.tax_total as "the" tax —
+  // correct only when every item on the invoice shared item 0's rate. An
+  // invoice with items at, say, 5% and 12% would silently report the
+  // whole taxable value under the 5% rate and split rec.tax_total (the
+  // real combined tax) as if it all belonged there — wrong for GST
+  // filing. Fixed to split each invoice's items by their actual GST rate
+  // and emit one row per rate, same approach as generateB2CSSummary below.
   function generateB2BSummary() {
     const history = loadInvoiceHistory();
-    return history
+    const rows = [];
+    history
       .filter((rec) => rec.gstCategory === "B2B" || rec.gstCategory === "SEZ" || rec.gstCategory === "EXPORT")
-      .map((rec) => {
-        const taxable = rec.taxable_total || 0;
-        const tax = rec.tax_total || 0;
-        const gstRate = (rec.items && rec.items[0] && rec.items[0].gst_rate) || 0;
-        const igst = rec.same_state === false ? tax : 0;
-        const cgst = rec.same_state === true ? tax / 2 : 0;
-        const sgst = rec.same_state === true ? tax / 2 : 0;
-        return {
-          gstin: rec.buyer_gstin || "",
-          receiver_name: rec.buyer_name || "",
-          invoice_number: rec.invoice_no || "",
-          invoice_date: rec.invoice_date || "",
-          invoice_value: (rec.roundedTotal !== undefined ? rec.roundedTotal : rec.grand_total) || 0,
-          place_of_supply: rec.placeOfSupply || rec.buyer_state || "",
-          reverse_charge: "N",
-          invoice_type: rec.invoiceType || "",
-          taxable_value: taxable,
-          rate: gstRate,
-          igst, cgst, sgst,
-          cess: 0,
-        };
+      .forEach((rec) => {
+        const recItems = (rec.items && rec.items.length) ? rec.items : [{ gst_rate: 0, taxable: rec.taxable_total || 0 }];
+        const taxableByRate = {};
+        recItems.forEach((it) => {
+          const rate = it.gst_rate || 0;
+          taxableByRate[rate] = (taxableByRate[rate] || 0) + (it.taxable !== undefined ? it.taxable : 0);
+        });
+        Object.keys(taxableByRate).forEach((rateKey) => {
+          const gstRate = Number(rateKey);
+          const taxable = taxableByRate[rateKey];
+          const tax = taxable * gstRate / 100;
+          const igst = rec.same_state === false ? tax : 0;
+          const cgst = rec.same_state === true ? tax / 2 : 0;
+          const sgst = rec.same_state === true ? tax / 2 : 0;
+          rows.push({
+            gstin: rec.buyer_gstin || "",
+            receiver_name: rec.buyer_name || "",
+            invoice_number: rec.invoice_no || "",
+            invoice_date: rec.invoice_date || "",
+            invoice_value: (rec.roundedTotal !== undefined ? rec.roundedTotal : rec.grand_total) || 0,
+            place_of_supply: rec.placeOfSupply || rec.buyer_state || "",
+            reverse_charge: "N",
+            invoice_type: rec.invoiceType || "",
+            taxable_value: taxable,
+            rate: gstRate,
+            igst, cgst, sgst,
+            cess: 0,
+          });
+        });
       });
+    return rows;
   }
 
   // Section B: B2CS — grouped by State + GST Rate.
