@@ -41,8 +41,9 @@ header.appbar,.tabs,.tab-panel,.sticky-bar,.app-footer{position:relative;z-index
 header.appbar{background:linear-gradient(135deg,var(--navy),var(--navy-dark));color:#fff;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20;box-shadow:0 4px 18px rgba(15,23,42,.28);}
 header.appbar .title{font-weight:700;font-size:17px;display:flex;align-items:center;gap:8px;}
 header.appbar .badge{font-size:11px;color:var(--gold-light);font-weight:600;max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.tabs{display:flex;background:rgba(255,255,255,.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--border);position:sticky;top:53px;z-index:19;}
-.tab-btn{flex:1;padding:12px 8px;text-align:center;font-size:14px;font-weight:600;color:var(--muted);background:none;border:none;border-bottom:3px solid transparent;transition:color .2s ease,border-color .2s ease;}
+.tabs{display:flex;background:rgba(255,255,255,.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--border);position:sticky;top:53px;z-index:19;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab-btn{flex:0 0 auto;min-width:88px;padding:12px 10px;text-align:center;font-size:13px;font-weight:600;color:var(--muted);background:none;border:none;border-bottom:3px solid transparent;transition:color .2s ease,border-color .2s ease;white-space:nowrap;}
 .tab-btn.active{color:var(--navy);border-bottom-color:var(--gold);}
 .tab-panel{display:none;padding:14px;max-width:720px;margin:0 auto;}
 .tab-panel.active{display:block;animation:tabFadeIn .32s ease;}
@@ -272,6 +273,44 @@ header.appbar .badge{font-size:11px;color:var(--gold-light);font-weight:600;max-
 /* Dashboard cards (Upgrade 4) */
 .dashboard-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px;}
 @media (min-width:600px){.dashboard-grid{grid-template-columns:repeat(4,1fr);}}
+
+/* ---------------- Accounting / Bookkeeping module ---------------- */
+.acc-segment{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin-bottom:12px;}
+.acc-segment::-webkit-scrollbar{display:none;}
+.acc-seg-btn{flex:0 0 auto;padding:8px 14px;font-size:12.5px;font-weight:700;border-radius:20px;border:1.5px solid var(--border);background:#fff;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all .15s ease;}
+.acc-seg-btn.active{background:var(--navy);border-color:var(--navy);color:#fff;}
+.acc-view{display:none;}
+.acc-view.active{display:block;animation:tabFadeIn .28s ease;}
+.acc-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--border);border-radius:10px;}
+table.acc-table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:420px;}
+table.acc-table th{background:var(--navy);color:#fff;text-align:left;padding:8px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;}
+table.acc-table td{padding:8px 10px;border-bottom:1px solid var(--border);color:var(--ink);}
+table.acc-table tr:last-child td{border-bottom:none;}
+table.acc-table tbody tr:hover{background:#f4f6fb;}
+table.acc-table td.num,table.acc-table th.num{text-align:right;font-variant-numeric:tabular-nums;}
+table.acc-table tfoot td{font-weight:800;background:#f4f6fb;border-top:2px solid var(--navy);}
+.acc-dr{color:#1a7a3c;font-weight:700;}
+.acc-cr{color:#b3261e;font-weight:700;}
+.acc-pill{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.02em;padding:2px 8px;border-radius:20px;text-transform:uppercase;}
+.acc-pill.asset{background:#e0f2fe;color:#075985;}
+.acc-pill.liability{background:#fee2e2;color:#991b1b;}
+.acc-pill.equity{background:#ede9fe;color:#5b21b6;}
+.acc-pill.income{background:#dcfce7;color:#166534;}
+.acc-pill.expense{background:#fef3c7;color:#92400e;}
+.acc-summary-row{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px;}
+@media (min-width:600px){.acc-summary-row{grid-template-columns:repeat(3,1fr);}}
+.je-line-row{display:grid;grid-template-columns:1.6fr 1fr 1fr auto;gap:6px;align-items:center;margin-bottom:8px;}
+.je-line-row select,.je-line-row input{height:38px;padding:6px 8px;font-size:12.5px;border:1px solid var(--border);border-radius:8px;background:#fbfbfc;color:var(--ink);}
+.je-remove-btn{background:none;border:none;color:var(--muted);font-size:16px;cursor:pointer;padding:4px 6px;}
+.je-remove-btn:hover{color:#b3261e;}
+.je-balance-note{font-size:12.5px;font-weight:700;margin:6px 0 10px;padding:8px 10px;border-radius:8px;background:#f4f6fb;}
+.je-balance-note.balanced{color:#1a7a3c;}
+.je-balance-note.unbalanced{color:#b3261e;}
+.acc-card-row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
+.acc-card-row .acn{font-weight:800;font-size:14px;color:var(--navy);}
+.acc-card-row .acv{font-size:13px;color:var(--muted);}
+.acc-src-tag{font-size:10px;color:var(--muted);font-style:italic;}
+.coa-list .card{padding:12px 14px;margin-bottom:8px;}
 .dash-card{background:var(--card-solid);border:1px solid var(--border);border-radius:12px;padding:12px 10px;text-align:center;box-shadow:0 2px 8px rgba(15,23,42,.05);}
 .dash-card .dash-label{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;font-weight:700;}
 .dash-card .dash-value{font-size:15px;font-weight:800;color:var(--navy);margin-top:4px;word-break:break-word;}
@@ -280,6 +319,28 @@ header.appbar .badge{font-size:11px;color:var(--gold-light);font-weight:600;max-
 .gst-export-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
 .gst-export-grid .btn{padding:9px 8px;font-size:12.5px;}
 .gst-export-grid .btn-export-all{grid-column:1 / -1;}
+
+/* GST Input Tax Credit (ITC) Worksheet */
+.itc-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--border);border-radius:10px;margin-bottom:10px;}
+table.itc-table{width:100%;border-collapse:collapse;font-size:11.5px;min-width:600px;}
+table.itc-table th{background:var(--navy);color:#fff;text-align:right;padding:7px 8px;font-size:10.5px;text-transform:uppercase;letter-spacing:.02em;white-space:nowrap;}
+table.itc-table th:first-child{text-align:left;}
+table.itc-table td{padding:5px 6px;border-bottom:1px solid var(--border);color:var(--ink);text-align:right;vertical-align:middle;}
+table.itc-table td.itc-label{text-align:left;font-weight:600;color:var(--navy);white-space:nowrap;padding-right:10px;}
+table.itc-table tr.itc-computed td{background:#f4f6fb;font-weight:800;}
+table.itc-table tr.itc-payable td{background:#fff7e6;font-weight:800;color:var(--gold);}
+table.itc-table tr.itc-spacer td{border-bottom:none;padding:2px;background:transparent;}
+table.itc-table input.itc-input{
+  width:88px;max-width:100%;padding:6px 6px;font-size:12px;text-align:right;
+  border:1px solid var(--border);border-radius:6px;background:#fbfbfc;color:var(--ink);
+  font-variant-numeric:tabular-nums;
+}
+table.itc-table input.itc-input:focus{outline:none;border-color:var(--navy);background:#fff;}
+table.itc-table input.itc-period-label{width:100%;min-width:110px;text-align:left;padding:6px 8px;font-size:12px;border:1px solid var(--border);border-radius:6px;background:#fbfbfc;color:var(--ink);}
+.itc-computed-value{font-variant-numeric:tabular-nums;}
+.itc-note{font-size:11.5px;color:var(--muted);margin:-2px 0 10px;line-height:1.5;}
+.itc-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+.itc-actions .btn{width:auto;flex:1 1 160px;padding:9px 8px;font-size:12.5px;}
 
 /* Saved item library + HSN/SAC lookup */
 .lib-toolbar{display:flex;gap:8px;margin-bottom:10px;}
@@ -294,6 +355,14 @@ header.appbar .badge{font-size:11px;color:var(--gold-light);font-weight:600;max-
 .lib-item .lib-item-meta{font-size:11px;color:var(--muted);margin-top:1px;}
 .lib-item .lib-item-actions{display:flex;gap:6px;flex:0 0 auto;}
 .lib-item .lib-item-actions button{padding:6px 10px;font-size:11.5px;border-radius:6px;border:none;font-weight:700;cursor:pointer;}
+.stock-ok{color:#1a7a3c;font-weight:700;}
+.stock-low{color:#b3261e;font-weight:700;}
+.stock-out{color:#b3261e;font-weight:800;background:rgba(179,38,30,.1);padding:1px 6px;border-radius:5px;}
+.inv-row-actions{display:flex;gap:5px;}
+.inv-row-actions button{padding:5px 8px;font-size:12px;border-radius:6px;border:1px solid var(--border);background:#fff;cursor:pointer;}
+.inv-row-actions button:hover{background:var(--bg);}
+.inv-toolbar{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+.inv-toolbar input{flex:1;min-width:140px;}
 .lib-add-btn{background:var(--navy);color:#fff;}
 .lib-del-btn{background:#e53e3e;color:#fff;}
 .hsn-result{padding:8px 9px;border-bottom:1px solid var(--border);font-size:12px;cursor:pointer;line-height:1.4;}
@@ -316,6 +385,10 @@ header.appbar .badge{font-size:11px;color:var(--gold-light);font-weight:600;max-
 <div class="tabs">
   <button class="tab-btn active" data-tab="tab-invoice">New Invoice</button>
   <button class="tab-btn" data-tab="tab-summary">Summary</button>
+  <button class="tab-btn" data-tab="tab-expenses">Expenses</button>
+  <button class="tab-btn" data-tab="tab-inventory">Inventory</button>
+  <button class="tab-btn" data-tab="tab-accounting">Accounting</button>
+  <button class="tab-btn" data-tab="tab-reports">Reports</button>
   <button class="tab-btn" data-tab="tab-pricing">Support</button>
   <button class="tab-btn" data-tab="tab-settings">Settings</button>
 </div>
@@ -461,6 +534,42 @@ header.appbar .badge{font-size:11px;color:var(--gold-light);font-weight:600;max-
     </div>
     <div id="ledgerList"></div>
   </div>
+
+  <!-- GST Input Tax Credit (ITC) Worksheet — mirrors the GST portal's
+       ledger/register figures (Electronic Cash Ledger, Credit Ledger,
+       RCM statement, etc.) so the user can enter values straight off
+       the portal and get Total Input / Net Payable computed for them.
+       These figures live on the government portal, not inside this
+       app's own invoice/purchase data, so every ledger cell here is a
+       manual entry; only the totals and payable row are calculated. -->
+  <div class="card">
+    <h3>GST Input Tax Credit (ITC) Worksheet</h3>
+    <div class="itc-note">Enter the figures from your GST portal ledgers below (Electronic Cash Ledger, Credit Ledger, RCM statement, etc.). Total Input and Net Payable are calculated automatically.</div>
+    <div class="field" style="max-width:260px;">
+      <label>Current period label (e.g. Apr to Jun 26)</label>
+      <input type="text" id="itcPeriodLabel" class="itc-period-label" placeholder="e.g. Apr to Jun 26">
+    </div>
+    <div class="itc-table-wrap">
+      <table class="itc-table" id="itcTable">
+        <thead>
+          <tr>
+            <th>Type of Ledger / Register</th>
+            <th>IGST</th>
+            <th>CGST</th>
+            <th>SGST</th>
+            <th>CESS</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody id="itcTableBody"></tbody>
+      </table>
+    </div>
+    <div class="itc-actions">
+      <button type="button" class="btn btn-outline" id="itcCopyFromCreditLedgerBtn">↺ Copy Credit Ledger → ITC Previous</button>
+      <button type="button" class="btn btn-outline" id="itcResetBtn">⟲ Reset Worksheet</button>
+      <button type="button" class="btn btn-primary" id="itcExportCsvBtn">⬇ Export ITC Worksheet CSV</button>
+    </div>
+  </div>
 </div>
 
 <!-- ============ RECORD RECEIPT MODAL ============ -->
@@ -535,35 +644,57 @@ header.appbar .badge{font-size:11px;color:var(--gold-light);font-weight:600;max-
       <input type="number" id="donateCustomAmount" placeholder="e.g. 25" min="1" step="1" inputmode="numeric">
     </div>
     <button type="button" class="btn btn-primary subscribe-btn" id="donateBtn">💛 Donate via UPI</button>
+    <button type="button" class="btn btn-outline" id="showDonateQrBtn" style="margin-top:8px;">📱 Show QR Code (for laptop/desktop)</button>
+    <div id="donateQrWrap" style="display:none;text-align:center;margin-top:14px;">
+      <img id="donateQrImg" alt="Donation UPI QR Code" style="width:180px;height:180px;border:1px solid var(--border);border-radius:10px;padding:8px;background:#fff;">
+      <div style="font-size:12.5px;color:var(--muted);margin-top:6px;">Scan with any UPI app — Google Pay, PhonePe, Paytm, BHIM, etc.</div>
+    </div>
   </div>
 
-  <p class="pricing-footnote">Tapping Donate opens your UPI app to pay <span class="upi-badge">8463083061@sbi</span>. Thank you for supporting independent development — every contribution helps.</p>
+  <p class="pricing-footnote">Tapping Donate opens your UPI app to pay <span class="upi-badge">8463083061@sbi</span>. On a laptop or desktop without a UPI app, use "Show QR Code" instead and scan it with your phone. Thank you for supporting independent development — every contribution helps.</p>
 </div>
 
 <!-- ============ COMPANY SETTINGS TAB ============ -->
 <div class="tab-panel" id="tab-settings">
   <div class="card">
-    <h3>Company / Seller Details (set once)</h3>
-    <div class="field"><label>Company Name</label><input type="text" id="set_company_name"></div>
-    <div class="field"><label>Tagline</label><input type="text" id="set_tagline"></div>
-    <div class="field"><label>Address Line 1</label><input type="text" id="set_address_line1"></div>
-    <div class="field"><label>Address Line 2</label><input type="text" id="set_address_line2"></div>
-    <div class="two-col">
-      <div class="field"><label>GSTIN</label><input type="text" id="set_gstin"></div>
-      <div class="field"><label>State</label><input type="text" id="set_state"></div>
+    <h3>🏢 Company Profiles</h3>
+    <p class="pricing-footnote" style="text-align:left;margin:-4px 0 12px;padding:0;">Run more than one business from this app. Each company profile keeps its own invoices, ledgers, inventory and settings, completely separate from the others. Switching companies reloads the app.</p>
+    <div class="field">
+      <label>Active Company</label>
+      <select id="companySwitcher"></select>
     </div>
     <div class="two-col">
-      <div class="field"><label>Phone</label><input type="text" id="set_phone"></div>
-      <div class="field"><label>Email</label><input type="text" id="set_email"></div>
+      <button type="button" class="btn btn-add" id="addCompanyBtn">➕ Add New Company</button>
+      <button type="button" class="btn btn-outline" id="renameCompanyBtn">✏️ Rename This Company</button>
+    </div>
+    <button type="button" class="btn btn-outline" id="deleteCompanyBtn" style="margin-top:8px;color:#b3261e;border-color:#b3261e;">🗑️ Delete This Company</button>
+    <div class="status-msg" id="companyMgmtStatus"></div>
+  </div>
+
+  <div class="card">
+    <h3>Company / Seller Details (set once)</h3>
+    <p class="pricing-footnote" style="text-align:left;margin:-4px 0 12px;padding:0;">These details appear on every invoice you generate — fill in your own business information below.</p>
+    <div class="field"><label>Company Name</label><input type="text" id="set_company_name" placeholder="e.g. Sharma Traders"></div>
+    <div class="field"><label>Tagline</label><input type="text" id="set_tagline" placeholder="e.g. Wholesale & Retail Suppliers"></div>
+    <div class="field"><label>Address Line 1</label><input type="text" id="set_address_line1" placeholder="e.g. Shop No. 12, Main Market"></div>
+    <div class="field"><label>Address Line 2</label><input type="text" id="set_address_line2" placeholder="e.g. Indore, Madhya Pradesh - 452001"></div>
+    <div class="two-col">
+      <div class="field"><label>GSTIN</label><input type="text" id="set_gstin" placeholder="e.g. 23AAAAA0000A1Z5"></div>
+      <div class="field"><label>State</label><input type="text" id="set_state" placeholder="e.g. Madhya Pradesh"></div>
+    </div>
+    <div class="two-col">
+      <div class="field"><label>Phone</label><input type="text" id="set_phone" placeholder="e.g. +91 98765 43210"></div>
+      <div class="field"><label>Email</label><input type="text" id="set_email" placeholder="e.g. you@yourcompany.com"></div>
     </div>
   </div>
 
   <div class="card">
     <h3>Bank & UPI</h3>
-    <div class="field"><label>Bank Name</label><input type="text" id="set_bank_name"></div>
+    <p class="pricing-footnote" style="text-align:left;margin:-4px 0 12px;padding:0;">Add your own bank and UPI details so customers pay you directly.</p>
+    <div class="field"><label>Bank Name</label><input type="text" id="set_bank_name" placeholder="e.g. State Bank of India"></div>
     <div class="two-col">
-      <div class="field"><label>Account No.</label><input type="text" id="set_bank_account_no"></div>
-      <div class="field"><label>IFSC Code</label><input type="text" id="set_bank_ifsc"></div>
+      <div class="field"><label>Account No.</label><input type="text" id="set_bank_account_no" placeholder="e.g. 1234567890"></div>
+      <div class="field"><label>IFSC Code</label><input type="text" id="set_bank_ifsc" placeholder="e.g. SBIN0001234"></div>
     </div>
     <div class="field"><label>UPI ID (for QR code — leave blank to hide)</label><input type="text" id="set_upi_id" placeholder="yourname@bank"></div>
     <span class="upi-badge"> Pay via UPI</span>
@@ -652,6 +783,335 @@ header.appbar .badge{font-size:11px;color:var(--gold-light);font-weight:600;max-
 
   <button type="button" class="btn btn-primary" id="saveSettingsBtn">💾 Save Company Details</button>
   <div class="status-msg" id="settingsStatus">Saved.</div>
+
+  <div class="card" style="margin-top:14px;">
+    <h3>📦 Backup &amp; Restore</h3>
+    <p class="pricing-footnote" style="text-align:left;margin:-4px 0 12px;padding:0;">Export every invoice, ledger entry, inventory record and setting for the active company into a single JSON file — keep it somewhere safe, or use it to move this company's data to another device. Restoring overwrites the active company's current data.</p>
+    <button type="button" class="btn btn-primary" id="exportCompanyDataBtn">⬇️ Export Company Data (Backup)</button>
+    <div class="field" style="margin-top:12px;">
+      <label>Restore from Backup File</label>
+      <input type="file" id="importCompanyDataInput" accept=".json,application/json">
+    </div>
+    <div class="status-msg" id="backupStatus"></div>
+  </div>
+</div>
+
+<!-- ============ EXPENSES / PURCHASES / VENDORS TAB ============ -->
+<div class="tab-panel" id="tab-expenses">
+
+  <div class="card">
+    <h3>Payables Overview</h3>
+    <div class="acc-summary-row" id="payablesSummaryGrid"></div>
+  </div>
+
+  <div class="card">
+    <h3>Vendors</h3>
+    <div class="two-col">
+      <div class="field"><label>Vendor Name</label><input type="text" id="vendor_name" placeholder="e.g. Sharma Suppliers"></div>
+      <div class="field"><label>GSTIN (optional)</label><input type="text" id="vendor_gstin" placeholder="e.g. 23AAAAA0000A1Z5"></div>
+    </div>
+    <div class="two-col">
+      <div class="field"><label>Phone</label><input type="text" id="vendor_phone" placeholder="e.g. +91 98765 43210"></div>
+      <div class="field"><label>Address</label><input type="text" id="vendor_address" placeholder="Optional"></div>
+    </div>
+    <button type="button" class="btn btn-add" id="addVendorBtn">➕ Add Vendor</button>
+    <div id="vendorListArea" style="margin-top:12px;"></div>
+  </div>
+
+  <div class="card">
+    <h3>Record Purchase Bill</h3>
+    <div class="field">
+      <label>Vendor</label>
+      <select id="pb_vendor"></select>
+    </div>
+    <div class="two-col">
+      <div class="field"><label>Bill No. (optional)</label><input type="text" id="pb_billno" placeholder="e.g. INV-2201"></div>
+      <div class="field"><label>Bill Date</label><input type="date" id="pb_date"></div>
+    </div>
+    <div class="field"><label>Description</label><input type="text" id="pb_description" placeholder="e.g. Raw material purchase"></div>
+    <div class="field">
+      <label>Expense / Purchase Account</label>
+      <select id="pb_account"></select>
+    </div>
+    <div class="two-col">
+      <div class="field"><label>Taxable Amount (₹)</label><input type="number" id="pb_taxable" min="0" step="0.01" placeholder="0.00"></div>
+      <div class="field">
+        <label>GST Rate (%)</label>
+        <select id="pb_gst_rate">
+          <option value="0">0%</option>
+          <option value="5">5%</option>
+          <option value="12">12%</option>
+          <option value="18" selected>18%</option>
+          <option value="28">28%</option>
+        </select>
+      </div>
+    </div>
+    <div class="field">
+      <label>Payment Mode</label>
+      <select id="pb_payment_mode">
+        <option value="Credit">Credit (unpaid — adds to Payables)</option>
+        <option value="Cash">Cash</option>
+        <option value="Bank">Bank / UPI</option>
+      </select>
+    </div>
+    <div class="je-balance-note balanced" id="pbTotalNote">Bill Total: ₹0.00</div>
+    <button type="button" class="btn btn-primary" id="savePurchaseBillBtn">💾 Save Purchase Bill</button>
+  </div>
+
+  <div class="card">
+    <h3>Purchase Bills</h3>
+    <div class="acc-table-wrap">
+      <table class="acc-table" id="purchaseBillsTable">
+        <thead><tr><th>Date</th><th>Vendor</th><th>Bill No.</th><th>Account</th><th class="num">Amount</th><th>Mode</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ============ INVENTORY TAB ============ -->
+<div class="tab-panel" id="tab-inventory">
+
+  <div class="card">
+    <h3>Inventory Overview</h3>
+    <div class="dashboard-grid" id="invSummaryGrid"></div>
+  </div>
+
+  <div class="card">
+    <h3 id="productFormTitle">Add Product</h3>
+    <input type="hidden" id="inv_edit_id">
+    <div class="two-col">
+      <div class="field"><label>Product Name</label><input type="text" id="inv_name" placeholder="e.g. Steel Hinge 4-inch"></div>
+      <div class="field"><label>SKU / Code (optional)</label><input type="text" id="inv_code" placeholder="e.g. SH-004"></div>
+    </div>
+    <div class="two-col">
+      <div class="field"><label>Unit</label><input type="text" id="inv_unit" placeholder="e.g. NOS, PCS, KG" value="NOS"></div>
+      <div class="field"><label>Opening Stock</label><input type="number" id="inv_opening_stock" min="0" step="0.01" placeholder="0"></div>
+    </div>
+    <div class="two-col">
+      <div class="field"><label>Reorder Level</label><input type="number" id="inv_reorder_level" min="0" step="0.01" placeholder="e.g. 10"></div>
+      <div class="field"><label>Cost Price (₹)</label><input type="number" id="inv_cost_price" min="0" step="0.01" placeholder="0.00"></div>
+    </div>
+    <div class="field"><label>Sale Price (₹, optional)</label><input type="number" id="inv_sale_price" min="0" step="0.01" placeholder="0.00"></div>
+    <button type="button" class="btn btn-add" id="saveProductBtn">➕ Add Product</button>
+    <button type="button" class="btn btn-outline" id="cancelEditProductBtn" style="display:none;margin-top:6px;">Cancel Edit</button>
+    <button type="button" class="btn btn-outline" id="importFromLibraryBtn" style="margin-top:6px;">📚 Import from Item Library</button>
+  </div>
+
+  <div class="card">
+    <h3>Products</h3>
+    <div class="inv-toolbar">
+      <input type="text" id="invProductSearch" placeholder="🔍 Search product or SKU">
+    </div>
+    <div class="acc-table-wrap">
+      <table class="acc-table" id="invProductsTable">
+        <thead><tr><th>Product</th><th>Unit</th><th class="num">Stock</th><th class="num">Reorder</th><th class="num">Cost</th><th class="num">Value</th><th>Actions</th></tr></thead>
+        <tbody id="invProductsBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Recent Stock Movements</h3>
+    <div class="acc-table-wrap">
+      <table class="acc-table" id="invLedgerTable">
+        <thead><tr><th>Date</th><th>Product</th><th>Type</th><th class="num">Qty</th><th>Note</th></tr></thead>
+        <tbody id="invLedgerBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ============ STOCK ADJUSTMENT MODAL ============ -->
+<div class="modal-overlay" id="invAdjustModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3>📦 Adjust Stock</h3>
+      <button type="button" class="modal-close" id="invAdjustModalClose">✕</button>
+    </div>
+    <div class="modal-customer" id="invAdjustProductName"></div>
+    <form id="invAdjustForm" class="receipt-form">
+      <label class="field-label">Movement Type
+        <select id="invAdjustType">
+          <option value="in">Stock In (received / restocked)</option>
+          <option value="out">Stock Out (damaged / used / lost)</option>
+        </select>
+      </label>
+      <div class="field-row">
+        <label class="field-label">Quantity
+          <input type="number" id="invAdjustQty" min="0.01" step="0.01" placeholder="0" required>
+        </label>
+        <label class="field-label">Date
+          <input type="date" id="invAdjustDate" required>
+        </label>
+      </div>
+      <label class="field-label">Reason / Note (optional)
+        <input type="text" id="invAdjustReason" placeholder="e.g. New purchase from vendor">
+      </label>
+      <button type="submit" class="btn btn-primary">💾 Save Adjustment</button>
+    </form>
+  </div>
+</div>
+
+<!-- ============ VENDOR PAYMENT MODAL ============ -->
+<div class="modal-overlay" id="vendorPayModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3>💸 Pay Vendor</h3>
+      <button type="button" class="modal-close" id="vendorPayModalClose">✕</button>
+    </div>
+    <div class="modal-customer">To: <b id="vendorPayModalVendor"></b></div>
+    <div class="receipt-due-note" id="vendorPayDueNote"></div>
+    <form id="vendorPayForm" class="receipt-form">
+      <input type="hidden" id="vendorPayVendorId">
+      <label class="field-label">Amount Paid (₹)
+        <input type="number" id="vendorPayAmount" min="0.01" step="0.01" placeholder="0.00" required>
+      </label>
+      <div class="field-row">
+        <label class="field-label">Date
+          <input type="date" id="vendorPayDate" required>
+        </label>
+        <label class="field-label">Mode
+          <select id="vendorPayMode">
+            <option value="Cash">Cash</option>
+            <option value="Bank Transfer">Bank Transfer</option>
+            <option value="UPI">UPI</option>
+            <option value="Cheque">Cheque</option>
+            <option value="Card">Card</option>
+            <option value="Other">Other</option>
+          </select>
+        </label>
+      </div>
+      <label class="field-label">Note / Reference (optional)
+        <input type="text" id="vendorPayNote" placeholder="e.g. Cheque no. 000123">
+      </label>
+      <button type="submit" class="btn btn-primary">💸 Save Payment</button>
+    </form>
+    <div class="receipt-history">
+      <h4>Payment History</h4>
+      <div id="vendorPayHistoryList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ACCOUNTING TAB (Chart of Accounts + Journal) ============ -->
+<div class="tab-panel" id="tab-accounting">
+
+  <div class="card">
+    <h3>Chart of Accounts</h3>
+    <div class="two-col">
+      <div class="field"><label>Account Name</label><input type="text" id="coa_name" placeholder="e.g. Rent Expense"></div>
+      <div class="field">
+        <label>Type</label>
+        <select id="coa_type">
+          <option value="Asset">Asset</option>
+          <option value="Liability">Liability</option>
+          <option value="Equity">Equity</option>
+          <option value="Income">Income</option>
+          <option value="Expense">Expense</option>
+        </select>
+      </div>
+    </div>
+    <button type="button" class="btn btn-add" id="addAccountBtn">➕ Add Account</button>
+    <div class="coa-list" id="coaListArea" style="margin-top:12px;"></div>
+  </div>
+
+  <div class="card">
+    <h3>Add Journal Entry</h3>
+    <div class="two-col">
+      <div class="field"><label>Date</label><input type="date" id="je_date"></div>
+      <div class="field"><label>Narration</label><input type="text" id="je_narration" placeholder="e.g. Paid office rent for August"></div>
+    </div>
+    <div id="jeLinesArea"></div>
+    <button type="button" class="btn btn-outline" id="addJeLineBtn" style="margin-bottom:10px;">➕ Add Line</button>
+    <div class="je-balance-note" id="jeBalanceNote">Debit ₹0.00 — Credit ₹0.00</div>
+    <button type="button" class="btn btn-primary" id="saveJournalEntryBtn">💾 Save Journal Entry</button>
+  </div>
+
+  <div class="card">
+    <h3>Recent Journal Entries</h3>
+    <div id="journalListArea"></div>
+  </div>
+</div>
+
+<!-- ============ REPORTS TAB (Trial Balance / Ledger / P&L / Balance Sheet) ============ -->
+<div class="tab-panel" id="tab-reports">
+
+  <div class="acc-segment" id="reportsSegment">
+    <button type="button" class="acc-seg-btn active" data-report="trial-balance">Trial Balance</button>
+    <button type="button" class="acc-seg-btn" data-report="ledger">Ledger</button>
+    <button type="button" class="acc-seg-btn" data-report="pnl">Profit &amp; Loss</button>
+    <button type="button" class="acc-seg-btn" data-report="balance-sheet">Balance Sheet</button>
+  </div>
+
+  <div class="acc-view active" id="view-trial-balance">
+    <div class="card">
+      <h3>Trial Balance</h3>
+      <div class="summary-toolbar"><input type="date" id="tbAsOfDate" title="As of date (optional)"></div>
+      <div class="acc-table-wrap">
+        <table class="acc-table" id="trialBalanceTable">
+          <thead><tr><th>Account</th><th>Type</th><th class="num">Debit</th><th class="num">Credit</th></tr></thead>
+          <tbody></tbody>
+          <tfoot></tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="acc-view" id="view-ledger">
+    <div class="card">
+      <h3>General Ledger</h3>
+      <div class="field"><label>Account</label><select id="ledgerAccountSelect"></select></div>
+      <div class="acc-summary-row" id="ledgerBalanceRow"></div>
+      <div class="acc-table-wrap">
+        <table class="acc-table" id="ledgerDetailTable">
+          <thead><tr><th>Date</th><th>Narration</th><th class="num">Debit</th><th class="num">Credit</th><th class="num">Balance</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="acc-view" id="view-pnl">
+    <div class="card">
+      <h3>Profit &amp; Loss Statement</h3>
+      <div class="summary-toolbar">
+        <input type="date" id="pnlFromDate" title="From date (optional)">
+        <input type="date" id="pnlToDate" title="To date (optional)">
+      </div>
+      <div class="acc-table-wrap">
+        <table class="acc-table" id="pnlTable">
+          <thead><tr><th>Account</th><th class="num">Amount</th></tr></thead>
+          <tbody></tbody>
+          <tfoot></tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="acc-view" id="view-balance-sheet">
+    <div class="card">
+      <h3>Balance Sheet</h3>
+      <div class="summary-toolbar"><input type="date" id="bsAsOfDate" title="As of date (optional)"></div>
+      <h4 style="margin:10px 0 6px;color:var(--navy);font-size:13px;">Assets</h4>
+      <div class="acc-table-wrap">
+        <table class="acc-table" id="bsAssetsTable">
+          <thead><tr><th>Account</th><th class="num">Amount</th></tr></thead>
+          <tbody></tbody>
+          <tfoot></tfoot>
+        </table>
+      </div>
+      <h4 style="margin:14px 0 6px;color:var(--navy);font-size:13px;">Liabilities &amp; Equity</h4>
+      <div class="acc-table-wrap">
+        <table class="acc-table" id="bsLiabEquityTable">
+          <thead><tr><th>Account</th><th class="num">Amount</th></tr></thead>
+          <tbody></tbody>
+          <tfoot></tfoot>
+        </table>
+      </div>
+      <div class="je-balance-note" id="bsCheckNote" style="margin-top:10px;"></div>
+    </div>
+  </div>
 </div>
 
 <footer class="app-footer">
@@ -26613,25 +27073,86 @@ if (typeof module !== "undefined") {
 <script>(function () {
   "use strict";
 
-  const STORAGE_KEY = "invoiceapp_seller_config_v1";
+  // ---------------------------------------------------------------
+  // Multi-company support
+  // ---------------------------------------------------------------
+  // A small registry of company profiles lives under its own
+  // (never-namespaced) key, along with which one is currently active.
+  // Every other localStorage key used by this app is then routed
+  // through nsKey() below, which transparently prefixes the key with
+  // the active company's id — except for the original "default"
+  // company, which keeps using the original bare key names so data
+  // saved before this feature existed is never orphaned.
+  const COMPANY_REGISTRY_KEY = "invoiceapp_companies_registry_v1";
+  const ACTIVE_COMPANY_KEY = "invoiceapp_active_company_id_v1";
+
+  function loadCompanyRegistry() {
+    try {
+      const raw = localStorage.getItem(COMPANY_REGISTRY_KEY);
+      if (raw) {
+        const list = JSON.parse(raw);
+        if (Array.isArray(list) && list.length) return list;
+      }
+    } catch (e) { /* fall through to default */ }
+    return [{ id: "default", name: "My Company" }];
+  }
+  function saveCompanyRegistry(list) {
+    try { localStorage.setItem(COMPANY_REGISTRY_KEY, JSON.stringify(list)); } catch (e) { /* ignore */ }
+  }
+  function getActiveCompanyId() {
+    try {
+      const id = localStorage.getItem(ACTIVE_COMPANY_KEY);
+      if (id) return id;
+    } catch (e) { /* ignore */ }
+    return "default";
+  }
+  function setActiveCompanyId(id) {
+    try { localStorage.setItem(ACTIVE_COMPANY_KEY, id); } catch (e) { /* ignore */ }
+  }
+  // Resolved once per page load — switching companies reloads the page
+  // (see switchCompany() further below) so every storage key computed
+  // from this constant stays consistent for the whole session.
+  const ACTIVE_COMPANY_ID = getActiveCompanyId();
+  function nsKey(baseKey) {
+    return ACTIVE_COMPANY_ID === "default" ? baseKey : "co_" + ACTIVE_COMPANY_ID + "__" + baseKey;
+  }
+  // Every base localStorage key this app persists data under. Used by
+  // the full-company export/import (backup) feature and by company
+  // deletion, so both operate on the complete data set in one place.
+  const ALL_DATA_BASE_KEYS = [
+    "invoiceapp_seller_config_v1",
+    "invoiceapp_invoice_seq_v1",
+    "invoiceapp_invoice_history_v1",
+    "invoiceapp_ledger_payments_v1",
+    "invoice_manager_item_library_v1",
+    "invoiceapp_gst_itc_sheet_v2",
+    "invoiceapp_coa_v1",
+    "invoiceapp_journal_v1",
+    "invoiceapp_vendors_v1",
+    "invoiceapp_purchase_bills_v1",
+    "invoiceapp_vendor_payments_v1",
+    "invoiceapp_inventory_products_v1",
+    "invoiceapp_inventory_ledger_v1",
+  ];
+
+  const STORAGE_KEY = nsKey("invoiceapp_seller_config_v1");
 
   const DEFAULT_SELLER = {
-    company_name: "Singh Tax Accounting & Services",
-    tagline: "TAX & ACCOUNTING SERVICES",
-    address_line1: "123, Business Street",
-    address_line2: "Your City, State - 000000",
-    gstin: "22AAAAA0000A1Z5",
-    state: "Chhattisgarh",
-    phone: "+91 90000 00000",
-    email: "billing@yourcompany.com",
-    bank_name: "State Bank of India",
-    bank_account_no: "1234567890",
-    bank_ifsc: "SBIN0001234",
-    upi_id: "8463083061@sbi",
+    company_name: "",
+    tagline: "",
+    address_line1: "",
+    address_line2: "",
+    gstin: "",
+    state: "",
+    phone: "",
+    email: "",
+    bank_name: "",
+    bank_account_no: "",
+    bank_ifsc: "",
+    upi_id: "",
     terms: [
       "Please make payments within the due date.",
-      "After payment, please share the screenshot on WhatsApp.",
-      "No duplication of work.",
+      "Goods once sold will not be taken back.",
     ],
     // Upgrade (Invoice Appearance): additive fields only — existing saved
     // seller configs that predate these keys fall back to these defaults
@@ -26704,7 +27225,7 @@ if (typeof module !== "undefined") {
   // ---------------------------------------------------------------
   // Auto-incrementing invoice series (e.g. STA-2026-001, STA-2026-002)
   // ---------------------------------------------------------------
-  const INVOICE_SEQ_STORAGE_KEY = "invoiceapp_invoice_seq_v1";
+  const INVOICE_SEQ_STORAGE_KEY = nsKey("invoiceapp_invoice_seq_v1");
 
   // Derives a 2-letter invoice prefix from the Company Name in Settings.
   // Two-or-more-word names use the initial of each of the first two words
@@ -26767,7 +27288,7 @@ if (typeof module !== "undefined") {
   // Every successfully generated invoice is appended here alongside
   // the existing invoice-numbering / license / trial storage above.
   // ---------------------------------------------------------------
-  const INVOICE_HISTORY_STORAGE_KEY = "invoiceapp_invoice_history_v1";
+  const INVOICE_HISTORY_STORAGE_KEY = nsKey("invoiceapp_invoice_history_v1");
 
   function loadInvoiceHistory() {
     try {
@@ -26790,7 +27311,7 @@ if (typeof module !== "undefined") {
   // mutating past invoices) so every credit sale and every payment
   // against it stays individually auditable.
   // ---------------------------------------------------------------
-  const LEDGER_PAYMENTS_STORAGE_KEY = "invoiceapp_ledger_payments_v1";
+  const LEDGER_PAYMENTS_STORAGE_KEY = nsKey("invoiceapp_ledger_payments_v1");
 
   function loadLedgerPayments() {
     try {
@@ -26821,6 +27342,7 @@ if (typeof module !== "undefined") {
       timestamp: Date.now(),
     });
     saveLedgerPayments(payments);
+    postJournalForReceipt(customerName, amount, mode, dateStr);
   }
 
   function deleteLedgerPayment(id) {
@@ -26888,6 +27410,8 @@ if (typeof module !== "undefined") {
       })),
     });
     saveInvoiceHistory(history);
+    postJournalForInvoice(invoice, grandTotal);
+    deductInventoryForSale(invoice);
   }
 
   // Fills in sensible defaults for invoice-history records saved before
@@ -27090,6 +27614,7 @@ if (typeof module !== "undefined") {
     seller.show_bank_details = document.getElementById("set_show_bank_details").checked;
     seller.show_qr = document.getElementById("set_show_qr").checked;
     saveSeller(seller);
+    syncActiveCompanyRegistryName(seller.company_name);
     document.getElementById("companyBadge").textContent = seller.company_name || "Invoice Manager";
     // Company Name drives the invoice number prefix — refresh the preview
     // shown in the field so a name change is reflected immediately.
@@ -27100,6 +27625,203 @@ if (typeof module !== "undefined") {
     status.classList.add("show");
     setTimeout(() => status.classList.remove("show"), 2500);
   });
+
+  // ---------------------------------------------------------------
+  // Company Profiles — switcher, add, rename, delete
+  // ---------------------------------------------------------------
+  function companyDisplayName(entry) {
+    return (entry && entry.name) || "Untitled Company";
+  }
+
+  function syncActiveCompanyRegistryName(newName) {
+    if (!newName) return;
+    const list = loadCompanyRegistry();
+    const entry = list.find((c) => c.id === ACTIVE_COMPANY_ID);
+    if (entry && entry.name !== newName) {
+      entry.name = newName;
+      saveCompanyRegistry(list);
+      renderCompanySwitcher();
+    }
+  }
+
+  function renderCompanySwitcher() {
+    const sel = document.getElementById("companySwitcher");
+    if (!sel) return;
+    const list = loadCompanyRegistry();
+    sel.innerHTML = list.map((c) =>
+      `<option value="${escapeHtml(c.id)}"${c.id === ACTIVE_COMPANY_ID ? " selected" : ""}>${escapeHtml(companyDisplayName(c))}</option>`
+    ).join("");
+    const deleteBtn = document.getElementById("deleteCompanyBtn");
+    if (deleteBtn) deleteBtn.disabled = list.length <= 1;
+  }
+
+  function showCompanyMgmtStatus(msg) {
+    const el = document.getElementById("companyMgmtStatus");
+    if (!el) return;
+    el.textContent = msg;
+    el.classList.add("show");
+    setTimeout(() => el.classList.remove("show"), 3000);
+  }
+
+  function switchCompany(id) {
+    setActiveCompanyId(id);
+    // A full reload is the simplest, safest way to re-scope every
+    // localStorage-backed module (invoices, ledgers, accounting,
+    // inventory, item library, settings) to the newly active company —
+    // all of it is read once at page load into module-level state.
+    window.location.reload();
+  }
+
+  const companySwitcherEl = document.getElementById("companySwitcher");
+  if (companySwitcherEl) {
+    renderCompanySwitcher();
+    companySwitcherEl.addEventListener("change", () => {
+      const id = companySwitcherEl.value;
+      if (id && id !== ACTIVE_COMPANY_ID) switchCompany(id);
+    });
+  }
+
+  const addCompanyBtn = document.getElementById("addCompanyBtn");
+  if (addCompanyBtn) {
+    addCompanyBtn.addEventListener("click", () => {
+      const name = (window.prompt("Name for the new company:", "") || "").trim();
+      if (!name) return;
+      const list = loadCompanyRegistry();
+      const id = "c" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+      list.push({ id, name });
+      saveCompanyRegistry(list);
+      switchCompany(id);
+    });
+  }
+
+  const renameCompanyBtn = document.getElementById("renameCompanyBtn");
+  if (renameCompanyBtn) {
+    renameCompanyBtn.addEventListener("click", () => {
+      const list = loadCompanyRegistry();
+      const entry = list.find((c) => c.id === ACTIVE_COMPANY_ID);
+      const current = entry ? companyDisplayName(entry) : "";
+      const name = (window.prompt("Rename this company:", current) || "").trim();
+      if (!name) return;
+      if (entry) {
+        entry.name = name;
+      } else {
+        list.push({ id: ACTIVE_COMPANY_ID, name });
+      }
+      saveCompanyRegistry(list);
+      seller.company_name = seller.company_name || name;
+      renderCompanySwitcher();
+      document.getElementById("set_company_name").value = seller.company_name;
+      document.getElementById("companyBadge").textContent = seller.company_name || "Invoice Manager";
+      showCompanyMgmtStatus("Renamed.");
+    });
+  }
+
+  const deleteCompanyBtn = document.getElementById("deleteCompanyBtn");
+  if (deleteCompanyBtn) {
+    deleteCompanyBtn.addEventListener("click", () => {
+      const list = loadCompanyRegistry();
+      if (list.length <= 1) {
+        showCompanyMgmtStatus("You need at least one company profile.");
+        return;
+      }
+      const entry = list.find((c) => c.id === ACTIVE_COMPANY_ID);
+      const name = entry ? companyDisplayName(entry) : "this company";
+      const confirmed = window.confirm(
+        `Delete "${name}" and ALL of its data (invoices, ledgers, inventory, accounting)? This cannot be undone.`
+      );
+      if (!confirmed) return;
+      // Remove every namespaced key belonging to this company.
+      ALL_DATA_BASE_KEYS.forEach((base) => {
+        try { localStorage.removeItem(nsKey(base)); } catch (e) { /* ignore */ }
+      });
+      const remaining = list.filter((c) => c.id !== ACTIVE_COMPANY_ID);
+      saveCompanyRegistry(remaining);
+      switchCompany(remaining[0].id);
+    });
+  }
+
+  // ---------------------------------------------------------------
+  // Backup & Restore — export/import the active company's full data
+  // ---------------------------------------------------------------
+  function exportCompanyData() {
+    const list = loadCompanyRegistry();
+    const entry = list.find((c) => c.id === ACTIVE_COMPANY_ID);
+    const companyName = (entry && entry.name) || seller.company_name || "Company";
+    const backup = {
+      app: "Invoice Manager Pro",
+      backupFormat: 1,
+      exportedAt: new Date().toISOString(),
+      companyId: ACTIVE_COMPANY_ID,
+      companyName,
+      data: {},
+    };
+    ALL_DATA_BASE_KEYS.forEach((base) => {
+      const val = localStorage.getItem(nsKey(base));
+      if (val !== null) backup.data[base] = val;
+    });
+    const safeName = companyName.replace(/[^a-z0-9]+/gi, "_").replace(/^_+|_+$/g, "").toLowerCase() || "company";
+    const dateStr = new Date().toISOString().slice(0, 10);
+    downloadJSON(`backup_${safeName}_${dateStr}.json`, backup);
+  }
+
+  const exportCompanyDataBtn = document.getElementById("exportCompanyDataBtn");
+  if (exportCompanyDataBtn) {
+    exportCompanyDataBtn.addEventListener("click", () => {
+      exportCompanyData();
+      showBackupStatus("Backup file downloaded.");
+    });
+  }
+
+  function showBackupStatus(msg) {
+    const el = document.getElementById("backupStatus");
+    if (!el) return;
+    el.textContent = msg;
+    el.classList.add("show");
+    setTimeout(() => el.classList.remove("show"), 4000);
+  }
+
+  const importCompanyDataInput = document.getElementById("importCompanyDataInput");
+  if (importCompanyDataInput) {
+    importCompanyDataInput.addEventListener("change", () => {
+      const file = importCompanyDataInput.files && importCompanyDataInput.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onerror = () => showBackupStatus("Could not read that file.");
+      reader.onload = () => {
+        let parsed;
+        try {
+          parsed = JSON.parse(reader.result);
+        } catch (e) {
+          showBackupStatus("That file isn't a valid backup (bad JSON).");
+          importCompanyDataInput.value = "";
+          return;
+        }
+        if (!parsed || typeof parsed !== "object" || !parsed.data || typeof parsed.data !== "object") {
+          showBackupStatus("That file doesn't look like an Invoice Manager Pro backup.");
+          importCompanyDataInput.value = "";
+          return;
+        }
+        const list = loadCompanyRegistry();
+        const entry = list.find((c) => c.id === ACTIVE_COMPANY_ID);
+        const activeName = entry ? companyDisplayName(entry) : "the active company";
+        const confirmed = window.confirm(
+          `Restore this backup into "${activeName}"? This will overwrite its current invoices, ledgers, inventory and settings.`
+        );
+        if (!confirmed) {
+          importCompanyDataInput.value = "";
+          return;
+        }
+        ALL_DATA_BASE_KEYS.forEach((base) => {
+          if (Object.prototype.hasOwnProperty.call(parsed.data, base)) {
+            try { localStorage.setItem(nsKey(base), parsed.data[base]); } catch (e) { /* ignore */ }
+          }
+        });
+        showBackupStatus("Restored. Reloading…");
+        setTimeout(() => window.location.reload(), 600);
+      };
+      reader.readAsText(file);
+    });
+  }
 
   // ---------------------------------------------------------------
   // Item rows
@@ -27228,7 +27950,7 @@ if (typeof module !== "undefined") {
   // ---------------------------------------------------------------
   // Saved Item Library (commonly-used items with HSN/SAC + GST %)
   // ---------------------------------------------------------------
-  const ITEM_LIBRARY_KEY = "invoice_manager_item_library_v1";
+  const ITEM_LIBRARY_KEY = nsKey("invoice_manager_item_library_v1");
 
   function loadItemLibrary() {
     try {
@@ -28163,6 +28885,52 @@ if (typeof module !== "undefined") {
     });
   }
 
+  // Laptops/desktops usually have no UPI app to catch the upi:// link
+  // above, so offer a scannable QR code (built with the same embedded
+  // qrcode-generator library used for invoice payment QR codes) as the
+  // practical way to donate from a computer.
+  const showDonateQrBtn = document.getElementById("showDonateQrBtn");
+  const donateQrWrap = document.getElementById("donateQrWrap");
+  const donateQrImg = document.getElementById("donateQrImg");
+
+  function renderDonateQr() {
+    if (!donateQrImg || typeof window.qrcode !== "function") return;
+    const amount = donateCustomAmount ? donateCustomAmount.value : "";
+    const link = buildDonationUpiLink(amount);
+    try {
+      const qr = window.qrcode(0, "M");
+      qr.addData(link);
+      qr.make();
+      donateQrImg.src = qr.createDataURL(6, 4);
+    } catch (e) {
+      // A QR payload that's too long for the smallest type number can
+      // throw — fall back to a larger type number rather than fail.
+      try {
+        const qr = window.qrcode(4, "M");
+        qr.addData(link);
+        qr.make();
+        donateQrImg.src = qr.createDataURL(6, 4);
+      } catch (e2) { /* give up silently, button stays as-is */ }
+    }
+  }
+
+  if (showDonateQrBtn && donateQrWrap) {
+    showDonateQrBtn.addEventListener("click", () => {
+      const isOpen = donateQrWrap.style.display !== "none";
+      if (isOpen) {
+        donateQrWrap.style.display = "none";
+        showDonateQrBtn.textContent = "📱 Show QR Code (for laptop/desktop)";
+      } else {
+        renderDonateQr();
+        donateQrWrap.style.display = "block";
+        showDonateQrBtn.textContent = "📱 Hide QR Code";
+      }
+    });
+  }
+  // Keep the QR in sync if it's already open and the amount changes.
+  if (donateAmountRow) donateAmountRow.addEventListener("click", () => { if (donateQrWrap && donateQrWrap.style.display !== "none") renderDonateQr(); });
+  if (donateCustomAmount) donateCustomAmount.addEventListener("input", () => { if (donateQrWrap && donateQrWrap.style.display !== "none") renderDonateQr(); });
+
   // ---------------------------------------------------------------
   // Upgrade 2 & 7: GST-return-ready summaries + reusable CSV export
   // ---------------------------------------------------------------
@@ -28669,11 +29437,333 @@ if (typeof module !== "undefined") {
   document.getElementById("summarySearch").addEventListener("input", renderLedgerSummary);
   document.getElementById("summaryFilter").addEventListener("change", renderLedgerSummary);
 
+  // ---------------------------------------------------------------
+  // GST Input Tax Credit (ITC) Worksheet
+  // ---------------------------------------------------------------
+  // A worksheet mirroring the GST portal's own ledgers/registers. None
+  // of this data exists inside the app's own invoice/purchase records
+  // — it lives on the GST portal — so every ledger cell is a plain
+  // user entry. Every one of the six ledger/register rows now feeds
+  // directly into the calculated figures below it (previously only
+  // the Electronic Credit Ledger row did, via a manual "copy" button
+  // — the other five sat there disconnected from any total):
+  //   • Electronic Credit Ledger        → ITC Previous (live, always
+  //                                        in sync — no button needed)
+  //   • Electronic Credit Reversal &
+  //     Re-claimed Statement            → added into Total Input
+  //   • RCM Liability/ITC Statement     → added into BOTH Total Input
+  //                                        (the matching ITC leg) and
+  //                                        Total Liability (the RCM tax
+  //                                        leg) — that's how RCM works:
+  //                                        one entry, two legs
+  //   • Electronic Liability Register   → added into Total Liability
+  //   • Negative liability statement    → subtracted from Total Liability
+  //   • Electronic Cash Ledger          → offsets Payable to give the
+  //                                        actual Net Cash Payable (cash
+  //                                        already sitting in the ledger
+  //                                        reduces what you still owe)
+  // Every row also gets a live Total column = IGST+CGST+SGST+CESS for
+  // that row, and every computed row recalculates from the current
+  // input values on every keystroke.
+  const ITC_SHEET_STORAGE_KEY = nsKey("invoiceapp_gst_itc_sheet_v2");
+  const ITC_TAX_COLS = ["igst", "cgst", "sgst", "cess"];
+  const ITC_LEDGER_ROWS = [
+    { key: "cashLedger", label: "Electronic Cash Ledger" },
+    { key: "liabilityRegister", label: "Electronic Liability Register (Return related)" },
+    { key: "creditLedger", label: "Electronic Credit Ledger" },
+    { key: "creditReversal", label: "Electronic Credit Reversal and Re-claimed Statement" },
+    { key: "rcmStatement", label: "RCM Liability/ITC Statement" },
+    { key: "negativeLiability", label: "Negative liability statement - Regular Taxpayers" },
+  ];
+  const ITC_INPUT_ROWS = [
+    { key: "itcCurrentPeriod", label: "ITC Current Period" },
+    { key: "tcsItc", label: "TCS ITC" },
+  ];
+  const ITC_ALL_ROW_KEYS = ITC_LEDGER_ROWS.concat(ITC_INPUT_ROWS).map((r) => r.key);
+
+  function defaultItcSheetState() {
+    const rows = {};
+    ITC_ALL_ROW_KEYS.forEach((key) => {
+      rows[key] = { igst: 0, cgst: 0, sgst: 0, cess: 0 };
+    });
+    return {
+      periodLabel: "",
+      rows,
+      liability: { taxable: 0, igst: 0, cgst: 0, sgst: 0, cess: 0 },
+    };
+  }
+
+  function loadItcSheetState() {
+    try {
+      const raw = localStorage.getItem(ITC_SHEET_STORAGE_KEY);
+      if (!raw) return defaultItcSheetState();
+      const parsed = JSON.parse(raw);
+      const base = defaultItcSheetState();
+      const rows = Object.assign({}, base.rows);
+      ITC_ALL_ROW_KEYS.forEach((key) => {
+        rows[key] = Object.assign({}, base.rows[key], (parsed.rows || {})[key] || {});
+      });
+      return {
+        periodLabel: parsed.periodLabel || "",
+        rows,
+        liability: Object.assign({}, base.liability, parsed.liability || {}),
+      };
+    } catch (e) {
+      return defaultItcSheetState();
+    }
+  }
+
+  function saveItcSheetState(state) {
+    localStorage.setItem(ITC_SHEET_STORAGE_KEY, JSON.stringify(state));
+  }
+
+  let itcSheetState = loadItcSheetState();
+
+  function itcNum(v) { return Number(v) || 0; }
+
+  // Sum of IGST + CGST + SGST + CESS for any {igst,cgst,sgst,cess} row
+  // object. Used for every row's Total column so every row foots the
+  // same way and the Total column is never out of step with the four
+  // tax-head cells beside it.
+  function itcRowTotal(rowObj) {
+    return ITC_TAX_COLS.reduce((s, col) => s + itcNum(rowObj[col]), 0);
+  }
+
+  // All six ledger/register rows plus the two period-entry rows are
+  // combined here, per tax head, into the figures that actually
+  // matter: how much ITC is available, how much is owed, and how much
+  // cash you still need to deposit.
+  function computeItcTotals(state) {
+    const r = state.rows;
+
+    // ITC Previous simply IS the Electronic Credit Ledger balance —
+    // always live, never a separate figure that can drift out of sync.
+    const itcPrevious = { igst: r.creditLedger.igst, cgst: r.creditLedger.cgst, sgst: r.creditLedger.sgst, cess: r.creditLedger.cess };
+
+    // Total Input = ITC Previous (Credit Ledger) + Credit Reversal/
+    // Re-claim adjustment + RCM's matching ITC leg + this period's
+    // fresh ITC + TCS ITC.
+    const totalInput = {};
+    ITC_TAX_COLS.forEach((col) => {
+      totalInput[col] = itcNum(itcPrevious[col])
+        + itcNum(r.creditReversal[col])
+        + itcNum(r.rcmStatement[col])
+        + itcNum(r.itcCurrentPeriod[col])
+        + itcNum(r.tcsItc[col]);
+    });
+    const totalInputSum = itcRowTotal(totalInput);
+
+    // Total Liability = the manually entered Output Tax Liability +
+    // Electronic Liability Register + RCM's liability leg − Negative
+    // liability statement adjustment.
+    const totalLiability = {};
+    ITC_TAX_COLS.forEach((col) => {
+      totalLiability[col] = itcNum(state.liability[col])
+        + itcNum(r.liabilityRegister[col])
+        + itcNum(r.rcmStatement[col])
+        - itcNum(r.negativeLiability[col]);
+    });
+    const totalLiabilitySum = itcRowTotal(totalLiability);
+
+    // Payable = Total Input − Total Liability (negative = cash owed,
+    // positive = excess ITC carried forward).
+    const payable = {};
+    ITC_TAX_COLS.forEach((col) => { payable[col] = totalInput[col] - totalLiability[col]; });
+    const payableTotal = totalInputSum - totalLiabilitySum;
+
+    // Net Cash Payable = Payable, offset by cash already sitting in
+    // the Electronic Cash Ledger (that balance is available to pay
+    // with, so it reduces the amount that still needs depositing).
+    const netCashPayable = {};
+    ITC_TAX_COLS.forEach((col) => { netCashPayable[col] = payable[col] + itcNum(r.cashLedger[col]); });
+    const netCashPayableTotal = payableTotal + itcRowTotal(r.cashLedger);
+
+    return { itcPrevious, totalInput, totalInputSum, totalLiability, totalLiabilitySum, payable, payableTotal, netCashPayable, netCashPayableTotal };
+  }
+
+  function itcInputCell(rowKey, col, value) {
+    return `<input type="number" step="0.01" class="itc-input" data-itc-row="${rowKey}" data-itc-col="${col}" value="${itcNum(value) || ""}" placeholder="0.00">`;
+  }
+
+  // A standard editable row: label + 4 tax-head inputs + a live Total
+  // cell that always equals the sum of those 4 inputs.
+  function itcEditableRow(rowKey, label, rowObj, extraLabelHtml) {
+    return `<tr>
+      <td class="itc-label">${label}${extraLabelHtml || ""}</td>
+      <td>${itcInputCell(rowKey, "igst", rowObj.igst)}</td>
+      <td>${itcInputCell(rowKey, "cgst", rowObj.cgst)}</td>
+      <td>${itcInputCell(rowKey, "sgst", rowObj.sgst)}</td>
+      <td>${itcInputCell(rowKey, "cess", rowObj.cess)}</td>
+      <td class="itc-computed-value" data-itc-rowtotal="${rowKey}">${money2(itcRowTotal(rowObj))}</td>
+    </tr>`;
+  }
+
+  // A read-only computed row (not user-editable): label + 4 computed
+  // tax-head cells + a Total cell, all addressed via data-itc-row so
+  // refreshItcComputedCells() can patch them without a full re-render.
+  function itcComputedRow(rowId, label, values, total, extraClass) {
+    return `<tr class="itc-computed${extraClass ? " " + extraClass : ""}" id="${rowId}">
+      <td class="itc-label">${label}</td>
+      <td class="itc-computed-value" data-itc-row="${rowId}" data-itc-col="igst">${money2(values.igst)}</td>
+      <td class="itc-computed-value" data-itc-row="${rowId}" data-itc-col="cgst">${money2(values.cgst)}</td>
+      <td class="itc-computed-value" data-itc-row="${rowId}" data-itc-col="sgst">${money2(values.sgst)}</td>
+      <td class="itc-computed-value" data-itc-row="${rowId}" data-itc-col="cess">${money2(values.cess)}</td>
+      <td class="itc-computed-value" data-itc-row="${rowId}" data-itc-col="total">${money2(total)}</td>
+    </tr>`;
+  }
+
+  function renderItcSheet() {
+    const body = document.getElementById("itcTableBody");
+    const periodEl = document.getElementById("itcPeriodLabel");
+    if (!body) return;
+    periodEl.value = itcSheetState.periodLabel || "";
+
+    const totals = computeItcTotals(itcSheetState);
+    const rowsHtml = [];
+
+    ITC_LEDGER_ROWS.forEach((r) => {
+      rowsHtml.push(itcEditableRow(r.key, escapeHtml(r.label), itcSheetState.rows[r.key]));
+    });
+
+    rowsHtml.push(`<tr class="itc-spacer"><td colspan="6"></td></tr>`);
+
+    rowsHtml.push(itcComputedRow("itcPreviousRow", "ITC Previous (= Electronic Credit Ledger)", totals.itcPrevious, itcRowTotal(totals.itcPrevious)));
+
+    ITC_INPUT_ROWS.forEach((r) => {
+      const label = r.key === "itcCurrentPeriod" && itcSheetState.periodLabel
+        ? `ITC ${escapeHtml(itcSheetState.periodLabel)}`
+        : escapeHtml(r.label);
+      rowsHtml.push(itcEditableRow(r.key, label, itcSheetState.rows[r.key]));
+    });
+
+    rowsHtml.push(itcComputedRow("itcTotalInputRow", "Total Input (Previous + Reversal + RCM ITC + Current + TCS)", totals.totalInput, totals.totalInputSum));
+
+    rowsHtml.push(`<tr class="itc-spacer"><td colspan="6"></td></tr>`);
+
+    rowsHtml.push(itcEditableRow(
+      "liability",
+      "Total Output Tax Liability",
+      itcSheetState.liability,
+      `<div style="font-weight:400;color:var(--muted);font-size:10.5px;">Taxable value ${itcInputCell("liability", "taxable", itcSheetState.liability.taxable)}</div>`
+    ));
+
+    rowsHtml.push(itcComputedRow("itcTotalLiabilityRow", "Total Liability (Output + Liability Register + RCM − Negative Liability)", totals.totalLiability, totals.totalLiabilitySum));
+
+    rowsHtml.push(`<tr class="itc-spacer"><td colspan="6"></td></tr>`);
+
+    rowsHtml.push(itcComputedRow("itcPayableRow", "Payable (Total Input − Total Liability)", totals.payable, totals.payableTotal, "itc-payable"));
+    rowsHtml.push(itcComputedRow("itcNetCashPayableRow", "Net Cash Payable (Payable + Cash Ledger balance)", totals.netCashPayable, totals.netCashPayableTotal, "itc-payable"));
+
+    body.innerHTML = rowsHtml.join("");
+  }
+
+  // Recompute and patch only the computed cells, so the user isn't
+  // kicked out of the input they're typing in on every keystroke.
+  // Because every one of the six ledger rows now feeds into the
+  // downstream totals, any edit anywhere in the sheet refreshes all
+  // of: the edited row's own Total column, ITC Previous, Total Input,
+  // Total Liability, Payable, and Net Cash Payable.
+  function refreshItcComputedCells(editedRowKey) {
+    if (editedRowKey) {
+      const rowObj = editedRowKey === "liability" ? itcSheetState.liability : itcSheetState.rows[editedRowKey];
+      const rowTotalCell = document.querySelector(`[data-itc-rowtotal="${editedRowKey}"]`);
+      if (rowObj && rowTotalCell) rowTotalCell.textContent = money2(itcRowTotal(rowObj));
+    }
+    const totals = computeItcTotals(itcSheetState);
+    const patch = (rowId, values, total) => {
+      ITC_TAX_COLS.forEach((col) => {
+        const cell = document.querySelector(`#${rowId} [data-itc-col="${col}"]`);
+        if (cell) cell.textContent = money2(values[col]);
+      });
+      const totalCell = document.querySelector(`#${rowId} [data-itc-col="total"]`);
+      if (totalCell) totalCell.textContent = money2(total);
+    };
+    patch("itcPreviousRow", totals.itcPrevious, itcRowTotal(totals.itcPrevious));
+    patch("itcTotalInputRow", totals.totalInput, totals.totalInputSum);
+    patch("itcTotalLiabilityRow", totals.totalLiability, totals.totalLiabilitySum);
+    patch("itcPayableRow", totals.payable, totals.payableTotal);
+    patch("itcNetCashPayableRow", totals.netCashPayable, totals.netCashPayableTotal);
+  }
+
+  const itcTableBodyEl = document.getElementById("itcTableBody");
+  if (itcTableBodyEl) {
+    itcTableBodyEl.addEventListener("input", (e) => {
+      const target = e.target;
+      if (!target.matches("input[data-itc-row]")) return;
+      const rowKey = target.getAttribute("data-itc-row");
+      const col = target.getAttribute("data-itc-col");
+      const value = parseFloat(target.value) || 0;
+      if (rowKey === "liability") {
+        itcSheetState.liability[col] = value;
+      } else if (itcSheetState.rows[rowKey]) {
+        itcSheetState.rows[rowKey][col] = value;
+      }
+      saveItcSheetState(itcSheetState);
+      // The "taxable" field isn't a tax head, so it never feeds the
+      // liability row's own Total column or any other computed cell —
+      // only its own input value needs saving.
+      if (col !== "taxable") refreshItcComputedCells(rowKey);
+    });
+  }
+
+  const itcPeriodLabelEl = document.getElementById("itcPeriodLabel");
+  if (itcPeriodLabelEl) {
+    itcPeriodLabelEl.addEventListener("input", (e) => {
+      itcSheetState.periodLabel = e.target.value;
+      saveItcSheetState(itcSheetState);
+      const currentRowLabelCell = document.querySelector('[data-itc-rowtotal="itcCurrentPeriod"]');
+      const currentRowLabelTd = currentRowLabelCell && currentRowLabelCell.closest("tr").querySelector(".itc-label");
+      if (currentRowLabelTd) {
+        currentRowLabelTd.textContent = itcSheetState.periodLabel ? `ITC ${itcSheetState.periodLabel}` : "ITC Current Period";
+      }
+    });
+  }
+
+  const itcResetBtn = document.getElementById("itcResetBtn");
+  if (itcResetBtn) {
+    itcResetBtn.addEventListener("click", () => {
+      if (!confirm("Reset the GST ITC worksheet? This clears every value you've entered.")) return;
+      itcSheetState = defaultItcSheetState();
+      saveItcSheetState(itcSheetState);
+      renderItcSheet();
+    });
+  }
+
+  const itcExportCsvBtn = document.getElementById("itcExportCsvBtn");
+  if (itcExportCsvBtn) {
+    itcExportCsvBtn.addEventListener("click", () => {
+      const totals = computeItcTotals(itcSheetState);
+      const headers = ["Type of Ledger / Register", "IGST", "CGST", "SGST", "CESS", "Total"];
+      const rows = [];
+      ITC_LEDGER_ROWS.forEach((r) => {
+        const row = itcSheetState.rows[r.key];
+        rows.push([r.label, money2(row.igst), money2(row.cgst), money2(row.sgst), money2(row.cess), money2(itcRowTotal(row))]);
+      });
+      rows.push(["", "", "", "", "", ""]);
+      rows.push(["ITC Previous (= Electronic Credit Ledger)", money2(totals.itcPrevious.igst), money2(totals.itcPrevious.cgst), money2(totals.itcPrevious.sgst), money2(totals.itcPrevious.cess), money2(itcRowTotal(totals.itcPrevious))]);
+      ITC_INPUT_ROWS.forEach((r) => {
+        const row = itcSheetState.rows[r.key];
+        const label = r.key === "itcCurrentPeriod" && itcSheetState.periodLabel ? `ITC ${itcSheetState.periodLabel}` : r.label;
+        rows.push([label, money2(row.igst), money2(row.cgst), money2(row.sgst), money2(row.cess), money2(itcRowTotal(row))]);
+      });
+      rows.push(["Total Input", money2(totals.totalInput.igst), money2(totals.totalInput.cgst), money2(totals.totalInput.sgst), money2(totals.totalInput.cess), money2(totals.totalInputSum)]);
+      rows.push(["", "", "", "", "", ""]);
+      rows.push(["Total Output Tax Liability (Taxable Value: " + money2(itcSheetState.liability.taxable) + ")",
+        money2(itcSheetState.liability.igst), money2(itcSheetState.liability.cgst), money2(itcSheetState.liability.sgst), money2(itcSheetState.liability.cess), money2(itcRowTotal(itcSheetState.liability))]);
+      rows.push(["Total Liability (Output + Liability Register + RCM − Negative Liability)", money2(totals.totalLiability.igst), money2(totals.totalLiability.cgst), money2(totals.totalLiability.sgst), money2(totals.totalLiability.cess), money2(totals.totalLiabilitySum)]);
+      rows.push(["", "", "", "", "", ""]);
+      rows.push(["Payable (Total Input - Total Liability)", money2(totals.payable.igst), money2(totals.payable.cgst), money2(totals.payable.sgst), money2(totals.payable.cess), money2(totals.payableTotal)]);
+      rows.push(["Net Cash Payable (Payable + Cash Ledger balance)", money2(totals.netCashPayable.igst), money2(totals.netCashPayable.cgst), money2(totals.netCashPayable.sgst), money2(totals.netCashPayable.cess), money2(totals.netCashPayableTotal)]);
+      exportCSV("gst_itc_worksheet.csv", headers, rows);
+    });
+  }
+
   // Refresh the summary whenever the Summary tab is opened, so newly
   // generated invoices are reflected without needing a page reload.
   document.querySelector('.tab-btn[data-tab="tab-summary"]').addEventListener("click", () => {
     renderLedgerSummary();
     renderDashboard();
+    renderItcSheet();
   });
 
   // Export summary to Excel (CSV, opens directly in Excel).
@@ -28726,6 +29816,1219 @@ if (typeof module !== "undefined") {
     }
   });
 
+
+  // ---------------------------------------------------------------
+  // Full Accounting & Bookkeeping module (Upgrade: Accounting)
+  // Double-entry ledger: Chart of Accounts + Journal + Purchases/
+  // Vendors, auto-posted from Sales invoices & Receipts, plus manual
+  // journal entries. Reports: Trial Balance, General Ledger,
+  // Profit & Loss and Balance Sheet — all derived live from the
+  // journal, so every report always ties out by construction.
+  // ---------------------------------------------------------------
+
+  const COA_STORAGE_KEY = nsKey("invoiceapp_coa_v1");
+  const JOURNAL_STORAGE_KEY = nsKey("invoiceapp_journal_v1");
+  const VENDORS_STORAGE_KEY = nsKey("invoiceapp_vendors_v1");
+  const PURCHASE_BILLS_STORAGE_KEY = nsKey("invoiceapp_purchase_bills_v1");
+  const VENDOR_PAYMENTS_STORAGE_KEY = nsKey("invoiceapp_vendor_payments_v1");
+
+  const ACC_TYPE_ORDER = ["Asset", "Liability", "Equity", "Income", "Expense"];
+
+  const DEFAULT_ACCOUNTS = [
+    { code: "1001", name: "Cash in Hand", type: "Asset", system: "cash" },
+    { code: "1002", name: "Bank Account", type: "Asset", system: "bank" },
+    { code: "1010", name: "Accounts Receivable (Debtors)", type: "Asset", system: "ar" },
+    { code: "1020", name: "Input GST Credit", type: "Asset", system: "input_gst" },
+    { code: "2001", name: "Accounts Payable (Creditors)", type: "Liability", system: "ap" },
+    { code: "2010", name: "Output GST Payable", type: "Liability", system: "output_gst" },
+    { code: "3001", name: "Owner's Capital", type: "Equity", system: "" },
+    { code: "3002", name: "Opening Balance Equity", type: "Equity", system: "opening_equity" },
+    { code: "3003", name: "Drawings", type: "Equity", system: "" },
+    { code: "4001", name: "Sales Revenue", type: "Income", system: "sales" },
+    { code: "4002", name: "Other Income", type: "Income", system: "" },
+    { code: "5001", name: "Purchases / Cost of Goods", type: "Expense", system: "purchases" },
+    { code: "5002", name: "Rent Expense", type: "Expense", system: "" },
+    { code: "5003", name: "Salaries & Wages", type: "Expense", system: "" },
+    { code: "5004", name: "Utilities", type: "Expense", system: "" },
+    { code: "5005", name: "Office Expenses", type: "Expense", system: "" },
+    { code: "5006", name: "Transport & Conveyance", type: "Expense", system: "" },
+    { code: "5007", name: "Professional Fees", type: "Expense", system: "" },
+    { code: "5008", name: "Bank Charges", type: "Expense", system: "" },
+    { code: "5009", name: "Miscellaneous Expense", type: "Expense", system: "" },
+  ];
+
+  function round2(n) {
+    return Math.round((Number(n) || 0) * 100) / 100;
+  }
+
+  function todayIso() {
+    const d = new Date();
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  }
+
+  // Converts the app's DD-MM-YYYY display date strings (invoice_date,
+  // ledger-payment date) to YYYY-MM-DD so every journal entry sorts
+  // and filters correctly regardless of which part of the app posted it.
+  function dmyToIso(dmy) {
+    if (!dmy) return todayIso();
+    const m = String(dmy).match(/^(\d{2})-(\d{2})-(\d{4})$/);
+    if (!m) return todayIso();
+    return m[3] + "-" + m[2] + "-" + m[1];
+  }
+
+  function loadCoa() {
+    try {
+      const raw = localStorage.getItem(COA_STORAGE_KEY);
+      let list = raw ? JSON.parse(raw) : null;
+      if (!Array.isArray(list) || !list.length) {
+        list = DEFAULT_ACCOUNTS.map((a) => ({ id: "acc_" + a.code, ...a }));
+        localStorage.setItem(COA_STORAGE_KEY, JSON.stringify(list));
+      }
+      return list;
+    } catch (e) {
+      return DEFAULT_ACCOUNTS.map((a) => ({ id: "acc_" + a.code, ...a }));
+    }
+  }
+  function saveCoa(list) {
+    localStorage.setItem(COA_STORAGE_KEY, JSON.stringify(list));
+  }
+  function getAccountById(id) {
+    return loadCoa().find((a) => a.id === id);
+  }
+  function getSystemAccount(systemKey) {
+    const list = loadCoa();
+    return list.find((a) => a.system === systemKey) || list[0];
+  }
+  function addAccount(name, type) {
+    const list = loadCoa();
+    const typePrefix = { Asset: "1", Liability: "2", Equity: "3", Income: "4", Expense: "5" }[type] || "9";
+    const existingCodes = list.filter((a) => a.code && a.code[0] === typePrefix).map((a) => Number(a.code) || 0);
+    const nextCode = String((existingCodes.length ? Math.max(...existingCodes) : Number(typePrefix + "000")) + 1);
+    const acc = {
+      id: "acc_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 6),
+      code: nextCode, name: (name || "").trim(), type, system: "",
+    };
+    list.push(acc);
+    saveCoa(list);
+    return acc;
+  }
+  function normalBalanceSide(type) {
+    return (type === "Asset" || type === "Expense") ? "dr" : "cr";
+  }
+
+  function loadJournal() {
+    try {
+      const raw = localStorage.getItem(JOURNAL_STORAGE_KEY);
+      const parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+      return [];
+    }
+  }
+  function saveJournal(list) {
+    localStorage.setItem(JOURNAL_STORAGE_KEY, JSON.stringify(list));
+  }
+
+  // Every posting in the app — manual or automatic — funnels through
+  // this single function, so the books can never go out of balance:
+  // it refuses to save any entry where total debits != total credits.
+  function postJournalEntry(opts) {
+    const lines = (opts.lines || []).filter((l) => (Number(l.dr) || 0) > 0.004 || (Number(l.cr) || 0) > 0.004);
+    const totalDr = round2(lines.reduce((s, l) => s + (Number(l.dr) || 0), 0));
+    const totalCr = round2(lines.reduce((s, l) => s + (Number(l.cr) || 0), 0));
+    if (Math.abs(totalDr - totalCr) > 0.01) {
+      throw new Error("Journal entry is not balanced (Debit " + formatINR(totalDr) + " vs Credit " + formatINR(totalCr) + ")");
+    }
+    const list = loadJournal();
+    const entry = {
+      id: "je_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 8),
+      date: opts.date || todayIso(),
+      narration: (opts.narration || "").trim(),
+      lines: lines.map((l) => ({ accountId: l.accountId, dr: round2(l.dr || 0), cr: round2(l.cr || 0) })),
+      source: opts.source || "manual",
+      sourceId: opts.sourceId || "",
+      timestamp: Date.now(),
+    };
+    list.push(entry);
+    saveJournal(list);
+    return entry;
+  }
+  function deleteJournalEntry(id) {
+    let list = loadJournal();
+    list = list.filter((e) => !(e.id === id && e.source === "manual"));
+    saveJournal(list);
+  }
+
+  // Auto-posts a balanced entry whenever a sales invoice is generated.
+  // Cash sale -> Dr Cash; Credit sale -> Dr Accounts Receivable.
+  // Any rounding (round-off) on the invoice is folded into Sales so
+  // the entry always balances to the exact rounded grand total.
+  function postJournalForInvoice(invoice, grandTotal) {
+    try {
+      const items = invoice.items || [];
+      const taxable = items.reduce((s, it) => s + it.qty * it.rate, 0);
+      const tax = items.reduce((s, it) => s + (it.qty * it.rate * it.gst_rate / 100), 0);
+      const total = Number(grandTotal) || 0;
+      const diff = round2(total - (taxable + tax));
+      const isCredit = invoice.payment_mode === "Credit";
+      const drAccount = isCredit ? getSystemAccount("ar") : getSystemAccount("cash");
+      const salesAccount = getSystemAccount("sales");
+      const gstAccount = getSystemAccount("output_gst");
+      const lines = [
+        { accountId: drAccount.id, dr: total, cr: 0 },
+        { accountId: salesAccount.id, dr: 0, cr: round2(taxable + diff) },
+      ];
+      if (tax > 0.004) lines.push({ accountId: gstAccount.id, dr: 0, cr: round2(tax) });
+      postJournalEntry({
+        date: dmyToIso(invoice.invoice_date),
+        narration: "Sales Invoice " + (invoice.invoice_no || "") + " — " + (invoice.buyer_name || "Customer"),
+        lines, source: "sales", sourceId: invoice.invoice_no || "",
+      });
+    } catch (e) {
+      console.error("Auto-journal (invoice) failed:", e);
+    }
+  }
+
+  // Auto-posts a receipt against a customer's Accounts Receivable.
+  function postJournalForReceipt(customerName, amount, mode, dateStr) {
+    try {
+      const amt = round2(Number(amount) || 0);
+      if (amt <= 0) return;
+      const drAccount = (mode === "Cash") ? getSystemAccount("cash") : getSystemAccount("bank");
+      const arAccount = getSystemAccount("ar");
+      postJournalEntry({
+        date: dmyToIso(dateStr),
+        narration: "Receipt from " + (customerName || "Customer") + (mode ? " (" + mode + ")" : ""),
+        lines: [
+          { accountId: drAccount.id, dr: amt, cr: 0 },
+          { accountId: arAccount.id, dr: 0, cr: amt },
+        ],
+        source: "receipt", sourceId: "",
+      });
+    } catch (e) {
+      console.error("Auto-journal (receipt) failed:", e);
+    }
+  }
+
+  function accountBalanceUpTo(accountId, uptoIso) {
+    const entries = loadJournal();
+    let dr = 0, cr = 0;
+    entries.forEach((e) => {
+      if (uptoIso && e.date > uptoIso) return;
+      e.lines.forEach((l) => {
+        if (l.accountId === accountId) { dr += Number(l.dr) || 0; cr += Number(l.cr) || 0; }
+      });
+    });
+    return { dr: round2(dr), cr: round2(cr) };
+  }
+  // Positive = normal (debit) balance for Asset/Expense, or normal
+  // (credit) balance for Liability/Equity/Income; negative = abnormal.
+  function accountNetBalance(accountId, uptoIso) {
+    const acc = getAccountById(accountId);
+    const { dr, cr } = accountBalanceUpTo(accountId, uptoIso);
+    const side = normalBalanceSide(acc ? acc.type : "Asset");
+    return side === "dr" ? round2(dr - cr) : round2(cr - dr);
+  }
+  function computePnlUpTo(asOfIso) {
+    const list = loadCoa();
+    let income = 0, expense = 0;
+    list.forEach((a) => {
+      if (a.type !== "Income" && a.type !== "Expense") return;
+      const { dr, cr } = accountBalanceUpTo(a.id, asOfIso);
+      if (a.type === "Income") income += (cr - dr); else expense += (dr - cr);
+    });
+    return round2(income - expense);
+  }
+
+  // ---------------- Vendors / Purchases ----------------
+  function loadVendors() {
+    try {
+      const raw = localStorage.getItem(VENDORS_STORAGE_KEY);
+      const parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) { return []; }
+  }
+  function saveVendors(list) {
+    localStorage.setItem(VENDORS_STORAGE_KEY, JSON.stringify(list));
+  }
+  function addVendor(name, gstin, phone, address) {
+    const list = loadVendors();
+    const v = {
+      id: "vnd_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 6),
+      name: (name || "").trim(), gstin: (gstin || "").trim(), phone: (phone || "").trim(), address: (address || "").trim(),
+    };
+    list.push(v);
+    saveVendors(list);
+    return v;
+  }
+
+  function loadPurchaseBills() {
+    try {
+      const raw = localStorage.getItem(PURCHASE_BILLS_STORAGE_KEY);
+      const parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) { return []; }
+  }
+  function savePurchaseBills(list) {
+    localStorage.setItem(PURCHASE_BILLS_STORAGE_KEY, JSON.stringify(list));
+  }
+  // Records a vendor bill and auto-posts: Dr Expense/Asset account +
+  // Dr Input GST Credit, Cr Cash/Bank (paid now) or Cr Accounts
+  // Payable (Credit — added to that vendor's payable due).
+  function recordPurchaseBill(bill) {
+    const list = loadPurchaseBills();
+    const taxable = round2(bill.taxable);
+    const gstAmt = round2(taxable * (Number(bill.gstRate) || 0) / 100);
+    const total = round2(taxable + gstAmt);
+    const rec = {
+      id: "pb_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 6),
+      vendorId: bill.vendorId, vendorName: bill.vendorName, billNo: bill.billNo || "", date: bill.date,
+      description: bill.description || "", accountId: bill.accountId, taxable, gstRate: Number(bill.gstRate) || 0,
+      gstAmt, total, paymentMode: bill.paymentMode, timestamp: Date.now(),
+    };
+    list.push(rec);
+    savePurchaseBills(list);
+
+    const expenseAccount = getAccountById(bill.accountId) || getSystemAccount("purchases");
+    const gstAccount = getSystemAccount("input_gst");
+    const isCredit = rec.paymentMode === "Credit";
+    const crAccount = isCredit ? getSystemAccount("ap") : (rec.paymentMode === "Cash" ? getSystemAccount("cash") : getSystemAccount("bank"));
+    const lines = [{ accountId: expenseAccount.id, dr: taxable, cr: 0 }];
+    if (gstAmt > 0.004) lines.push({ accountId: gstAccount.id, dr: gstAmt, cr: 0 });
+    lines.push({ accountId: crAccount.id, dr: 0, cr: total });
+    postJournalEntry({
+      date: rec.date,
+      narration: "Purchase Bill " + (rec.billNo || rec.id) + " — " + (rec.vendorName || "Vendor"),
+      lines, source: "purchase", sourceId: rec.id,
+    });
+    return rec;
+  }
+
+  function loadVendorPayments() {
+    try {
+      const raw = localStorage.getItem(VENDOR_PAYMENTS_STORAGE_KEY);
+      const parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) { return []; }
+  }
+  function saveVendorPayments(list) {
+    localStorage.setItem(VENDOR_PAYMENTS_STORAGE_KEY, JSON.stringify(list));
+  }
+  function getTotalPaidToVendor(vendorId) {
+    return loadVendorPayments().reduce((s, p) => p.vendorId === vendorId ? s + (Number(p.amount) || 0) : s, 0);
+  }
+  function getVendorPayable(vendorId) {
+    const billsTotal = loadPurchaseBills()
+      .filter((b) => b.vendorId === vendorId && b.paymentMode === "Credit")
+      .reduce((s, b) => s + b.total, 0);
+    return round2(Math.max(0, billsTotal - getTotalPaidToVendor(vendorId)));
+  }
+  function getPaymentsForVendor(vendorId) {
+    return loadVendorPayments().filter((p) => p.vendorId === vendorId).sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+  }
+  // Records a payment made to a vendor and auto-posts: Dr Accounts
+  // Payable, Cr Cash/Bank.
+  function recordVendorPayment(vendorId, vendorName, amount, mode, note, dateIso) {
+    const list = loadVendorPayments();
+    const amt = round2(Number(amount) || 0);
+    const rec = {
+      id: "vp_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 6),
+      vendorId, vendorName, amount: amt, mode: mode || "Cash", note: (note || "").trim(), date: dateIso, timestamp: Date.now(),
+    };
+    list.push(rec);
+    saveVendorPayments(list);
+    const apAccount = getSystemAccount("ap");
+    const crAccount = (mode === "Cash") ? getSystemAccount("cash") : getSystemAccount("bank");
+    postJournalEntry({
+      date: dateIso,
+      narration: "Payment to " + (vendorName || "Vendor") + (mode ? " (" + mode + ")" : ""),
+      lines: [{ accountId: apAccount.id, dr: amt, cr: 0 }, { accountId: crAccount.id, dr: 0, cr: amt }],
+      source: "vendor_payment", sourceId: "",
+    });
+    return rec;
+  }
+
+  // ---------------------------------------------------------------
+  // Inventory Management
+  // ---------------------------------------------------------------
+  const INV_PRODUCTS_KEY = nsKey("invoiceapp_inventory_products_v1");
+  const INV_LEDGER_KEY = nsKey("invoiceapp_inventory_ledger_v1");
+
+  function loadInvProducts() {
+    try {
+      const raw = localStorage.getItem(INV_PRODUCTS_KEY);
+      const parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) { return []; }
+  }
+  function saveInvProducts(list) {
+    localStorage.setItem(INV_PRODUCTS_KEY, JSON.stringify(list));
+  }
+  function loadInvLedger() {
+    try {
+      const raw = localStorage.getItem(INV_LEDGER_KEY);
+      const parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) { return []; }
+  }
+  function saveInvLedger(list) {
+    localStorage.setItem(INV_LEDGER_KEY, JSON.stringify(list));
+  }
+
+  function findInvProductByName(name) {
+    const key = (name || "").trim().toLowerCase();
+    if (!key) return null;
+    return loadInvProducts().find((p) => p.name.trim().toLowerCase() === key) || null;
+  }
+
+  // Appends a movement record. Caller must have already updated
+  // product.stock to its NEW value before calling this.
+  function addStockLedgerEntry(product, type, qty, note, dateStr) {
+    const ledger = loadInvLedger();
+    ledger.push({
+      id: "sl_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 6),
+      product_id: product.id,
+      product_name: product.name,
+      type,
+      qty,
+      balance_after: product.stock,
+      note: note || "",
+      date: dateStr || todayIso(),
+      timestamp: Date.now(),
+    });
+    saveInvLedger(ledger);
+  }
+
+  function upsertInvProduct(data, editId) {
+    const list = loadInvProducts();
+    if (editId) {
+      const p = list.find((x) => x.id === editId);
+      if (!p) return null;
+      p.name = data.name;
+      p.code = data.code;
+      p.unit = data.unit;
+      p.reorder_level = Number(data.reorder_level) || 0;
+      p.cost_price = Number(data.cost_price) || 0;
+      p.sale_price = Number(data.sale_price) || 0;
+      saveInvProducts(list);
+      return p;
+    }
+    const p = {
+      id: "prod_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 6),
+      name: data.name,
+      code: data.code || "",
+      unit: data.unit || "NOS",
+      stock: Number(data.opening_stock) || 0,
+      reorder_level: Number(data.reorder_level) || 0,
+      cost_price: Number(data.cost_price) || 0,
+      sale_price: Number(data.sale_price) || 0,
+      timestamp: Date.now(),
+    };
+    list.push(p);
+    saveInvProducts(list);
+    if (p.stock > 0) addStockLedgerEntry(p, "opening", p.stock, "Opening stock", todayIso());
+    return p;
+  }
+
+  function deleteInvProduct(id) {
+    if (!confirm("Delete this product? Its past stock movements will remain in the log.")) return;
+    const list = loadInvProducts().filter((p) => p.id !== id);
+    saveInvProducts(list);
+    renderInventorySummary();
+    renderProductsTable(document.getElementById("invProductSearch").value);
+  }
+
+  function adjustInvStock(id, type, qty, note, dateStr) {
+    const list = loadInvProducts();
+    const p = list.find((x) => x.id === id);
+    if (!p) return;
+    const delta = type === "out" ? -Math.abs(qty) : Math.abs(qty);
+    p.stock = round2(p.stock + delta);
+    saveInvProducts(list);
+    addStockLedgerEntry(p, type, delta, note, dateStr);
+  }
+
+  // Auto stock-out when an invoice is finalized. Matches invoice line
+  // items to tracked products by name (case-insensitive). Items that
+  // don't match any tracked product are skipped silently — inventory
+  // tracking is opt-in per product.
+  function deductInventoryForSale(invoice) {
+    const items = invoice.items || [];
+    if (!items.length) return;
+    const list = loadInvProducts();
+    if (!list.length) return;
+    let changed = false;
+    items.forEach((it) => {
+      const key = (it.name || "").trim().toLowerCase();
+      if (!key) return;
+      const p = list.find((x) => x.name.trim().toLowerCase() === key);
+      if (!p) return;
+      const qty = Number(it.qty) || 0;
+      if (!qty) return;
+      p.stock = round2(p.stock - qty);
+      changed = true;
+      addStockLedgerEntry(p, "sale", -qty, "Invoice " + (invoice.invoice_no || ""), invoice.invoice_date || todayIso());
+    });
+    if (changed) {
+      saveInvProducts(list);
+      renderInventorySummary();
+      renderProductsTable(document.getElementById("invProductSearch") ? document.getElementById("invProductSearch").value : "");
+      renderStockLedger();
+    }
+  }
+
+  function invStockStatus(p) {
+    if (p.stock <= 0) return { cls: "stock-out", label: "Out of stock" };
+    if (p.reorder_level > 0 && p.stock <= p.reorder_level) return { cls: "stock-low", label: "Low stock" };
+    return { cls: "stock-ok", label: "In stock" };
+  }
+
+  function renderInventorySummary() {
+    const grid = document.getElementById("invSummaryGrid");
+    if (!grid) return;
+    const products = loadInvProducts();
+    const totalValue = products.reduce((s, p) => s + p.stock * (p.cost_price || 0), 0);
+    const lowStock = products.filter((p) => p.stock > 0 && p.reorder_level > 0 && p.stock <= p.reorder_level).length;
+    const outStock = products.filter((p) => p.stock <= 0).length;
+    grid.innerHTML = `
+      <div class="dash-card"><div class="dash-label">Products</div><div class="dash-value">${products.length}</div></div>
+      <div class="dash-card"><div class="dash-label">Stock Value</div><div class="dash-value">${formatINR(totalValue)}</div></div>
+      <div class="dash-card"><div class="dash-label">Low Stock</div><div class="dash-value">${lowStock}</div></div>
+      <div class="dash-card"><div class="dash-label">Out of Stock</div><div class="dash-value">${outStock}</div></div>
+    `;
+  }
+
+  function renderProductsTable(filter) {
+    const body = document.getElementById("invProductsBody");
+    if (!body) return;
+    const q = (filter || "").trim().toLowerCase();
+    let products = loadInvProducts().slice().sort((a, b) => a.name.localeCompare(b.name));
+    if (q) products = products.filter((p) => p.name.toLowerCase().includes(q) || (p.code || "").toLowerCase().includes(q));
+    if (!products.length) {
+      body.innerHTML = `<tr><td colspan="7" class="summary-empty">No products yet. Add one above, or use "Import from Item Library" to pull in items you've already saved.</td></tr>`;
+      return;
+    }
+    body.innerHTML = products.map((p) => {
+      const st = invStockStatus(p);
+      const value = p.stock * (p.cost_price || 0);
+      return `
+        <tr>
+          <td>${escapeHtml(p.name)}${p.code ? `<br><span class="lib-item-meta">${escapeHtml(p.code)}</span>` : ""}</td>
+          <td>${escapeHtml(p.unit)}</td>
+          <td class="num ${st.cls}">${p.stock}</td>
+          <td class="num">${p.reorder_level || "—"}</td>
+          <td class="num">${formatINR(p.cost_price || 0)}</td>
+          <td class="num">${formatINR(value)}</td>
+          <td>
+            <div class="inv-row-actions">
+              <button type="button" class="inv-adj-btn" data-id="${p.id}" title="Adjust stock">±</button>
+              <button type="button" class="inv-edit-btn" data-id="${p.id}" title="Edit">✎</button>
+              <button type="button" class="inv-del-btn" data-id="${p.id}" title="Delete">✕</button>
+            </div>
+          </td>
+        </tr>`;
+    }).join("");
+    body.querySelectorAll(".inv-adj-btn").forEach((btn) => btn.addEventListener("click", () => openInvAdjustModal(btn.dataset.id)));
+    body.querySelectorAll(".inv-edit-btn").forEach((btn) => btn.addEventListener("click", () => loadProductIntoForm(btn.dataset.id)));
+    body.querySelectorAll(".inv-del-btn").forEach((btn) => btn.addEventListener("click", () => deleteInvProduct(btn.dataset.id)));
+  }
+
+  function renderStockLedger() {
+    const body = document.getElementById("invLedgerBody");
+    if (!body) return;
+    const ledger = loadInvLedger().slice().sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0)).slice(0, 30);
+    if (!ledger.length) {
+      body.innerHTML = `<tr><td colspan="5" class="summary-empty">No stock movements yet.</td></tr>`;
+      return;
+    }
+    const typeLabel = { opening: "Opening", in: "Stock In", out: "Stock Out", sale: "Sale", adjust: "Adjustment" };
+    body.innerHTML = ledger.map((l) => `
+      <tr>
+        <td>${escapeHtml(l.date || "")}</td>
+        <td>${escapeHtml(l.product_name)}</td>
+        <td>${typeLabel[l.type] || l.type}</td>
+        <td class="num ${l.qty < 0 ? "stock-low" : "stock-ok"}">${l.qty > 0 ? "+" : ""}${l.qty}</td>
+        <td>${escapeHtml(l.note || "")}</td>
+      </tr>`).join("");
+  }
+
+  function clearProductForm() {
+    document.getElementById("inv_edit_id").value = "";
+    document.getElementById("inv_name").value = "";
+    document.getElementById("inv_code").value = "";
+    document.getElementById("inv_unit").value = "NOS";
+    document.getElementById("inv_opening_stock").value = "";
+    document.getElementById("inv_opening_stock").disabled = false;
+    document.getElementById("inv_reorder_level").value = "";
+    document.getElementById("inv_cost_price").value = "";
+    document.getElementById("inv_sale_price").value = "";
+    document.getElementById("productFormTitle").textContent = "Add Product";
+    document.getElementById("saveProductBtn").textContent = "➕ Add Product";
+    document.getElementById("cancelEditProductBtn").style.display = "none";
+  }
+
+  function loadProductIntoForm(id) {
+    const p = loadInvProducts().find((x) => x.id === id);
+    if (!p) return;
+    document.getElementById("inv_edit_id").value = p.id;
+    document.getElementById("inv_name").value = p.name;
+    document.getElementById("inv_code").value = p.code || "";
+    document.getElementById("inv_unit").value = p.unit || "NOS";
+    document.getElementById("inv_opening_stock").value = p.stock;
+    // Opening stock is a one-time seed value; use the ± button for
+    // ongoing stock changes so every change is logged in the ledger.
+    document.getElementById("inv_opening_stock").disabled = true;
+    document.getElementById("inv_reorder_level").value = p.reorder_level || "";
+    document.getElementById("inv_cost_price").value = p.cost_price || "";
+    document.getElementById("inv_sale_price").value = p.sale_price || "";
+    document.getElementById("productFormTitle").textContent = "Edit Product";
+    document.getElementById("saveProductBtn").textContent = "💾 Update Product";
+    document.getElementById("cancelEditProductBtn").style.display = "block";
+    const panel = document.getElementById("tab-inventory");
+    if (panel) panel.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  const saveProductBtnEl = document.getElementById("saveProductBtn");
+  if (saveProductBtnEl) saveProductBtnEl.addEventListener("click", () => {
+    const name = document.getElementById("inv_name").value.trim();
+    if (!name) { alert("Please enter a product name."); return; }
+    const editId = document.getElementById("inv_edit_id").value || null;
+    if (!editId && findInvProductByName(name)) { alert("A product with this name already exists in inventory."); return; }
+    const data = {
+      name,
+      code: document.getElementById("inv_code").value.trim(),
+      unit: document.getElementById("inv_unit").value.trim() || "NOS",
+      opening_stock: document.getElementById("inv_opening_stock").value,
+      reorder_level: document.getElementById("inv_reorder_level").value,
+      cost_price: document.getElementById("inv_cost_price").value,
+      sale_price: document.getElementById("inv_sale_price").value,
+    };
+    upsertInvProduct(data, editId);
+    clearProductForm();
+    renderInventorySummary();
+    renderProductsTable(document.getElementById("invProductSearch").value);
+  });
+
+  const cancelEditProductBtnEl = document.getElementById("cancelEditProductBtn");
+  if (cancelEditProductBtnEl) cancelEditProductBtnEl.addEventListener("click", () => clearProductForm());
+
+  const invProductSearchEl = document.getElementById("invProductSearch");
+  if (invProductSearchEl) invProductSearchEl.addEventListener("input", (e) => renderProductsTable(e.target.value));
+
+  const importFromLibraryBtnEl = document.getElementById("importFromLibraryBtn");
+  if (importFromLibraryBtnEl) importFromLibraryBtnEl.addEventListener("click", () => {
+    const lib = loadItemLibrary();
+    if (!lib.length) { alert("Your Item Library is empty. Save some line items from the New Invoice tab first (💾 button)."); return; }
+    const existing = loadInvProducts();
+    let added = 0;
+    lib.forEach((l) => {
+      const key = l.name.trim().toLowerCase();
+      if (existing.find((p) => p.name.trim().toLowerCase() === key)) return;
+      existing.push({
+        id: "prod_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 6) + added,
+        name: l.name,
+        code: l.code || "",
+        unit: l.uqc || "NOS",
+        stock: 0,
+        reorder_level: 0,
+        cost_price: 0,
+        sale_price: Number(l.rate) || 0,
+        timestamp: Date.now(),
+      });
+      added++;
+    });
+    if (added) saveInvProducts(existing);
+    renderInventorySummary();
+    renderProductsTable("");
+    alert(added ? `Imported ${added} item(s) from your library. Set opening stock using the ± button on each row.` : "Everything in your Item Library is already tracked in inventory.");
+  });
+
+  let invAdjustProductId = null;
+  function openInvAdjustModal(id) {
+    const p = loadInvProducts().find((x) => x.id === id);
+    if (!p) return;
+    invAdjustProductId = id;
+    document.getElementById("invAdjustProductName").innerHTML = `<b>${escapeHtml(p.name)}</b> — current stock: ${p.stock} ${escapeHtml(p.unit)}`;
+    document.getElementById("invAdjustQty").value = "";
+    document.getElementById("invAdjustReason").value = "";
+    document.getElementById("invAdjustDate").value = todayIso();
+    document.getElementById("invAdjustType").value = "in";
+    document.getElementById("invAdjustModal").classList.add("open");
+  }
+  const invAdjustModalCloseEl = document.getElementById("invAdjustModalClose");
+  if (invAdjustModalCloseEl) invAdjustModalCloseEl.addEventListener("click", () => document.getElementById("invAdjustModal").classList.remove("open"));
+
+  const invAdjustFormEl = document.getElementById("invAdjustForm");
+  if (invAdjustFormEl) invAdjustFormEl.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const qty = Number(document.getElementById("invAdjustQty").value);
+    if (!qty || qty <= 0) { alert("Enter a quantity greater than 0."); return; }
+    const type = document.getElementById("invAdjustType").value;
+    const note = document.getElementById("invAdjustReason").value.trim();
+    const dateStr = document.getElementById("invAdjustDate").value || todayIso();
+    adjustInvStock(invAdjustProductId, type, qty, note, dateStr);
+    document.getElementById("invAdjustModal").classList.remove("open");
+    renderInventorySummary();
+    renderProductsTable(document.getElementById("invProductSearch").value);
+    renderStockLedger();
+  });
+
+  const inventoryTabBtn = document.querySelector('.tab-btn[data-tab="tab-inventory"]');
+  if (inventoryTabBtn) inventoryTabBtn.addEventListener("click", () => {
+    renderInventorySummary();
+    renderProductsTable(document.getElementById("invProductSearch") ? document.getElementById("invProductSearch").value : "");
+    renderStockLedger();
+  });
+
+  // ---------------- Shared UI helpers ----------------
+  function accountOptionsHtml(filterTypes) {
+    const list = loadCoa().slice().sort((a, b) => {
+      const ta = ACC_TYPE_ORDER.indexOf(a.type), tb = ACC_TYPE_ORDER.indexOf(b.type);
+      return ta !== tb ? ta - tb : String(a.code || "").localeCompare(String(b.code || ""));
+    });
+    const groups = {};
+    list.forEach((a) => {
+      if (filterTypes && !filterTypes.includes(a.type)) return;
+      if (!groups[a.type]) groups[a.type] = [];
+      groups[a.type].push(a);
+    });
+    let html = "";
+    Object.keys(groups).forEach((type) => {
+      html += `<optgroup label="${type}">`;
+      groups[type].forEach((a) => { html += `<option value="${a.id}">${escapeHtml(a.code)} — ${escapeHtml(a.name)}</option>`; });
+      html += `</optgroup>`;
+    });
+    return html;
+  }
+  function populateAccountSelects() {
+    const pbAccount = document.getElementById("pb_account");
+    if (pbAccount) { const cur = pbAccount.value; pbAccount.innerHTML = accountOptionsHtml(["Expense", "Asset"]); if (cur) pbAccount.value = cur; }
+    const ledgerSel = document.getElementById("ledgerAccountSelect");
+    if (ledgerSel) { const cur = ledgerSel.value; ledgerSel.innerHTML = accountOptionsHtml(null); if (cur) ledgerSel.value = cur; }
+    document.querySelectorAll(".je-account-select").forEach((sel) => {
+      const cur = sel.value;
+      sel.innerHTML = accountOptionsHtml(null);
+      if (cur) sel.value = cur;
+    });
+  }
+  function balanceLabel(acc, bal) {
+    const side = normalBalanceSide(acc.type);
+    const label = bal < 0 ? (side === "dr" ? "Cr" : "Dr") : (side === "dr" ? "Dr" : "Cr");
+    return formatINR(Math.abs(bal)) + " " + label;
+  }
+
+  // ---------------- Chart of Accounts UI ----------------
+  function renderCoaList() {
+    const area = document.getElementById("coaListArea");
+    if (!area) return;
+    const list = loadCoa();
+    const grouped = {};
+    ACC_TYPE_ORDER.forEach((t) => { grouped[t] = []; });
+    list.forEach((a) => { if (!grouped[a.type]) grouped[a.type] = []; grouped[a.type].push(a); });
+    let html = "";
+    ACC_TYPE_ORDER.forEach((type) => {
+      const accs = grouped[type].slice().sort((a, b) => String(a.code || "").localeCompare(String(b.code || "")));
+      if (!accs.length) return;
+      html += `<div style="font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;margin:10px 0 4px;">${type}</div>`;
+      accs.forEach((a) => {
+        const bal = accountNetBalance(a.id);
+        html += `
+          <div class="card">
+            <div class="acc-card-row">
+              <div><span class="acn">${escapeHtml(a.name)}</span> <span class="acc-pill ${type.toLowerCase()}">${type}</span></div>
+              <div class="acv">${escapeHtml(a.code)} · ${balanceLabel(a, bal)}</div>
+            </div>
+          </div>`;
+      });
+    });
+    area.innerHTML = html || '<div class="summary-empty">No accounts yet.</div>';
+    populateAccountSelects();
+  }
+  const addAccountBtnEl = document.getElementById("addAccountBtn");
+  if (addAccountBtnEl) addAccountBtnEl.addEventListener("click", () => {
+    const name = document.getElementById("coa_name").value.trim();
+    const type = document.getElementById("coa_type").value;
+    if (!name) { alert("Please enter an account name."); return; }
+    addAccount(name, type);
+    document.getElementById("coa_name").value = "";
+    renderCoaList();
+  });
+
+  // ---------------- Journal entry UI ----------------
+  function addJeLineRow() {
+    const area = document.getElementById("jeLinesArea");
+    if (!area) return;
+    const div = document.createElement("div");
+    div.className = "je-line-row";
+    div.innerHTML = `
+      <select class="je-account-select">${accountOptionsHtml(null)}</select>
+      <input type="number" class="je-dr-input" min="0" step="0.01" placeholder="Debit">
+      <input type="number" class="je-cr-input" min="0" step="0.01" placeholder="Credit">
+      <button type="button" class="je-remove-btn" title="Remove line">✕</button>
+    `;
+    area.appendChild(div);
+    div.querySelector(".je-remove-btn").addEventListener("click", () => { div.remove(); updateJeBalance(); });
+    div.querySelector(".je-dr-input").addEventListener("input", updateJeBalance);
+    div.querySelector(".je-cr-input").addEventListener("input", updateJeBalance);
+  }
+  function updateJeBalance() {
+    let dr = 0, cr = 0;
+    document.querySelectorAll(".je-dr-input").forEach((i) => { dr += parseFloat(i.value) || 0; });
+    document.querySelectorAll(".je-cr-input").forEach((i) => { cr += parseFloat(i.value) || 0; });
+    const note = document.getElementById("jeBalanceNote");
+    if (!note) return;
+    const diff = round2(dr - cr);
+    note.textContent = `Debit ${formatINR(dr)} — Credit ${formatINR(cr)}` + (diff === 0 && dr > 0 ? " — Balanced ✓" : diff !== 0 ? ` — Out of balance by ${formatINR(Math.abs(diff))}` : "");
+    note.className = "je-balance-note " + (diff === 0 && dr > 0 ? "balanced" : "unbalanced");
+  }
+  const addJeLineBtnEl = document.getElementById("addJeLineBtn");
+  if (addJeLineBtnEl) addJeLineBtnEl.addEventListener("click", addJeLineRow);
+
+  const saveJournalEntryBtnEl = document.getElementById("saveJournalEntryBtn");
+  if (saveJournalEntryBtnEl) saveJournalEntryBtnEl.addEventListener("click", () => {
+    const date = document.getElementById("je_date").value || todayIso();
+    const narration = document.getElementById("je_narration").value.trim();
+    const rows = Array.from(document.querySelectorAll("#jeLinesArea .je-line-row"));
+    const lines = rows.map((row) => ({
+      accountId: row.querySelector(".je-account-select").value,
+      dr: parseFloat(row.querySelector(".je-dr-input").value) || 0,
+      cr: parseFloat(row.querySelector(".je-cr-input").value) || 0,
+    })).filter((l) => l.dr > 0 || l.cr > 0);
+    if (lines.length < 2) { alert("Add at least two lines (one debit, one credit)."); return; }
+    if (!narration) { alert("Please enter a narration for this entry."); return; }
+    try {
+      postJournalEntry({ date, narration, lines, source: "manual" });
+      document.getElementById("je_narration").value = "";
+      document.getElementById("jeLinesArea").innerHTML = "";
+      addJeLineRow(); addJeLineRow();
+      updateJeBalance();
+      renderJournalList();
+      renderCoaList();
+    } catch (err) {
+      alert(err.message);
+    }
+  });
+
+  function renderJournalList() {
+    const area = document.getElementById("journalListArea");
+    if (!area) return;
+    const list = loadJournal().slice().sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0)).slice(0, 60);
+    if (!list.length) { area.innerHTML = '<div class="summary-empty">No journal entries yet.</div>'; return; }
+    const sourceLabels = { manual: "Manual", sales: "Sales Invoice", purchase: "Purchase Bill", receipt: "Receipt", vendor_payment: "Vendor Payment" };
+    area.innerHTML = list.map((e) => {
+      const linesHtml = e.lines.map((l) => {
+        const acc = getAccountById(l.accountId);
+        const name = acc ? acc.name : "Unknown Account";
+        if (l.dr > 0) return `<div>Dr ${escapeHtml(name)} <span class="acc-dr">${formatINR(l.dr)}</span></div>`;
+        return `<div style="padding-left:14px;">Cr ${escapeHtml(name)} <span class="acc-cr">${formatINR(l.cr)}</span></div>`;
+      }).join("");
+      return `
+        <div class="card">
+          <div class="acc-card-row">
+            <div class="acn">${escapeHtml(e.narration || "(no narration)")}</div>
+            <div class="acv">${escapeHtml(e.date)}</div>
+          </div>
+          <div style="font-size:12.5px;margin-top:6px;">${linesHtml}</div>
+          <div class="acc-src-tag">${sourceLabels[e.source] || e.source}${e.sourceId ? " · " + escapeHtml(e.sourceId) : ""}</div>
+          ${e.source === "manual" ? `<button type="button" class="btn btn-outline btn-sm je-delete-btn" data-id="${e.id}" style="margin-top:8px;">🗑 Delete</button>` : ""}
+        </div>`;
+    }).join("");
+    area.querySelectorAll(".je-delete-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        if (confirm("Delete this journal entry?")) {
+          deleteJournalEntry(btn.dataset.id);
+          renderJournalList();
+          renderCoaList();
+        }
+      });
+    });
+  }
+
+  // ---------------- Vendors / Purchases UI ----------------
+  function populateVendorSelect() {
+    const sel = document.getElementById("pb_vendor");
+    if (!sel) return;
+    const cur = sel.value;
+    const vendors = loadVendors();
+    sel.innerHTML = vendors.length
+      ? vendors.map((v) => `<option value="${v.id}">${escapeHtml(v.name)}</option>`).join("")
+      : '<option value="">Add a vendor first</option>';
+    if (cur) sel.value = cur;
+  }
+  function renderVendorList() {
+    const area = document.getElementById("vendorListArea");
+    if (!area) return;
+    const vendors = loadVendors();
+    populateVendorSelect();
+    if (!vendors.length) { area.innerHTML = '<div class="summary-empty">No vendors added yet.</div>'; return; }
+    area.innerHTML = vendors.map((v) => {
+      const due = getVendorPayable(v.id);
+      const paid = getTotalPaidToVendor(v.id);
+      return `
+        <div class="card ledger-card">
+          <div class="lc-name">${escapeHtml(v.name)}</div>
+          <div class="lc-stats">
+            ${v.phone ? "Phone: <b>" + escapeHtml(v.phone) + "</b><br>" : ""}
+            ${paid > 0 ? "Paid Till Date: <b>" + formatINR(paid) + "</b><br>" : ""}
+            ${due > 0 ? `Payable Due: <b class="lc-credit">${formatINR(due)}</b>` : "No dues"}
+          </div>
+          <div class="lc-actions">
+            ${due > 0 ? `<button type="button" class="btn btn-outline vnd-pay-btn" data-vendor-id="${v.id}">💸 Pay Vendor</button>` : ""}
+            ${paid > 0 ? `<button type="button" class="btn btn-outline vnd-history-btn" data-vendor-id="${v.id}">🧾 Payment History</button>` : ""}
+          </div>
+        </div>`;
+    }).join("");
+    area.querySelectorAll(".vnd-pay-btn").forEach((btn) => btn.addEventListener("click", () => openVendorPayModal(btn.dataset.vendorId)));
+    area.querySelectorAll(".vnd-history-btn").forEach((btn) => btn.addEventListener("click", () => openVendorPayModal(btn.dataset.vendorId)));
+  }
+  const addVendorBtnEl = document.getElementById("addVendorBtn");
+  if (addVendorBtnEl) addVendorBtnEl.addEventListener("click", () => {
+    const name = document.getElementById("vendor_name").value.trim();
+    if (!name) { alert("Please enter a vendor name."); return; }
+    const gstin = document.getElementById("vendor_gstin").value.trim();
+    const phone = document.getElementById("vendor_phone").value.trim();
+    const address = document.getElementById("vendor_address").value.trim();
+    addVendor(name, gstin, phone, address);
+    document.getElementById("vendor_name").value = "";
+    document.getElementById("vendor_gstin").value = "";
+    document.getElementById("vendor_phone").value = "";
+    document.getElementById("vendor_address").value = "";
+    renderVendorList();
+  });
+
+  function renderVendorPayHistory(vendorId) {
+    const list = getPaymentsForVendor(vendorId);
+    const area = document.getElementById("vendorPayHistoryList");
+    if (!area) return;
+    if (!list.length) { area.innerHTML = '<div class="summary-empty">No payments recorded yet.</div>'; return; }
+    area.innerHTML = list.map((p) => `
+      <div class="card" style="padding:10px 12px;margin-bottom:6px;">
+        <div class="acc-card-row"><div class="acn">${formatINR(p.amount)}</div><div class="acv">${escapeHtml(p.date)} · ${escapeHtml(p.mode)}</div></div>
+        ${p.note ? `<div style="font-size:12px;color:var(--muted);margin-top:4px;">${escapeHtml(p.note)}</div>` : ""}
+      </div>`).join("");
+  }
+  function openVendorPayModal(vendorId) {
+    const vendor = loadVendors().find((v) => v.id === vendorId);
+    if (!vendor) return;
+    document.getElementById("vendorPayVendorId").value = vendorId;
+    document.getElementById("vendorPayModalVendor").textContent = vendor.name;
+    const due = getVendorPayable(vendorId);
+    document.getElementById("vendorPayDueNote").textContent = due > 0 ? "Outstanding due: " + formatINR(due) : "No outstanding due.";
+    document.getElementById("vendorPayAmount").value = due > 0 ? due.toFixed(2) : "";
+    document.getElementById("vendorPayDate").value = todayIso();
+    document.getElementById("vendorPayNote").value = "";
+    renderVendorPayHistory(vendorId);
+    document.getElementById("vendorPayModal").classList.add("open");
+  }
+  function closeVendorPayModal() {
+    document.getElementById("vendorPayModal").classList.remove("open");
+  }
+  const vendorPayModalCloseEl = document.getElementById("vendorPayModalClose");
+  if (vendorPayModalCloseEl) vendorPayModalCloseEl.addEventListener("click", closeVendorPayModal);
+  const vendorPayModalEl = document.getElementById("vendorPayModal");
+  if (vendorPayModalEl) vendorPayModalEl.addEventListener("click", (e) => { if (e.target === vendorPayModalEl) closeVendorPayModal(); });
+  const vendorPayFormEl = document.getElementById("vendorPayForm");
+  if (vendorPayFormEl) vendorPayFormEl.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const vendorId = document.getElementById("vendorPayVendorId").value;
+    const vendor = loadVendors().find((v) => v.id === vendorId);
+    const amount = parseFloat(document.getElementById("vendorPayAmount").value);
+    if (!Number.isFinite(amount) || amount <= 0) { alert("Please enter a valid amount greater than 0."); return; }
+    const mode = document.getElementById("vendorPayMode").value || "Cash";
+    const note = document.getElementById("vendorPayNote").value || "";
+    const dateIso = document.getElementById("vendorPayDate").value || todayIso();
+    recordVendorPayment(vendorId, vendor ? vendor.name : "", amount, mode, note, dateIso);
+    renderVendorList();
+    renderVendorPayHistory(vendorId);
+    renderPayablesSummary();
+    document.getElementById("vendorPayDueNote").textContent = "Outstanding due: " + formatINR(getVendorPayable(vendorId));
+    document.getElementById("vendorPayAmount").value = "";
+    document.getElementById("vendorPayNote").value = "";
+  });
+
+  function updatePbTotal() {
+    const taxableEl = document.getElementById("pb_taxable");
+    const rateEl = document.getElementById("pb_gst_rate");
+    const noteEl = document.getElementById("pbTotalNote");
+    if (!taxableEl || !rateEl || !noteEl) return;
+    const taxable = parseFloat(taxableEl.value) || 0;
+    const rate = parseFloat(rateEl.value) || 0;
+    const gst = round2(taxable * rate / 100);
+    const total = round2(taxable + gst);
+    noteEl.textContent = `Bill Total: ${formatINR(total)} (GST ${formatINR(gst)})`;
+    noteEl.className = "je-balance-note balanced";
+  }
+  const pbTaxableEl = document.getElementById("pb_taxable");
+  if (pbTaxableEl) pbTaxableEl.addEventListener("input", updatePbTotal);
+  const pbGstRateEl = document.getElementById("pb_gst_rate");
+  if (pbGstRateEl) pbGstRateEl.addEventListener("change", updatePbTotal);
+
+  const savePurchaseBillBtnEl = document.getElementById("savePurchaseBillBtn");
+  if (savePurchaseBillBtnEl) savePurchaseBillBtnEl.addEventListener("click", () => {
+    const vendorId = document.getElementById("pb_vendor").value;
+    const vendor = loadVendors().find((v) => v.id === vendorId);
+    if (!vendor) { alert("Please add and select a vendor first."); return; }
+    const taxable = parseFloat(document.getElementById("pb_taxable").value);
+    if (!Number.isFinite(taxable) || taxable <= 0) { alert("Please enter a valid taxable amount."); return; }
+    const gstRate = parseFloat(document.getElementById("pb_gst_rate").value) || 0;
+    const accountId = document.getElementById("pb_account").value;
+    const billNo = document.getElementById("pb_billno").value.trim();
+    const dateVal = document.getElementById("pb_date").value || todayIso();
+    const description = document.getElementById("pb_description").value.trim();
+    const paymentMode = document.getElementById("pb_payment_mode").value;
+    recordPurchaseBill({ vendorId, vendorName: vendor.name, billNo, date: dateVal, description, accountId, taxable, gstRate, paymentMode });
+    document.getElementById("pb_billno").value = "";
+    document.getElementById("pb_taxable").value = "";
+    document.getElementById("pb_description").value = "";
+    updatePbTotal();
+    renderPurchaseBillsTable();
+    renderVendorList();
+    renderPayablesSummary();
+    renderCoaList();
+  });
+
+  function renderPurchaseBillsTable() {
+    const tbody = document.querySelector("#purchaseBillsTable tbody");
+    if (!tbody) return;
+    const bills = loadPurchaseBills().slice().sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+    if (!bills.length) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--muted);">No purchase bills yet.</td></tr>'; return; }
+    tbody.innerHTML = bills.map((b) => {
+      const acc = getAccountById(b.accountId);
+      return `<tr>
+        <td>${escapeHtml(b.date)}</td>
+        <td>${escapeHtml(b.vendorName)}</td>
+        <td>${escapeHtml(b.billNo || "-")}</td>
+        <td>${escapeHtml(acc ? acc.name : "-")}</td>
+        <td class="num">${formatINR(b.total)}</td>
+        <td>${escapeHtml(b.paymentMode)}</td>
+      </tr>`;
+    }).join("");
+  }
+
+  function renderPayablesSummary() {
+    const grid = document.getElementById("payablesSummaryGrid");
+    if (!grid) return;
+    const vendors = loadVendors();
+    const totalPayable = vendors.reduce((s, v) => s + getVendorPayable(v.id), 0);
+    const bills = loadPurchaseBills();
+    const totalPurchases = bills.reduce((s, b) => s + b.total, 0);
+    const cards = [
+      ["Total Vendors", vendors.length],
+      ["Total Purchases", formatINR(totalPurchases)],
+      ["Total Payable Due", formatINR(totalPayable)],
+    ];
+    grid.innerHTML = cards.map(([label, value]) => `
+      <div class="dash-card"><div class="dash-label">${label}</div><div class="dash-value">${value}</div></div>
+    `).join("");
+  }
+
+  // ---------------- Reports tab ----------------
+  function renderActiveReport(name) {
+    if (name === "trial-balance") renderTrialBalance();
+    else if (name === "ledger") renderLedgerReport();
+    else if (name === "pnl") renderPnl();
+    else if (name === "balance-sheet") renderBalanceSheet();
+  }
+  document.querySelectorAll("#reportsSegment .acc-seg-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll("#reportsSegment .acc-seg-btn").forEach((b) => b.classList.remove("active"));
+      document.querySelectorAll(".acc-view").forEach((v) => v.classList.remove("active"));
+      btn.classList.add("active");
+      document.getElementById("view-" + btn.dataset.report).classList.add("active");
+      renderActiveReport(btn.dataset.report);
+    });
+  });
+
+  function renderTrialBalance() {
+    const tbody = document.querySelector("#trialBalanceTable tbody");
+    const tfoot = document.querySelector("#trialBalanceTable tfoot");
+    if (!tbody) return;
+    const asOf = document.getElementById("tbAsOfDate").value || null;
+    let totalDr = 0, totalCr = 0;
+    const rows = loadCoa().map((a) => {
+      const bal = accountNetBalance(a.id, asOf);
+      const side = normalBalanceSide(a.type);
+      let drAmt = 0, crAmt = 0;
+      if (bal >= 0) { if (side === "dr") drAmt = bal; else crAmt = bal; }
+      else { if (side === "dr") crAmt = -bal; else drAmt = -bal; }
+      totalDr += drAmt; totalCr += crAmt;
+      return { a, drAmt, crAmt };
+    }).filter((r) => r.drAmt > 0.004 || r.crAmt > 0.004);
+    tbody.innerHTML = rows.length ? rows.map((r) => `
+      <tr><td>${escapeHtml(r.a.name)}</td><td><span class="acc-pill ${r.a.type.toLowerCase()}">${r.a.type}</span></td>
+      <td class="num">${r.drAmt > 0.004 ? formatINR(r.drAmt) : "-"}</td>
+      <td class="num">${r.crAmt > 0.004 ? formatINR(r.crAmt) : "-"}</td></tr>
+    `).join("") : '<tr><td colspan="4" style="text-align:center;color:var(--muted);">No transactions recorded yet.</td></tr>';
+    tfoot.innerHTML = `<tr><td colspan="2">Total</td><td class="num">${formatINR(totalDr)}</td><td class="num">${formatINR(totalCr)}</td></tr>`;
+  }
+  const tbAsOfDateEl = document.getElementById("tbAsOfDate");
+  if (tbAsOfDateEl) tbAsOfDateEl.addEventListener("change", renderTrialBalance);
+
+  function renderLedgerReport() {
+    const sel = document.getElementById("ledgerAccountSelect");
+    const tbody = document.querySelector("#ledgerDetailTable tbody");
+    const balRow = document.getElementById("ledgerBalanceRow");
+    if (!sel || !sel.value || !tbody) return;
+    const accountId = sel.value;
+    const acc = getAccountById(accountId);
+    if (!acc) return;
+    const side = normalBalanceSide(acc.type);
+    const entries = loadJournal()
+      .filter((e) => e.lines.some((l) => l.accountId === accountId))
+      .sort((a, b) => (a.date.localeCompare(b.date)) || ((a.timestamp || 0) - (b.timestamp || 0)));
+    let running = 0;
+    const rowsHtml = [];
+    entries.forEach((e) => {
+      e.lines.filter((l) => l.accountId === accountId).forEach((l) => {
+        const dr = Number(l.dr) || 0, cr = Number(l.cr) || 0;
+        running = round2(running + (side === "dr" ? (dr - cr) : (cr - dr)));
+        rowsHtml.push(`<tr>
+          <td>${escapeHtml(e.date)}</td><td>${escapeHtml(e.narration || "-")}</td>
+          <td class="num">${dr > 0 ? formatINR(dr) : "-"}</td><td class="num">${cr > 0 ? formatINR(cr) : "-"}</td>
+          <td class="num">${formatINR(Math.abs(running))}${running < 0 ? " (" + (side === "dr" ? "Cr" : "Dr") + ")" : ""}</td>
+        </tr>`);
+      });
+    });
+    tbody.innerHTML = rowsHtml.length ? rowsHtml.join("") : '<tr><td colspan="5" style="text-align:center;color:var(--muted);">No transactions for this account yet.</td></tr>';
+    const closing = accountNetBalance(accountId);
+    if (balRow) balRow.innerHTML = `
+      <div class="dash-card"><div class="dash-label">Account Type</div><div class="dash-value">${acc.type}</div></div>
+      <div class="dash-card"><div class="dash-label">Closing Balance</div><div class="dash-value">${balanceLabel(acc, closing)}</div></div>
+    `;
+  }
+  const ledgerAccountSelectEl = document.getElementById("ledgerAccountSelect");
+  if (ledgerAccountSelectEl) ledgerAccountSelectEl.addEventListener("change", renderLedgerReport);
+
+  function renderPnl() {
+    const tbody = document.querySelector("#pnlTable tbody");
+    const tfoot = document.querySelector("#pnlTable tfoot");
+    if (!tbody) return;
+    const from = document.getElementById("pnlFromDate").value || null;
+    const to = document.getElementById("pnlToDate").value || null;
+    function rangeBalance(accountId) {
+      let dr = 0, cr = 0;
+      loadJournal().forEach((e) => {
+        if (from && e.date < from) return;
+        if (to && e.date > to) return;
+        e.lines.forEach((l) => { if (l.accountId === accountId) { dr += Number(l.dr) || 0; cr += Number(l.cr) || 0; } });
+      });
+      return { dr, cr };
+    }
+    const list = loadCoa();
+    let totalIncome = 0, totalExpense = 0;
+    let html = '<tr><td colspan="2" style="font-weight:800;background:#f4f6fb;">Income</td></tr>';
+    list.filter((a) => a.type === "Income").forEach((a) => {
+      const { dr, cr } = rangeBalance(a.id);
+      const net = round2(cr - dr);
+      if (Math.abs(net) < 0.005) return;
+      totalIncome += net;
+      html += `<tr><td>${escapeHtml(a.name)}</td><td class="num">${formatINR(net)}</td></tr>`;
+    });
+    html += '<tr><td colspan="2" style="font-weight:800;background:#f4f6fb;">Expenses</td></tr>';
+    list.filter((a) => a.type === "Expense").forEach((a) => {
+      const { dr, cr } = rangeBalance(a.id);
+      const net = round2(dr - cr);
+      if (Math.abs(net) < 0.005) return;
+      totalExpense += net;
+      html += `<tr><td>${escapeHtml(a.name)}</td><td class="num">${formatINR(net)}</td></tr>`;
+    });
+    tbody.innerHTML = html;
+    const netProfit = round2(totalIncome - totalExpense);
+    tfoot.innerHTML = `
+      <tr><td>Total Income</td><td class="num">${formatINR(totalIncome)}</td></tr>
+      <tr><td>Total Expenses</td><td class="num">${formatINR(totalExpense)}</td></tr>
+      <tr><td>${netProfit >= 0 ? "Net Profit" : "Net Loss"}</td><td class="num" style="color:${netProfit >= 0 ? "#1a7a3c" : "#b3261e"};">${formatINR(Math.abs(netProfit))}</td></tr>
+    `;
+  }
+  const pnlFromDateEl = document.getElementById("pnlFromDate");
+  if (pnlFromDateEl) pnlFromDateEl.addEventListener("change", renderPnl);
+  const pnlToDateEl = document.getElementById("pnlToDate");
+  if (pnlToDateEl) pnlToDateEl.addEventListener("change", renderPnl);
+
+  function renderBalanceSheet() {
+    const assetsBody = document.querySelector("#bsAssetsTable tbody");
+    if (!assetsBody) return;
+    const asOf = document.getElementById("bsAsOfDate").value || null;
+    const list = loadCoa();
+
+    let totalAssets = 0, ah = "";
+    list.filter((a) => a.type === "Asset").forEach((a) => {
+      const bal = accountNetBalance(a.id, asOf);
+      if (Math.abs(bal) < 0.005) return;
+      totalAssets += bal;
+      ah += `<tr><td>${escapeHtml(a.name)}</td><td class="num">${formatINR(bal)}</td></tr>`;
+    });
+    assetsBody.innerHTML = ah || '<tr><td colspan="2" style="text-align:center;color:var(--muted);">No balances yet.</td></tr>';
+    document.querySelector("#bsAssetsTable tfoot").innerHTML = `<tr><td>Total Assets</td><td class="num">${formatINR(totalAssets)}</td></tr>`;
+
+    let totalLiabEq = 0, lh = "";
+    list.filter((a) => a.type === "Liability").forEach((a) => {
+      const bal = accountNetBalance(a.id, asOf);
+      if (Math.abs(bal) < 0.005) return;
+      totalLiabEq += bal;
+      lh += `<tr><td>${escapeHtml(a.name)}</td><td class="num">${formatINR(bal)}</td></tr>`;
+    });
+    list.filter((a) => a.type === "Equity").forEach((a) => {
+      const bal = accountNetBalance(a.id, asOf);
+      if (Math.abs(bal) < 0.005) return;
+      totalLiabEq += bal;
+      lh += `<tr><td>${escapeHtml(a.name)}</td><td class="num">${formatINR(bal)}</td></tr>`;
+    });
+    const netProfit = computePnlUpTo(asOf);
+    if (Math.abs(netProfit) >= 0.005) {
+      totalLiabEq += netProfit;
+      lh += `<tr><td>${netProfit >= 0 ? "Retained Earnings (Net Profit)" : "Retained Earnings (Net Loss)"}</td><td class="num">${formatINR(netProfit)}</td></tr>`;
+    }
+    document.querySelector("#bsLiabEquityTable tbody").innerHTML = lh || '<tr><td colspan="2" style="text-align:center;color:var(--muted);">No balances yet.</td></tr>';
+    document.querySelector("#bsLiabEquityTable tfoot").innerHTML = `<tr><td>Total Liabilities &amp; Equity</td><td class="num">${formatINR(totalLiabEq)}</td></tr>`;
+
+    const note = document.getElementById("bsCheckNote");
+    const diff = round2(totalAssets - totalLiabEq);
+    if (Math.abs(diff) < 0.01) {
+      note.textContent = "✓ Balanced — Assets = Liabilities + Equity";
+      note.className = "je-balance-note balanced";
+    } else {
+      note.textContent = "Out of balance by " + formatINR(Math.abs(diff)) + " — check your journal entries.";
+      note.className = "je-balance-note unbalanced";
+    }
+  }
+  const bsAsOfDateEl = document.getElementById("bsAsOfDate");
+  if (bsAsOfDateEl) bsAsOfDateEl.addEventListener("change", renderBalanceSheet);
+
+  // ---------------- Tab refresh wiring ----------------
+  const expensesTabBtn = document.querySelector('.tab-btn[data-tab="tab-expenses"]');
+  if (expensesTabBtn) expensesTabBtn.addEventListener("click", () => {
+    renderVendorList();
+    renderPurchaseBillsTable();
+    renderPayablesSummary();
+    updatePbTotal();
+  });
+  const accountingTabBtn = document.querySelector('.tab-btn[data-tab="tab-accounting"]');
+  if (accountingTabBtn) accountingTabBtn.addEventListener("click", () => {
+    renderCoaList();
+    renderJournalList();
+  });
+  const reportsTabBtn = document.querySelector('.tab-btn[data-tab="tab-reports"]');
+  if (reportsTabBtn) reportsTabBtn.addEventListener("click", () => {
+    const activeSeg = document.querySelector("#reportsSegment .acc-seg-btn.active");
+    renderActiveReport(activeSeg ? activeSeg.dataset.report : "trial-balance");
+  });
+
+  // ---------------- Accounting module init ----------------
+  document.getElementById("je_date").value = todayIso();
+  document.getElementById("pb_date").value = todayIso();
+  addJeLineRow();
+  addJeLineRow();
+  updateJeBalance();
+  updatePbTotal();
+  populateAccountSelects();
+  renderCoaList();
+  renderVendorList();
+  renderPurchaseBillsTable();
+  renderPayablesSummary();
+  renderJournalList();
+  renderTrialBalance();
+
   // ---------------------------------------------------------------
   // Init
   // ---------------------------------------------------------------
@@ -28742,7 +31045,13 @@ if (typeof module !== "undefined") {
   addItemRow();
   renderLedgerSummary();
   renderDashboard();
+  renderItcSheet();
   updateGstCategoryNote();
+
+  // ---------------- Inventory module init ----------------
+  renderInventorySummary();
+  renderProductsTable("");
+  renderStockLedger();
 })();
 </script>
 </body>
