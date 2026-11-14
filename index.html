@@ -23,6 +23,11 @@
   --bg:#f4f6fb; --card:rgba(255,255,255,.7); --card-solid:#ffffff; --border:rgba(15,23,42,.09); --ink:#1a1a1a; --muted:#6b7280;
 }
 *{box-sizing:border-box;}
+.design-gallery{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 12px;}
+.design-gallery .dg-item{width:86px;padding:5px 4px;border:2px solid var(--border);border-radius:10px;background:#fff;cursor:pointer;text-align:center;font-size:10.5px;color:var(--muted);font-weight:600;transition:border-color .15s ease,transform .15s ease;}
+.design-gallery .dg-item:hover{transform:translateY(-2px);}
+.design-gallery .dg-item.active{border-color:var(--gold);color:var(--navy);box-shadow:0 0 0 2px rgba(217,119,6,.18);}
+.design-gallery .dg-item img{display:block;width:100%;height:50px;object-fit:contain;margin-bottom:3px;}
 @keyframes bgGlowFloat{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(-2%,3%) scale(1.06);}}
 @keyframes tabFadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
 @keyframes shimmerSweep{0%{transform:translateX(-120%) skewX(-15deg);}100%{transform:translateX(220%) skewX(-15deg);}}
@@ -769,6 +774,7 @@ table.itc-table input.itc-period-label{width:100%;min-width:110px;text-align:lef
       <div class="field"><label>Account No.</label><input type="text" id="set_bank_account_no" placeholder="e.g. 1234567890"></div>
       <div class="field"><label>IFSC Code</label><input type="text" id="set_bank_ifsc" placeholder="e.g. SBIN0001234"></div>
     </div>
+    <div class="field"><label>Bank Branch (printed on Tally layout)</label><input type="text" id="set_bank_branch" placeholder="e.g. BILASPUR"></div>
     <div class="field"><label>UPI ID (for QR code — leave blank to hide)</label><input type="text" id="set_upi_id" placeholder="yourname@bank"></div>
     <span class="upi-badge"> Pay via UPI</span>
   </div>
@@ -805,6 +811,7 @@ table.itc-table input.itc-period-label{width:100%;min-width:110px;text-align:lef
           <option value="modern">Modern Corporate</option>
           <option value="gst">GST Professional</option>
           <option value="minimal">Minimal</option>
+          <option value="tally">Tally Tax Invoice (Tally Prime format)</option>
         </select>
       </div>
     </div>
@@ -842,6 +849,79 @@ table.itc-table input.itc-period-label{width:100%;min-width:110px;text-align:lef
         <button type="button" class="btn btn-outline btn-sm" id="removeSignatureBtn">Remove Signature</button>
       </div>
       <div class="status-msg" id="signatureMsg"></div>
+    </div>
+
+    <div class="field">
+      <label>Authorised Signatory Name</label>
+      <input type="text" id="set_signatory_name" placeholder="e.g. Ashish Kumar Gupta">
+      <div style="font-size:11.5px;color:var(--muted);margin-top:4px;">Printed under "Authorised Signatory". Also used to auto-generate a signature when no signature image is uploaded.</div>
+    </div>
+    <div class="two-col">
+      <div class="field"><label>Auto signature style</label>
+        <select id="set_signature_style">
+          <option value="script">Handwritten script</option>
+          <option value="elegant">Elegant calligraphy</option>
+          <option value="pen">Pen / marker</option>
+          <option value="flourish">Flourish</option>
+          <option value="initials">Initials + surname</option>
+          <option value="scrawl">Scrawl (hand-drawn)</option>
+          <option value="italic">Italic serif</option>
+          <option value="formal">Formal serif</option>
+        </select>
+      </div>
+      <div class="field"><label>&nbsp;</label>
+        <label class="checkbox-field"><input type="checkbox" id="set_signature_auto" checked> Auto-generate signature from name</label>
+      </div>
+    </div>
+    <div class="field"><label>Signature ink colour</label>
+      <select id="set_signature_color">
+        <option value="blue">Blue</option>
+        <option value="black">Black</option>
+        <option value="green">Green</option>
+        <option value="red">Red</option>
+      </select>
+    </div>
+    <label style="display:block;font-size:12px;color:var(--muted);">Signature designs (tap to choose)</label>
+    <div class="design-gallery" id="sigGallery"></div>
+    <div id="autoSigPreviewWrap" style="display:none;margin-bottom:10px;">
+      <img id="autoSigPreviewImg" class="sig-preview" alt="Auto signature preview">
+    </div>
+
+    <div class="field">
+      <label>Company Stamp</label>
+      <label class="checkbox-field"><input type="checkbox" id="set_show_stamp"> Add auto-generated company stamp (from Company Name)</label>
+    </div>
+    <div class="field"><label>Seal design</label>
+      <select id="set_stamp_design">
+        <option value="round">Classic Round</option>
+        <option value="double">Double Ring</option>
+        <option value="star">Star</option>
+        <option value="scallop">Scalloped</option>
+        <option value="banner">Banner</option>
+        <option value="rect">Rectangle</option>
+        <option value="oval">Oval</option>
+      </select>
+    </div>
+    <div class="design-gallery" id="sealGallery"></div>
+    <div class="two-col">
+      <label class="checkbox-field"><input type="checkbox" id="set_stamp_texture"> Rubber-stamp texture</label>
+      <label class="checkbox-field"><input type="checkbox" id="set_stamp_tilt"> Natural tilt</label>
+    </div>
+    <div class="two-col">
+      <div class="field"><label>Stamp colour</label>
+        <select id="set_stamp_color">
+          <option value="blue">Blue</option>
+          <option value="red">Red</option>
+          <option value="black">Black</option>
+          <option value="green">Green</option>
+          <option value="purple">Purple</option>
+        </select>
+      </div>
+      <div class="field"><label>Stamp centre text (blank = initials)</label><input type="text" id="set_stamp_center" placeholder="e.g. AKG"></div>
+    </div>
+    <div class="field"><label>Stamp bottom text (blank = State)</label><input type="text" id="set_stamp_bottom" placeholder="e.g. RAIPUR (C.G.)"></div>
+    <div id="stampPreviewWrap" style="display:none;margin-bottom:10px;">
+      <img id="stampPreviewImg" class="sig-preview" alt="Stamp preview" style="max-height:120px;">
     </div>
 
     <div class="two-col">
@@ -4058,6 +4138,328 @@ function resolveTheme(seller) {
   };
 }
 
+// ---------------------------------------------------------------------
+// Auto-generated signature + company seal/stamp (drawn on a canvas, so
+// they need no uploaded image). Used by every invoice layout.
+// ---------------------------------------------------------------------
+const SIGNATURE_STYLES = [["script", "Script"], ["elegant", "Elegant"], ["pen", "Pen"], ["flourish", "Flourish"], ["initials", "Initials"], ["scrawl", "Scrawl"], ["italic", "Italic"], ["formal", "Formal"]];
+const SEAL_DESIGNS = [["round", "Classic Round"], ["double", "Double Ring"], ["star", "Star"], ["scallop", "Scalloped"], ["banner", "Banner"], ["rect", "Rectangle"], ["oval", "Oval"]];
+
+function _autoCanvas(w, h) {
+  if (typeof document === "undefined") return null;
+  const c = document.createElement("canvas");
+  c.width = w; c.height = h;
+  return c;
+}
+function _rng(seed) {
+  seed = String(seed);
+  let h = 1779033703 ^ seed.length;
+  for (let i = 0; i < seed.length; i++) { h = Math.imul(h ^ seed.charCodeAt(i), 3432918353); h = (h << 13) | (h >>> 19); }
+  return function () {
+    h = Math.imul(h ^ (h >>> 16), 2246822507);
+    h = Math.imul(h ^ (h >>> 13), 3266489909);
+    return ((h ^= h >>> 16) >>> 0) / 4294967296;
+  };
+}
+
+// Typed signature in one of several styles. Script/elegant/pen use handwriting
+// fonts already on the device; "scrawl" is hand-drawn and needs no font.
+function generateSignatureDataUrl(name, style, color) {
+  name = String(name || "").trim();
+  if (!name) return "";
+  const c = _autoCanvas(640, 220);
+  const ctx = c && c.getContext("2d");
+  if (!ctx) return "";
+  const inks = { blue: "#14237a", black: "#151515", green: "#14532d", red: "#9b1c1c" };
+  const ink = inks[color] || inks.blue;
+  const stacks = {
+    script: '"Segoe Script","Brush Script MT","Lucida Handwriting","Ink Free","Snell Roundhand","Apple Chancery","Zapfino",cursive',
+    elegant: '"Lucida Calligraphy","Monotype Corsiva","Apple Chancery","URW Chancery L","Z003","Palace Script MT",cursive',
+    pen: '"Ink Free","Bradley Hand","Segoe Print","Marker Felt","Comic Sans MS",cursive',
+    italic: 'Georgia,"Times New Roman",serif',
+    formal: '"Palatino Linotype","Book Antiqua",Palatino,serif',
+  };
+  const st = SIGNATURE_STYLES.some((x) => x[0] === style) ? style : "script";
+  ctx.fillStyle = ink; ctx.strokeStyle = ink; ctx.lineCap = "round"; ctx.lineJoin = "round";
+  ctx.textBaseline = "alphabetic";
+  ctx.save();
+  ctx.translate(320, 110); ctx.rotate(-0.045); ctx.translate(-320, -110);
+
+  if (st === "scrawl") {
+    const rnd = _rng(name);
+    const letters = name.replace(/\s+/g, "").length;
+    ctx.font = 'italic bold 130px Georgia,"Times New Roman",serif';
+    ctx.fillText(name.charAt(0).toUpperCase(), 70, 150);
+    ctx.lineWidth = 4.2;
+    ctx.beginPath();
+    let px = 175, py = 118;
+    ctx.moveTo(px, py);
+    const n = Math.min(11, Math.max(5, Math.round(letters * 0.8)));
+    const step = (570 - 175) / n;
+    for (let i = 0; i < n; i++) {
+      const peak = (i % 2 === 0) ? (50 + rnd() * 35) : (135 + rnd() * 30);
+      ctx.quadraticCurveTo(px + step * 0.5, peak, px + step, 105 + rnd() * 35);
+      px += step;
+    }
+    ctx.stroke();
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(95, 176); ctx.bezierCurveTo(250, 162, 420, 192, 595, 150);
+    ctx.stroke();
+  } else {
+    let text = name;
+    if (st === "initials") {
+      const parts = name.split(/\s+/);
+      if (parts.length > 1) text = parts.slice(0, -1).map((p) => p.charAt(0).toUpperCase() + ".").join(" ") + " " + parts[parts.length - 1];
+    }
+    const fam = (st === "flourish" || st === "initials") ? stacks.script : stacks[st];
+    const prefix = (st === "italic" || st === "formal" || st === "elegant") ? "italic " : (st === "pen" ? "bold " : "");
+    let size = st === "pen" ? 78 : 88;
+    do {
+      ctx.font = prefix + size + "px " + fam;
+      if (ctx.measureText(text).width <= 560) break;
+      size -= 4;
+    } while (size > 24);
+    const tw = ctx.measureText(text).width;
+    const x = (640 - tw) / 2, y = 126;
+    ctx.fillText(text, x, y);
+    if (st === "flourish") {
+      ctx.lineWidth = 3.2;
+      ctx.beginPath();
+      ctx.moveTo(x + tw + 12, y - 34);
+      ctx.bezierCurveTo(x + tw + 44, y + 50, x + tw * 0.5, y + 62, x - 8, y + 26);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(x + tw * 0.15, y + 40); ctx.quadraticCurveTo(x + tw * 0.5, y + 22, x + tw * 0.9, y + 44);
+      ctx.stroke();
+    } else if (st === "pen") {
+      ctx.lineWidth = 5;
+      ctx.beginPath(); ctx.moveTo(x, y + 20); ctx.lineTo(x + tw, y + 8); ctx.stroke();
+    } else if (st === "initials") {
+      ctx.lineWidth = 3;
+      ctx.setLineDash([2, 9]);
+      ctx.beginPath(); ctx.moveTo(x - 6, y + 22); ctx.lineTo(x + tw + 6, y + 22); ctx.stroke();
+      ctx.setLineDash([]);
+    } else {
+      ctx.lineWidth = 3.5;
+      ctx.beginPath();
+      ctx.moveTo(x, y + 24);
+      ctx.bezierCurveTo(x + tw * 0.3, y + 8, x + tw * 0.65, y + 38, x + tw, y + 14);
+      ctx.stroke();
+    }
+  }
+  ctx.restore();
+  return c.toDataURL("image/png");
+}
+
+// Company seal in one of several designs. Everything is derived from the
+// company name (plus optional centre / bottom text and the GSTIN).
+function generateStampDataUrl(s) {
+  s = s || {};
+  const name = String(s.company_name || "").trim().toUpperCase();
+  if (!name) return "";
+  const design = SEAL_DESIGNS.some((d) => d[0] === s.stamp_design) ? s.stamp_design : "round";
+  const wide = design === "rect" || design === "oval";
+  const W = wide ? 780 : 540, H = wide ? (design === "oval" ? 540 : 520) : 540;
+  const c = _autoCanvas(W, H);
+  const ctx = c && c.getContext("2d");
+  if (!ctx) return "";
+  const colors = { blue: "#1d3fae", red: "#c0262d", black: "#1a1a1a", green: "#17653a", purple: "#5b2a86" };
+  const col = colors[s.stamp_color] || colors.blue;
+  const cx = W / 2, cy = H / 2;
+  const FONT = 'Arial,Helvetica,"Liberation Sans",sans-serif';
+  const TAU = Math.PI * 2;
+  const bottom = String(s.stamp_bottom || s.state || "").trim().toUpperCase();
+  let centre = String(s.stamp_center || "").trim().toUpperCase();
+  const initials = () => {
+    const skip = ["&", "AND", "ASSOCIATES", "CO", "CO.", "COMPANY", "PVT", "PVT.", "LTD", "LTD.", "LIMITED", "LLP", "M/S"];
+    return name.split(/\s+/).filter((w) => w && skip.indexOf(w) < 0).map((w) => w.charAt(0)).join("").slice(0, 5);
+  };
+
+  ctx.globalAlpha = 0.9;
+  ctx.strokeStyle = col; ctx.fillStyle = col;
+  ctx.textAlign = "center"; ctx.textBaseline = "alphabetic"; ctx.lineJoin = "round";
+  ctx.save();
+  if (s.stamp_tilt === true) { ctx.translate(cx, cy); ctx.rotate(-0.1); ctx.translate(-cx, -cy); }
+
+  const ring = (r, w, dash) => {
+    ctx.lineWidth = w; ctx.setLineDash(dash || []);
+    ctx.beginPath(); ctx.arc(cx, cy, r, 0, TAU); ctx.stroke(); ctx.setLineDash([]);
+  };
+  const star = (x, y, R, r) => {
+    ctx.beginPath();
+    for (let i = 0; i < 10; i++) {
+      const a = -Math.PI / 2 + i * Math.PI / 5, rr = i % 2 ? r : R;
+      ctx.lineTo(x + rr * Math.cos(a), y + rr * Math.sin(a));
+    }
+    ctx.closePath(); ctx.fill();
+  };
+  const arcText = (text, r, size, maxArc, isTop) => {
+    let fs = size, widths, total;
+    for (;;) {
+      ctx.font = "bold " + fs + "px " + FONT;
+      widths = text.split("").map((ch) => ctx.measureText(ch).width + fs * 0.06);
+      total = widths.reduce((a, b) => a + b, 0) / r;
+      if (total <= maxArc || fs <= 16) break;
+      fs -= 2;
+    }
+    let cum = 0;
+    text.split("").forEach((ch, i) => {
+      const w = widths[i] / r;
+      ctx.save();
+      ctx.translate(cx, cy);
+      if (isTop) { ctx.rotate(-total / 2 + cum + w / 2); ctx.fillText(ch, 0, -r); }
+      else { ctx.rotate(Math.PI + (total / 2 - cum - w / 2)); ctx.translate(0, -r); ctx.rotate(Math.PI); ctx.fillText(ch, 0, 0); }
+      ctx.restore();
+      cum += w;
+    });
+  };
+  const fitFont = (text, maxW, start, minSize) => {
+    let fs = start;
+    do { ctx.font = "bold " + fs + "px " + FONT; if (ctx.measureText(text).width <= maxW) break; fs -= 2; } while (fs > (minSize || 20));
+    return fs;
+  };
+  const centreText = (text, y, maxW, start, color) => {
+    const fs = fitFont(text, maxW, start);
+    if (color) ctx.fillStyle = color;
+    ctx.fillText(text, cx, y + fs * 0.34);
+    ctx.fillStyle = col;
+    return fs;
+  };
+  const dots = (rad) => [-1, 1].forEach((d) => { ctx.beginPath(); ctx.arc(cx + d * rad, cy, 6, 0, TAU); ctx.fill(); });
+  const wrapLines = (text, maxW, start) => {
+    for (let fs = start; fs >= 30; fs -= 2) {
+      ctx.font = "bold " + fs + "px " + FONT;
+      const words = text.split(/\s+/), lines = []; let cur = "";
+      words.forEach((w) => { const t = cur ? cur + " " + w : w; if (ctx.measureText(t).width <= maxW || !cur) cur = t; else { lines.push(cur); cur = w; } });
+      if (cur) lines.push(cur);
+      if (lines.length <= 2 && lines.every((l) => ctx.measureText(l).width <= maxW)) return { fs, lines };
+    }
+    ctx.font = "bold 30px " + FONT;
+    return { fs: 30, lines: [text] };
+  };
+  // Horizontal text block used by the rectangle and oval seals
+  const stack = (maxW, span) => {
+    const nm = wrapLines(name, maxW, 64);
+    const items = nm.lines.map((l) => ({ t: l, fs: nm.fs }));
+    const mid = centre || (s.gstin ? "GSTIN: " + s.gstin : "");
+    if (mid) items.push({ rule: true }, { t: mid, fs: Math.min(38, nm.fs), plain: true });
+    if (bottom) items.push({ t: bottom, fs: Math.min(40, nm.fs) });
+    let total = 0;
+    items.forEach((it) => { it.h = it.rule ? 24 : it.fs * 1.25; total += it.h; });
+    if (total > span) { const k = span / total; items.forEach((it) => { if (!it.rule) it.fs = Math.floor(it.fs * k); it.h *= k; }); total = span; }
+    let y = cy - total / 2;
+    items.forEach((it) => {
+      if (it.rule) { ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(cx - maxW / 2, y + it.h / 2); ctx.lineTo(cx + maxW / 2, y + it.h / 2); ctx.stroke(); }
+      else {
+        ctx.font = (it.plain ? "" : "bold ") + it.fs + "px " + FONT;
+        ctx.fillText(it.t, cx, y + it.fs * 0.95);
+      }
+      y += it.h;
+    });
+  };
+
+  if (design === "round") {
+    ring(248, 7); ring(237, 2.5); ring(150, 3); ring(141, 1.5);
+    arcText(name, 178, 40, bottom ? 4.1 : 5.3, true);
+    if (bottom) arcText(bottom, 205, 30, 2.0, false);
+    dots(194);
+    centre = centre || initials();
+    if (centre) {
+      const fs = centreText(centre, cy, 215, 84);
+      ctx.lineWidth = 2.5;
+      ctx.beginPath(); ctx.moveTo(cx - 80, cy - fs * 0.62); ctx.lineTo(cx + 80, cy - fs * 0.62); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(cx - 80, cy + fs * 0.62); ctx.lineTo(cx + 80, cy + fs * 0.62); ctx.stroke();
+    }
+  } else if (design === "double") {
+    ring(248, 11); ring(231, 2); ring(162, 2.5, [3, 8]); ring(148, 3.5);
+    arcText(name, 176, 38, bottom ? 4.0 : 5.2, true);
+    if (bottom) arcText(bottom, 214, 30, 2.0, false);
+    centre = centre || initials();
+    const fs = centre ? centreText(centre, cy + 8, 200, 78) : 60;
+    [-1, 0, 1].forEach((d) => star(cx + d * 34, cy - fs * 0.66 - 6, 11, 4.6));
+    [-1, 0, 1].forEach((d) => star(cx + d * 34, cy + fs * 0.66 + 24, 11, 4.6));
+  } else if (design === "star") {
+    ring(248, 6); ring(238, 2); ring(150, 3);
+    arcText(name, 178, 40, bottom ? 4.1 : 5.3, true);
+    if (bottom) arcText(bottom, 205, 30, 2.0, false);
+    [-1, 1].forEach((d) => star(cx + d * 194, cy, 14, 6));
+    star(cx, cy - 22, 62, 25);
+    centre = centre || initials();
+    if (centre) centreText(centre, cy + 78, 150, 46);
+  } else if (design === "scallop") {
+    const N = 44, R0 = 238;
+    ctx.lineWidth = 5; ctx.beginPath();
+    for (let i = 0; i < N; i++) {
+      const a1 = TAU * i / N, a2 = TAU * (i + 1) / N, am = (a1 + a2) / 2;
+      if (i === 0) ctx.moveTo(cx + R0 * Math.cos(a1), cy + R0 * Math.sin(a1));
+      ctx.quadraticCurveTo(cx + (R0 + 22) * Math.cos(am), cy + (R0 + 22) * Math.sin(am), cx + R0 * Math.cos(a2), cy + R0 * Math.sin(a2));
+    }
+    ctx.closePath(); ctx.stroke();
+    ring(214, 2.5); ring(140, 3);
+    arcText(name, 163, 34, bottom ? 4.0 : 5.2, true);
+    if (bottom) arcText(bottom, 192, 28, 2.0, false);
+    dots(177);
+    centre = centre || initials();
+    if (centre) centreText(centre, cy, 190, 72);
+  } else if (design === "banner") {
+    ring(248, 7); ring(237, 2.5); ring(150, 3); ring(141, 1.5);
+    arcText(name, 178, 40, bottom ? 4.1 : 5.3, true);
+    if (bottom) arcText(bottom, 205, 30, 2.0, false);
+    dots(194);
+    ctx.fillRect(cx - 142, cy - 40, 284, 80);
+    centre = centre || initials();
+    if (centre) centreText(centre, cy, 250, 60, "#ffffff");
+    star(cx, cy - 74, 11, 4.6); star(cx, cy + 82, 11, 4.6);
+  } else if (design === "rect") {
+    const x0 = 40, y0 = 40, w0 = W - 80, h0 = H - 80;
+    const rr = (x, y, w, h, r) => { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); ctx.stroke(); };
+    ctx.lineWidth = 8; rr(x0, y0, w0, h0, 20);
+    ctx.lineWidth = 2.5; rr(x0 + 17, y0 + 17, w0 - 34, h0 - 34, 12);
+    stack(w0 - 110, h0 - 90);
+  } else if (design === "oval") {
+    ctx.lineWidth = 8; ctx.beginPath(); ctx.ellipse(cx, cy, 350, 228, 0, 0, TAU); ctx.stroke();
+    ctx.lineWidth = 2.5; ctx.beginPath(); ctx.ellipse(cx, cy, 332, 210, 0, 0, TAU); ctx.stroke();
+    stack(470, 270);
+  }
+  ctx.restore();
+
+  if (s.stamp_texture === true) {
+    const rnd = _rng(name + "tx");
+    ctx.save();
+    ctx.globalCompositeOperation = "destination-out";
+    ctx.strokeStyle = "#000"; ctx.fillStyle = "#000";
+    for (let i = 0; i < 1500; i++) { ctx.globalAlpha = 0.3 + rnd() * 0.65; ctx.beginPath(); ctx.arc(rnd() * W, rnd() * H, 0.5 + rnd() * 2.4, 0, TAU); ctx.fill(); }
+    for (let i = 0; i < 16; i++) { ctx.globalAlpha = 0.5; ctx.lineWidth = 1 + rnd() * 3; const x = rnd() * W, y = rnd() * H; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + (rnd() - 0.5) * 70, y + (rnd() - 0.5) * 30); ctx.stroke(); }
+    ctx.restore();
+  }
+  return c.toDataURL("image/png");
+}
+
+// Uploaded signature image wins; otherwise a typed one from the signatory name.
+function resolveSignatureImage(seller) {
+  if (seller.signature_dataurl) return seller.signature_dataurl;
+  if (seller.signature_auto !== false && seller.signatory_name) {
+    try { return generateSignatureDataUrl(seller.signatory_name, seller.signature_style, seller.signature_color); } catch (e) { return ""; }
+  }
+  return "";
+}
+function resolveStampImage(seller) {
+  if (seller.show_stamp === true) {
+    try { return generateStampDataUrl(seller); } catch (e) { return ""; }
+  }
+  return "";
+}
+// Draw an image centred in a box, keeping its aspect ratio.
+function drawImageFit(doc, img, boxX, boxY, boxW, boxH) {
+  let w = boxW, h = boxH;
+  try {
+    const p = doc.getImageProperties(img);
+    if (p && p.width && p.height) { const k = Math.min(boxW / p.width, boxH / p.height); w = p.width * k; h = p.height * k; }
+  } catch (e) {}
+  doc.addImage(img, "PNG", boxX + (boxW - w) / 2, boxY + (boxH - h) / 2, w, h);
+}
+
 /**
  * Build the invoice PDF.
  * @param {Function} JsPDFCtor - the jsPDF class/constructor
@@ -4068,6 +4470,7 @@ function resolveTheme(seller) {
  * @returns {jsPDF} doc
  */
 function buildInvoicePDF(JsPDFCtor, autoTableFn, qrcodeGen, seller, invoice) {
+  if ((seller && seller.invoice_layout) === "tally") return buildTallyInvoicePDF(JsPDFCtor, qrcodeGen, seller, invoice);
   const doc = new JsPDFCtor({ unit: "mm", format: "a4" });
   const pageW = 210;
   const marginX = 13;
@@ -4510,11 +4913,16 @@ function buildInvoicePDF(JsPDFCtor, autoTableFn, qrcodeGen, seller, invoice) {
   setNavy();
   doc.text(`For ${seller.company_name || ""}`, signX + signW / 2, y, { align: "center" });
 
-  if (seller.signature_dataurl) {
+  const sigImg = resolveSignatureImage(seller);
+  const stampImg = resolveStampImage(seller);
+  if (stampImg) {
+    try { drawImageFit(doc, stampImg, signX + signW / 2 - 40, y - 1, 36, 26); } catch (e) { console.error("Stamp failed", e); }
+  }
+  if (sigImg) {
     try {
       const maxW = 40, maxH = 16; // mm — fits the existing signature slot
       let imgProps = null;
-      try { imgProps = doc.getImageProperties(seller.signature_dataurl); } catch (e) { imgProps = null; }
+      try { imgProps = doc.getImageProperties(sigImg); } catch (e) { imgProps = null; }
       let drawW = maxW, drawH = maxH;
       if (imgProps && imgProps.width && imgProps.height) {
         const ratio = Math.min(maxW / imgProps.width, maxH / imgProps.height);
@@ -4523,7 +4931,7 @@ function buildInvoicePDF(JsPDFCtor, autoTableFn, qrcodeGen, seller, invoice) {
       }
       const imgX = signX + signW / 2 - drawW / 2;
       const imgY = y + 3;
-      doc.addImage(seller.signature_dataurl, imgX, imgY, drawW, drawH);
+      doc.addImage(sigImg, imgX, imgY, drawW, drawH);
     } catch (e) {
       console.error("Could not render signature image", e);
       doc.setDrawColor(...INK);
@@ -4537,8 +4945,13 @@ function buildInvoicePDF(JsPDFCtor, autoTableFn, qrcodeGen, seller, invoice) {
   doc.setFontSize(8.7);
   setInk();
   doc.text("Authorized Signatory", signX + signW / 2, y + 20, { align: "center" });
+  if (seller.signatory_name) {
+    doc.setFont(baseFont, "bold");
+    doc.setFontSize(8.5);
+    doc.text(seller.signatory_name, signX + signW / 2, y + 24.5, { align: "center" });
+  }
 
-  y = Math.max(ny, y + 24) + 8;
+  y = Math.max(ny, y + (seller.signatory_name ? 28 : 24)) + 8;
 
   // ---------------- Footer ----------------
   // Upgrade (Settings: Show/Hide Footer; Footer Improvements): the whole
@@ -4584,6 +4997,426 @@ function buildInvoicePDF(JsPDFCtor, autoTableFn, qrcodeGen, seller, invoice) {
   }
   doc.setPage(totalPages);
 
+  return doc;
+}
+
+// ---------------------------------------------------------------------
+// Tally Prime style "Tax Invoice" layout (invoice_layout === "tally").
+// Black & white, boxed grid exactly like a Tally-generated invoice:
+// seller + buyer on the left, reference grid on the right, item table
+// with tax ledger lines, HSN/SAC tax summary, amount in words,
+// declaration + bank details + signatory.
+// ---------------------------------------------------------------------
+function tallyDateStr(s) {
+  s = String(s || "").trim();
+  const MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  let m = s.match(/^(\d{1,2})[-\/.](\d{1,2})[-\/.](\d{4})$/);
+  if (m && +m[2] >= 1 && +m[2] <= 12) return (+m[1]) + "-" + MON[(+m[2]) - 1] + "-" + m[3];
+  m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+  if (m && +m[2] >= 1 && +m[2] <= 12) return (+m[3]) + "-" + MON[(+m[2]) - 1] + "-" + m[1];
+  return s;
+}
+
+function buildTallyInvoicePDF(JsPDFCtor, qrcodeGen, seller, invoice) {
+  seller = seller || {};
+  invoice = invoice || {};
+  const doc = new JsPDFCtor({ unit: "mm", format: "a4" });
+  const PW = 210, PH = 297, mx = 8, W = PW - mx * 2, X2 = mx + W, F = "helvetica";
+  doc.setDrawColor(0, 0, 0);
+  doc.setTextColor(0, 0, 0);
+  doc.setLineWidth(0.2);
+
+  const fmt = (n) => (Number(n) || 0).toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const font = (st, sz) => { doc.setFont(F, st); doc.setFontSize(sz); };
+  const T = (s, x, y, o) => doc.text(String(s == null ? "" : s), x, y, o);
+  const R = (x, y, w, h) => doc.rect(x, y, w, h);
+  const Ln = (x1, y1, x2, y2) => doc.line(x1, y1, x2, y2);
+  const wrap = (s, w) => doc.splitTextToSize(String(s || ""), w);
+  const stCode = (g) => (/^\d{2}/.test(String(g || "")) ? String(g).slice(0, 2) : "");
+  const inrWords = (n) => {
+    const r = Math.floor(n + 1e-9);
+    const p = Math.round((n - r) * 100);
+    let s = "INR " + numberToWordsIndian(r);
+    if (p) s += " and " + numberToWordsIndian(p) + " paise";
+    return s + " Only";
+  };
+
+  // ---------- numbers ----------
+  const items = invoice.items || [];
+  const sameState = !!invoice.same_state;
+  let taxable = 0, tax = 0;
+  const byRate = {}, byHsn = {};
+  items.forEach((it) => {
+    const t = (Number(it.qty) || 0) * (Number(it.rate) || 0);
+    const r = Number(it.gst_rate) || 0;
+    const tx = t * r / 100;
+    taxable += t; tax += tx;
+    byRate[r] = (byRate[r] || 0) + tx;
+    const k = (it.code || "") + "|" + r;
+    if (!byHsn[k]) byHsn[k] = { code: it.code || "", rate: r, taxable: 0, tax: 0 };
+    byHsn[k].taxable += t; byHsn[k].tax += tx;
+  });
+  const grand = taxable + tax;
+  const ri = (invoice.roundOff !== undefined && invoice.roundedTotal !== undefined)
+    ? { roundOff: invoice.roundOff, roundedTotal: invoice.roundedTotal }
+    : calculateRoundOff(grand);
+  let finalPayable = ri.roundedTotal;
+  if (!Number.isFinite(finalPayable)) finalPayable = grand;
+  const rates = Object.keys(byRate).map(Number).filter((r) => byRate[r] > 0).sort((a, b) => a - b);
+  const hsnRows = Object.keys(byHsn).map((k) => byHsn[k]);
+  const allService = items.length > 0 && items.every((it) => it.item_type === "Service");
+  const allGoods = items.length > 0 && items.every((it) => it.item_type !== "Service");
+
+  // ---------- title ----------
+  font("bold", 12);
+  T(seller.invoice_heading || "Tax Invoice", PW / 2, 11, { align: "center" });
+
+  // ---------- header block ----------
+  const y0 = 14, LW = W / 2, rx = mx + LW, rowH = 9;
+  const sellerH = 36, buyerH = 32, hdrH = sellerH + buyerH;
+  R(mx, y0, W, hdrH);
+  Ln(rx, y0, rx, y0 + hdrH);
+  Ln(mx, y0 + sellerH, rx, y0 + sellerH);
+
+  // seller
+  let sy = y0 + 4.6;
+  font("bold", 10);
+  wrap((seller.company_name || "").toUpperCase(), LW - 3).forEach((l) => { T(l, mx + 1.5, sy); sy += 4.4; });
+  font("normal", 8.3);
+  const sLines = [];
+  if (seller.address_line1) wrap(seller.address_line1, LW - 3).forEach((l) => sLines.push(l));
+  if (seller.address_line2) wrap(seller.address_line2, LW - 3).forEach((l) => sLines.push(l));
+  if (seller.phone) sLines.push("Contact : " + seller.phone);
+  if (seller.gstin) sLines.push("GSTIN/UIN: " + seller.gstin);
+  if (seller.state) sLines.push("State Name : " + seller.state + (stCode(seller.gstin) ? ", Code : " + stCode(seller.gstin) : ""));
+  if (seller.email) sLines.push("E-Mail : " + seller.email);
+  sLines.forEach((l) => { T(l, mx + 1.5, sy); sy += 3.8; });
+
+  // buyer
+  let by = y0 + sellerH + 3.8;
+  font("normal", 7.5);
+  T("Buyer (Bill to)", mx + 1.5, by);
+  by += 4.2;
+  font("bold", 9);
+  wrap((invoice.buyer_name || "").toUpperCase(), LW - 3).slice(0, 2).forEach((l) => { T(l, mx + 1.5, by); by += 4; });
+  font("normal", 8.3);
+  if (invoice.buyer_address) wrap(invoice.buyer_address, LW - 3).slice(0, 2).forEach((l) => { T(l, mx + 1.5, by); by += 3.7; });
+  T("GSTIN/UIN : " + (invoice.buyer_gstin || "Unregistered"), mx + 1.5, by); by += 3.7;
+  if (invoice.buyer_state) {
+    const bc = stCode(invoice.buyer_gstin);
+    T("State Name : " + invoice.buyer_state + (bc ? ", Code : " + bc : ""), mx + 1.5, by); by += 3.7;
+    T("Place of Supply : " + invoice.buyer_state, mx + 1.5, by);
+  }
+
+  // right reference grid
+  const rcw = LW / 2;
+  const cells = [
+    ["Invoice No.", invoice.invoice_no, "Dated", tallyDateStr(invoice.invoice_date)],
+    ["Delivery Note", invoice.delivery_note, "Mode/Terms of Payment", invoice.payment_terms],
+    ["Supplier's Ref.", invoice.supplier_ref, "Other Reference(s)", invoice.other_reference],
+    ["Buyer's Order No.", invoice.buyer_order_no, "Dated", invoice.buyer_order_date],
+    ["Despatch Document No.", invoice.despatch_doc_no, "Delivery Note Date", invoice.delivery_note_date],
+    ["Despatched through", invoice.despatched_through, "Destination", invoice.destination],
+  ];
+  cells.forEach((c, i) => {
+    const ry = y0 + i * rowH;
+    if (i > 0) Ln(rx, ry, X2, ry);
+    Ln(rx + rcw, ry, rx + rcw, ry + rowH);
+    font("normal", 7.3);
+    T(c[0], rx + 1.5, ry + 3.3);
+    T(c[2], rx + rcw + 1.5, ry + 3.3);
+    font("bold", 8.5);
+    T(c[1] || "", rx + 1.5, ry + 7.3);
+    T(c[3] || "", rx + rcw + 1.5, ry + 7.3);
+  });
+  const todY = y0 + 6 * rowH;
+  Ln(rx, todY, X2, todY);
+  font("normal", 7.3);
+  T("Terms of Delivery", rx + 1.5, todY + 3.3);
+  if (invoice.terms_of_delivery) { font("bold", 8.3); doc.text(wrap(invoice.terms_of_delivery, LW - 3).slice(0, 3), rx + 1.5, todY + 7.3); }
+
+  // ---------- items table ----------
+  const cw = [8, 84, 22, 22, 20, 10, 28];
+  const cx = [mx];
+  cw.forEach((w, i) => cx.push(cx[i] + w));
+  const hdrRowH = 9;
+  const descTitle = allService ? "Description of Services" : allGoods ? "Description of Goods" : "Description of Goods / Services";
+
+  function drawHdr(top) {
+    font("bold", 8.3);
+    T("Sl", cx[0] + cw[0] / 2, top + 4, { align: "center" });
+    T("No.", cx[0] + cw[0] / 2, top + 7.4, { align: "center" });
+    T(descTitle, cx[1] + cw[1] / 2, top + 5.6, { align: "center" });
+    T("HSN/SAC", cx[2] + cw[2] / 2, top + 5.6, { align: "center" });
+    T("Quantity", cx[3] + cw[3] / 2, top + 5.6, { align: "center" });
+    T("Rate", cx[4] + cw[4] / 2, top + 5.6, { align: "center" });
+    T("per", cx[5] + cw[5] / 2, top + 5.6, { align: "center" });
+    T("Amount", cx[6] + cw[6] / 2, top + 5.6, { align: "center" });
+  }
+  function frame(top, bottom) {
+    R(mx, top, W, bottom - top);
+    for (let i = 1; i < cx.length - 1; i++) Ln(cx[i], top, cx[i], bottom);
+    Ln(mx, top + hdrRowH, X2, top + hdrRowH);
+  }
+
+  const rows = [];
+  items.forEach((it, i) => {
+    const goods = it.item_type !== "Service";
+    font("bold", 8.3);
+    const lines = wrap(it.name || "", cw[1] - 3);
+    const taxableAmt = (Number(it.qty) || 0) * (Number(it.rate) || 0);
+    rows.push({
+      h: lines.length * 3.9 + 2,
+      draw(y) {
+        font("normal", 8.3);
+        T(String(i + 1), cx[0] + cw[0] / 2, y + 4, { align: "center" });
+        font("bold", 8.3);
+        doc.text(lines, cx[1] + 1.5, y + 4);
+        font("normal", 8.3);
+        T(it.code || "", cx[2] + cw[2] / 2, y + 4, { align: "center" });
+        if (goods) {
+          font("bold", 8.3);
+          T(fmt(it.qty).replace(/\.00$/, "") + " " + (it.uqc || "NOS"), cx[4] - 1.5, y + 4, { align: "right" });
+          font("normal", 8.3);
+          T(fmt(it.rate), cx[5] - 1.5, y + 4, { align: "right" });
+          T(it.uqc || "NOS", cx[5] + cw[5] / 2, y + 4, { align: "center" });
+        }
+        font("bold", 8.3);
+        T(fmt(taxableAmt), X2 - 1.5, y + 4, { align: "right" });
+      },
+    });
+  });
+  rows.push({ h: 3, draw() {} });
+  const ledgerRow = (label, amtText) => ({
+    h: 4.6,
+    draw(y) {
+      font("bolditalic", 8.3);
+      T(label, cx[2] - 2, y + 3.6, { align: "right" });
+      font("bold", 8.3);
+      T(amtText, X2 - 1.5, y + 3.6, { align: "right" });
+    },
+  });
+  rates.forEach((r) => {
+    const multi = rates.length > 1;
+    if (sameState) {
+      rows.push(ledgerRow("CGST A/c" + (multi ? " @ " + r / 2 + "%" : ""), fmt(byRate[r] / 2)));
+      rows.push(ledgerRow("SGST A/c" + (multi ? " @ " + r / 2 + "%" : ""), fmt(byRate[r] / 2)));
+    } else {
+      rows.push(ledgerRow("IGST A/c" + (multi ? " @ " + r + "%" : ""), fmt(byRate[r])));
+    }
+  });
+  if (Math.abs(ri.roundOff) > 0.0049) {
+    rows.push(ledgerRow(ri.roundOff < 0 ? "Less : ROUND OFF" : "ROUND OFF", (ri.roundOff < 0 ? "(-)" : "") + fmt(Math.abs(ri.roundOff))));
+  }
+
+  const totalH = 7;
+  let ty = y0 + hdrH, pageTop = ty;
+  drawHdr(pageTop);
+  let y = pageTop + hdrRowH;
+  rows.forEach((r) => {
+    if (y + r.h > PH - 14 - totalH) {
+      frame(pageTop, y);
+      doc.addPage();
+      pageTop = 14;
+      drawHdr(pageTop);
+      y = pageTop + hdrRowH;
+    }
+    r.draw(y);
+    y += r.h;
+  });
+  let bodyEnd = y;
+  if (doc.getNumberOfPages() === 1) bodyEnd = Math.max(y, pageTop + hdrRowH + 62);
+  frame(pageTop, bodyEnd + totalH);
+  Ln(mx, bodyEnd, X2, bodyEnd);
+  font("bold", 8.5);
+  T("Total", cx[2] - 2, bodyEnd + 4.9, { align: "right" });
+  if (allGoods) {
+    const uq = items.map((it) => it.uqc || "NOS");
+    if (uq.every((u) => u === uq[0])) {
+      const q = items.reduce((a, it) => a + (Number(it.qty) || 0), 0);
+      T(fmt(q).replace(/\.00$/, "") + " " + uq[0], cx[4] - 1.5, bodyEnd + 4.9, { align: "right" });
+    }
+  }
+  T("Rs. " + fmt(finalPayable), X2 - 1.5, bodyEnd + 4.9, { align: "right" });
+  let fy = bodyEnd + totalH;
+
+  // ---------- footer needs room; otherwise continue on a new page ----------
+  const bottomH = 52;
+  const footH = 14 + (11 + hsnRows.length * 5.5) + 7 + bottomH + 8;
+  if (fy + footH > PH - 8) { doc.addPage(); fy = 14; }
+
+  // amount chargeable
+  const words = wrap(inrWords(finalPayable), W - 3);
+  const acH = 6 + words.length * 4.2 + 1;
+  R(mx, fy, W, acH);
+  font("normal", 7.5);
+  T("Amount Chargeable (in words)", mx + 1.5, fy + 3.6);
+  T("E. & O.E", X2 - 1.5, fy + 3.6, { align: "right" });
+  font("bold", 8.8);
+  doc.text(words, mx + 1.5, fy + 8);
+  fy += acH;
+
+  // HSN / SAC summary
+  const hc = sameState ? [34, 34, 14, 30, 14, 30, 38] : [40, 44, 20, 44, 46];
+  const hx = [mx];
+  hc.forEach((w, i) => hx.push(hx[i] + w));
+  const hsnH = 10 + hsnRows.length * 5.5 + 5.5;
+  R(mx, fy, W, hsnH);
+  const gStart = 2;
+  const groupCols = sameState ? [[2, 4], [4, 6]] : [[2, 4]];
+  const lastCol = hc.length - 1;
+  Ln(hx[1], fy, hx[1], fy + hsnH);
+  Ln(hx[2], fy, hx[2], fy + hsnH);
+  groupCols.forEach((g) => {
+    Ln(hx[g[1]], fy, hx[g[1]], fy + hsnH);
+    Ln(hx[g[0]], fy + 5, hx[g[1]], fy + 5);
+    Ln(hx[g[0] + 1], fy + 5, hx[g[0] + 1], fy + hsnH);
+  });
+  Ln(mx, fy + 10, X2, fy + 10);
+  Ln(mx, fy + hsnH - 5.5, X2, fy + hsnH - 5.5);
+  font("bold", 7.8);
+  T("HSN/SAC", hx[0] + hc[0] / 2, fy + 6.4, { align: "center" });
+  T("Taxable", hx[1] + hc[1] / 2, fy + 4.2, { align: "center" });
+  T("Value", hx[1] + hc[1] / 2, fy + 8, { align: "center" });
+  const gNames = sameState ? ["Central Tax", "State Tax"] : ["Integrated Tax"];
+  groupCols.forEach((g, gi) => {
+    T(gNames[gi], (hx[g[0]] + hx[g[1]]) / 2, fy + 3.7, { align: "center" });
+    T("Rate", hx[g[0]] + hc[g[0]] / 2, fy + 8.6, { align: "center" });
+    T("Amount", hx[g[0] + 1] + hc[g[0] + 1] / 2, fy + 8.6, { align: "center" });
+  });
+  T("Total", hx[lastCol] + hc[lastCol] / 2, fy + 4.2, { align: "center" });
+  T("Tax Amount", hx[lastCol] + hc[lastCol] / 2, fy + 8, { align: "center" });
+  let hy = fy + 10;
+  font("normal", 8);
+  hsnRows.forEach((h) => {
+    T(h.code, hx[0] + 1.5, hy + 3.9);
+    T(fmt(h.taxable), hx[2] - 1.5, hy + 3.9, { align: "right" });
+    if (sameState) {
+      T((h.rate / 2) + "%", hx[3] - 1.5, hy + 3.9, { align: "right" });
+      T(fmt(h.tax / 2), hx[4] - 1.5, hy + 3.9, { align: "right" });
+      T((h.rate / 2) + "%", hx[5] - 1.5, hy + 3.9, { align: "right" });
+      T(fmt(h.tax / 2), hx[6] - 1.5, hy + 3.9, { align: "right" });
+    } else {
+      T(h.rate + "%", hx[3] - 1.5, hy + 3.9, { align: "right" });
+      T(fmt(h.tax), hx[4] - 1.5, hy + 3.9, { align: "right" });
+    }
+    T(fmt(h.tax), X2 - 1.5, hy + 3.9, { align: "right" });
+    hy += 5.5;
+  });
+  font("bold", 8);
+  T("Total", hx[1] - 1.5, hy + 3.9, { align: "right" });
+  T(fmt(taxable), hx[2] - 1.5, hy + 3.9, { align: "right" });
+  if (sameState) {
+    T(fmt(tax / 2), hx[4] - 1.5, hy + 3.9, { align: "right" });
+    T(fmt(tax / 2), hx[6] - 1.5, hy + 3.9, { align: "right" });
+  } else {
+    T(fmt(tax), hx[4] - 1.5, hy + 3.9, { align: "right" });
+  }
+  T(fmt(tax), X2 - 1.5, hy + 3.9, { align: "right" });
+  fy += hsnH;
+
+  // tax amount in words
+  R(mx, fy, W, 7);
+  font("normal", 8.3);
+  const tLabel = "Tax Amount (in words) :  ";
+  T(tLabel, mx + 1.5, fy + 4.8);
+  const tw = doc.getTextWidth(tLabel);
+  font("bold", 8.3);
+  T(inrWords(tax), mx + 1.5 + tw, fy + 4.8);
+  fy += 7;
+
+  // declaration + bank + signatory
+  R(mx, fy, W, bottomH);
+  Ln(rx, fy, rx, fy + bottomH);
+  const showQr = seller.show_qr !== false && seller.upi_id && qrcodeGen;
+  font("bold", 8.3);
+  T("Declaration", mx + 1.5, fy + 4.2);
+  Ln(mx + 1.5, fy + 4.8, mx + 1.5 + doc.getTextWidth("Declaration"), fy + 4.8);
+  font("normal", 7.8);
+  const decl = "We declare that this invoice shows the actual price of the goods described and that all particulars are true and correct.";
+  let dy = fy + 8.6;
+  const decLines = wrap(decl, LW - 3 - (showQr ? 22 : 0));
+  doc.text(decLines, mx + 1.5, dy);
+  dy += decLines.length * 3.5 + 1.5;
+  if (seller.show_terms !== false && seller.terms && seller.terms.length) {
+    font("bold", 7.5);
+    T("Terms & Conditions", mx + 1.5, dy); dy += 3.5;
+    font("normal", 7);
+    seller.terms.slice(0, 3).forEach((t) => {
+      const tl = wrap("- " + t, LW - 3 - (showQr ? 22 : 0)).slice(0, 2);
+      if (dy + tl.length * 3 < fy + bottomH - 1) { doc.text(tl, mx + 1.5, dy); dy += tl.length * 3; }
+    });
+  }
+  if (showQr) {
+    try {
+      const qr = qrcodeGen(0, "M");
+      qr.addData("upi://pay?pa=" + seller.upi_id + "&pn=" + encodeURIComponent(seller.company_name || "") + "&am=" + finalPayable.toFixed(2) + "&cu=INR");
+      qr.make();
+      doc.addImage(qr.createDataURL(6, 2), "PNG", rx - 22, fy + 8, 19, 19);
+      font("bold", 6.5);
+      T("Scan to pay (UPI)", rx - 12.5, fy + 30, { align: "center" });
+    } catch (e) { console.error("QR failed", e); }
+  }
+
+  let ry2 = fy + 4.2;
+  if (seller.show_bank_details !== false && (seller.bank_name || seller.bank_account_no || seller.bank_ifsc)) {
+    font("bold", 8.3);
+    T("Company's Bank Details", rx + 1.5, ry2);
+    ry2 += 4.2;
+    const brs = [
+      ["A/c Holder's Name", seller.bank_account_name || seller.company_name || ""],
+      ["Bank Name", seller.bank_name || ""],
+      ["A/c No.", seller.bank_account_no || ""],
+      ["Branch & IFS Code", (seller.bank_branch ? seller.bank_branch + " & " : "") + (seller.bank_ifsc || "")],
+    ];
+    brs.forEach(([lb, v]) => {
+      font("normal", 7.8);
+      T(lb, rx + 1.5, ry2);
+      T(":", rx + 31, ry2);
+      font("bold", 7.8);
+      T(v, rx + 33, ry2);
+      ry2 += 3.9;
+    });
+  }
+  const sigTop = fy + 22.5;
+  Ln(rx, sigTop, X2, sigTop);
+  font("bold", 8.3);
+  T("for " + (seller.company_name || "").toUpperCase(), X2 - 1.5, sigTop + 4, { align: "right" });
+  const sigImg = resolveSignatureImage(seller);
+  const stampImg = resolveStampImage(seller);
+  if (stampImg) {
+    try { drawImageFit(doc, stampImg, X2 - 67, sigTop + 5.5, 29, 23); } catch (e) { console.error("Stamp failed", e); }
+  }
+  if (sigImg) {
+    try {
+      const maxW = 36, maxH = 11;
+      let ip = null;
+      try { ip = doc.getImageProperties(sigImg); } catch (e) { ip = null; }
+      let dw = maxW, dh = maxH;
+      if (ip && ip.width && ip.height) { const k = Math.min(maxW / ip.width, maxH / ip.height); dw = ip.width * k; dh = ip.height * k; }
+      doc.addImage(sigImg, X2 - 1.5 - dw, sigTop + 7.5, dw, dh);
+    } catch (e) { console.error("Signature failed", e); }
+  }
+  if (seller.signatory_name) {
+    font("bold", 7.8);
+    T(seller.signatory_name, X2 - 1.5, fy + bottomH - 5.4, { align: "right" });
+  }
+  font("normal", 8.3);
+  T("Authorised Signatory", X2 - 1.5, fy + bottomH - 1.8, { align: "right" });
+  fy += bottomH;
+
+  font("normal", 8);
+  T("This is a Computer Generated Invoice", PW / 2, fy + 5, { align: "center" });
+
+  const n = doc.getNumberOfPages();
+  if (n > 1) {
+    for (let p = 1; p <= n; p++) {
+      doc.setPage(p);
+      font("normal", 7);
+      T("Page " + p + " of " + n, X2, 7, { align: "right" });
+    }
+    doc.setPage(n);
+  }
   return doc;
 }
 
@@ -27332,6 +28165,7 @@ if (typeof module !== "undefined") {
     bank_name: "",
     bank_account_no: "",
     bank_ifsc: "",
+    bank_branch: "",
     upi_id: "",
     terms: [
       "Please make payments within the due date.",
@@ -27341,7 +28175,7 @@ if (typeof module !== "undefined") {
     // seller configs that predate these keys fall back to these defaults
     // via the {...DEFAULT_SELLER, ...saved} merge in loadSeller().
     invoice_heading: "Tax Invoice",
-    invoice_layout: "classic",
+    invoice_layout: "tally",
     theme_preset: "classic-blue",
     custom_colors: {
       header: "#0f172a",
@@ -27353,6 +28187,17 @@ if (typeof module !== "undefined") {
       text: "#1a1a1a",
     },
     signature_dataurl: "",
+    signatory_name: "",
+    signature_auto: true,
+    signature_style: "script",
+    show_stamp: false,
+    stamp_color: "blue",
+    stamp_design: "round",
+    stamp_texture: false,
+    stamp_tilt: false,
+    signature_color: "blue",
+    stamp_center: "",
+    stamp_bottom: "",
     show_footer: true,
     show_terms: true,
     show_bank_details: true,
@@ -27644,7 +28489,7 @@ if (typeof module !== "undefined") {
   // ---------------------------------------------------------------
   const settingsFields = [
     "company_name", "tagline", "address_line1", "address_line2", "gstin", "state",
-    "phone", "email", "bank_name", "bank_account_no", "bank_ifsc", "upi_id",
+    "phone", "email", "bank_name", "bank_account_no", "bank_ifsc", "bank_branch", "upi_id", "signatory_name", "signature_style", "stamp_color", "stamp_design", "signature_color", "stamp_center", "stamp_bottom",
     // Upgrade (Invoice Appearance): plain <select> values, so they read
     // and write through the same generic loop as the text fields above.
     "invoice_heading", "invoice_layout", "theme_preset",
@@ -27680,6 +28525,49 @@ if (typeof module !== "undefined") {
     }
   }
 
+  function refreshAutoPreviews() {
+    const val = (id) => { const el = document.getElementById(id); return el ? el.value.trim() : ""; };
+    const chk = (id) => { const el = document.getElementById(id); return !!(el && el.checked); };
+    const tmp = {
+      company_name: val("set_company_name"), state: val("set_state"), gstin: val("set_gstin"),
+      signatory_name: val("set_signatory_name"), signature_style: val("set_signature_style"), signature_color: val("set_signature_color"),
+      stamp_color: val("set_stamp_color"), stamp_design: val("set_stamp_design"), stamp_center: val("set_stamp_center"), stamp_bottom: val("set_stamp_bottom"),
+      stamp_texture: chk("set_stamp_texture"), stamp_tilt: chk("set_stamp_tilt"),
+    };
+    const gallery = (boxId, items, selId, makeUrl) => {
+      const box = document.getElementById(boxId), sel = document.getElementById(selId);
+      if (!box) return;
+      const cur = sel ? sel.value : "";
+      box.innerHTML = "";
+      items.forEach((it) => {
+        const d = document.createElement("div");
+        d.className = "dg-item" + (it[0] === cur ? " active" : "");
+        let url = "";
+        try { url = makeUrl(it[0]); } catch (e) {}
+        if (url) { const im = document.createElement("img"); im.src = url; im.alt = it[1]; d.appendChild(im); }
+        const t = document.createElement("div"); t.textContent = it[1]; d.appendChild(t);
+        d.addEventListener("click", () => { if (sel) { sel.value = it[0]; refreshAutoPreviews(); } });
+        box.appendChild(d);
+      });
+    };
+    gallery("sigGallery", SIGNATURE_STYLES, "set_signature_style", (v) => generateSignatureDataUrl(tmp.signatory_name || "Your Name", v, tmp.signature_color));
+    gallery("sealGallery", SEAL_DESIGNS, "set_stamp_design", (v) => generateStampDataUrl(Object.assign({}, tmp, { company_name: tmp.company_name || "Your Company", stamp_design: v })));
+    const show = (wrapId, imgId, url) => {
+      const w = document.getElementById(wrapId), i = document.getElementById(imgId);
+      if (!w || !i) return;
+      if (url) { i.src = url; w.style.display = "block"; } else { i.src = ""; w.style.display = "none"; }
+    };
+    let sig = "", stamp = "";
+    try { sig = generateSignatureDataUrl(tmp.signatory_name, tmp.signature_style); } catch (e) {}
+    try { stamp = generateStampDataUrl(tmp); } catch (e) {}
+    show("autoSigPreviewWrap", "autoSigPreviewImg", sig);
+    show("stampPreviewWrap", "stampPreviewImg", stamp);
+  }
+  ["set_company_name", "set_state", "set_signatory_name", "set_signature_style", "set_stamp_color", "set_stamp_center", "set_stamp_bottom", "set_stamp_design", "set_signature_color", "set_stamp_texture", "set_stamp_tilt", "set_gstin"].forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) { el.addEventListener("input", refreshAutoPreviews); el.addEventListener("change", refreshAutoPreviews); }
+  });
+
   function fillSettingsForm() {
     settingsFields.forEach((key) => {
       const el = document.getElementById("set_" + key);
@@ -27695,6 +28583,15 @@ if (typeof module !== "undefined") {
     document.getElementById("set_show_terms").checked = seller.show_terms !== false;
     document.getElementById("set_show_bank_details").checked = seller.show_bank_details !== false;
     document.getElementById("set_show_qr").checked = seller.show_qr !== false;
+    document.getElementById("set_signature_auto").checked = seller.signature_auto !== false;
+    document.getElementById("set_show_stamp").checked = seller.show_stamp === true;
+    if (!seller.signature_style) document.getElementById("set_signature_style").value = "script";
+    if (!seller.stamp_color) document.getElementById("set_stamp_color").value = "blue";
+    if (!seller.stamp_design) document.getElementById("set_stamp_design").value = "round";
+    if (!seller.signature_color) document.getElementById("set_signature_color").value = "blue";
+    document.getElementById("set_stamp_texture").checked = seller.stamp_texture === true;
+    document.getElementById("set_stamp_tilt").checked = seller.stamp_tilt === true;
+    refreshAutoPreviews();
   }
 
   const themePresetSelect = document.getElementById("set_theme_preset");
@@ -27784,6 +28681,10 @@ if (typeof module !== "undefined") {
     seller.show_terms = document.getElementById("set_show_terms").checked;
     seller.show_bank_details = document.getElementById("set_show_bank_details").checked;
     seller.show_qr = document.getElementById("set_show_qr").checked;
+    seller.signature_auto = document.getElementById("set_signature_auto").checked;
+    seller.show_stamp = document.getElementById("set_show_stamp").checked;
+    seller.stamp_texture = document.getElementById("set_stamp_texture").checked;
+    seller.stamp_tilt = document.getElementById("set_stamp_tilt").checked;
     saveSeller(seller);
     syncActiveCompanyRegistryName(seller.company_name);
     document.getElementById("companyBadge").textContent = seller.company_name || "Invoice Manager";
@@ -28139,6 +29040,12 @@ if (typeof module !== "undefined") {
     return String(d).padStart(2, "0") + "-" + String(mo).padStart(2, "0") + "-" + y;
   }
 
+  const PDFIMP_RIGHT = /\s*\b(Invoice No\.?|e-?Way Bill|Delivery Note( Date)?|Reference No|Supplier.s Ref\.?|Buyer.s Order( No\.?)?|Dispatch(ed)?( Document No\.?| through)?|Despatch(ed)?( Document No\.?| through)?|Mode\/Terms( of Payment)?|Other Reference\(?s?\)?|Terms of Delivery|Destination|Dated)\b.*$/i;
+  const PDFIMP_TAILDATE = /\s+[A-Za-z0-9][A-Za-z0-9\/\-_.]{0,24}\s+\d{1,2}[-\/. ][A-Za-z]{3}[-\/. ,]*\d{2,4}\s*$/;
+  function pdfImpCleanLeft(l) {
+    return String(l).replace(PDFIMP_TAILDATE, "").replace(PDFIMP_RIGHT, "").replace(/[\s,]+$/, "").trim();
+  }
+
   function pdfImpParse(lines) {
     lines = lines.map((l) => l.replace(/\s+/g, " ").trim()).filter(Boolean);
     const full = lines.join("\n");
@@ -28151,11 +29058,20 @@ if (typeof module !== "undefined") {
     const labelIdx = lines.findIndex((l) => /^Invoice\s*(No\.?|Number|#)/i.test(l));
     if (labelIdx >= 0) {
       const inline = lines[labelIdx].match(/^Invoice\s*(?:No\.?|Number|#)\s*[:\-]?\s*([A-Za-z0-9][A-Za-z0-9\/\-_.]*)\b/i);
-      if (inline && !/^(Dated|Delivery|Date|Reference)$/i.test(inline[1])) out.invoice_no = inline[1];
+      if (inline && !/^(Dated|Delivery|Date|Reference|e-?Way|Way|Bill|Supplier.*)$/i.test(inline[1])) out.invoice_no = inline[1];
       if (!out.invoice_no) {
         const rowRe = new RegExp("^([A-Za-z0-9][A-Za-z0-9\\/\\-_.]{0,24})\\s+" + dateRe);
         for (let j = labelIdx + 1; j < Math.min(lines.length, labelIdx + 6); j++) {
           const m = lines[j].match(rowRe);
+          if (m) { out.invoice_no = m[1]; break; }
+        }
+      }
+      if (!out.invoice_no) {
+        // Value printed on its own row (e.g. "2026-27/AKG/136") under the labels
+        const onlyDate = new RegExp("^" + dateRe + "$");
+        for (let j = labelIdx + 1; j < Math.min(lines.length, labelIdx + 4); j++) {
+          if (onlyDate.test(lines[j])) continue;
+          const m = lines[j].match(/^([A-Za-z0-9][A-Za-z0-9\/\-_.]*\d[A-Za-z0-9\/\-_.]*)(?:\s|$)/);
           if (m) { out.invoice_no = m[1]; break; }
         }
       }
@@ -28167,12 +29083,14 @@ if (typeof module !== "undefined") {
 
     // ---- Buyer block (Bill to)
     let bi = lines.findIndex((l) => /Buyer\s*\(?\s*Bill\s*to\s*\)?/i.test(l));
-    if (bi < 0) bi = lines.findIndex((l) => /^(Bill\s*To|Billed\s*To|Buyer)\b/i.test(l));
+    if (bi < 0) bi = lines.findIndex((l) => /^(Bill\s*To|Billed\s*To|Buyer(\s*\(\s*Bill\s*to\s*\))?\s*$)/i.test(l.replace(PDFIMP_RIGHT, "")) && !/^Buyer.s Order/i.test(l));
     if (bi >= 0) {
       const block = [];
       for (let j = bi + 1; j < Math.min(lines.length, bi + 9); j++) {
         if (/^(Invoice No|Delivery Note|Consignee|Sl\b|Particulars)/i.test(lines[j])) break;
-        block.push(lines[j]);
+        const cl = pdfImpCleanLeft(lines[j]);
+        if (!cl || /^(Buyer|BUYER)(\s*\(\s*Bill\s*to\s*\))?$/i.test(cl)) continue;
+        block.push(cl);
       }
       const lab = /^(GSTIN\s*\/?\s*UIN|GSTIN|State Name|PAN|E-?Mail|Contact|Place of Supply)/i;
       const first = block.findIndex((l) => !lab.test(l));
@@ -28191,17 +29109,17 @@ if (typeof module !== "undefined") {
     }
 
     // ---- Seller (your company) block at the top of the invoice
-    out.seller = { company_name: "", address_line1: "", address_line2: "", gstin: "", state: "", phone: "", email: "", bank_name: "", bank_account_no: "", bank_ifsc: "" };
+    out.seller = { company_name: "", address_line1: "", address_line2: "", gstin: "", state: "", phone: "", email: "", bank_name: "", bank_account_no: "", bank_ifsc: "", bank_branch: "" };
     {
       let start = lines.findIndex((l) => /^(Tax\s+)?Invoice$/i.test(l));
       start = start < 0 ? 0 : start + 1;
-      let end = lines.findIndex((l, i) => i >= start && /^(Consignee|Buyer\s*\(?\s*Bill|Bill\s*To|Sl\b)/i.test(l));
+      let end = lines.findIndex((l, i) => i >= start && /^(Consignee|Buyer\b|Bill\s*To|Sl\b)/i.test(l));
       if (end < 0) end = Math.min(lines.length, start + 12);
       const rightCol = /\s*\b(Invoice No\.?|Delivery Note|Reference No|Buyer.s Order|Dispatch(ed)?|Mode\/Terms|Other References|Terms of Delivery|Destination|Dated)\b.*$/i;
       const dateRow = /^[A-Za-z0-9\/\-_.]{1,24}\s+\d{1,2}[-\/. ][A-Za-z]{3}[-\/. ,]*\d{2,4}\s*$/;
       const sl = [];
       for (let i = start; i < end; i++) {
-        let l = lines[i].replace(rightCol, "").trim();
+        let l = pdfImpCleanLeft(lines[i]);
         if (!l || dateRow.test(lines[i])) continue;
         sl.push(l);
       }
@@ -28225,6 +29143,7 @@ if (typeof module !== "undefined") {
         if ((m = l.match(/Bank Name\s*:?\s*(.+)$/i))) out.seller.bank_name = m[1].replace(/\s*\(.*$/, "").trim();
         if ((m = l.match(/A\/c\s*No\.?\s*:?\s*(\d{6,20})/i))) out.seller.bank_account_no = m[1];
         if ((m = l.match(/\b([A-Z]{4}0[A-Z0-9]{6})\b/))) out.seller.bank_ifsc = m[1];
+        if ((m = l.match(/Branch\s*&\s*IFS\s*Code\s*:?\s*(.+?)\s*&\s*[A-Z]{4}0[A-Z0-9]{6}/i))) out.seller.bank_branch = m[1].trim();
       });
     }
 
@@ -28238,19 +29157,39 @@ if (typeof module !== "undefined") {
       taxSum += pdfImpNum(m[3]);
     });
     if (ig) out.taxRate = ig; else if (cg || sg) out.taxRate = cg + sg;
+    // Tally HSN/SAC summary row: "998221 1,45,000.00 9% 13,050.00 9% 13,050.00 26,100.00"
+    const hsnRates = {};
+    lines.forEach((l) => {
+      const m = l.match(/^(\d{4,8})\s+[\d,]+\.\d{2}\s+(.*)$/);
+      if (!m) return;
+      const pcts = (m[2].match(/(\d+(?:\.\d+)?)\s*%/g) || []).map((x) => parseFloat(x));
+      if (!pcts.length) return;
+      hsnRates[m[1]] = pcts.length >= 2 ? pcts.reduce((a, b) => a + b, 0) : pcts[0];
+    });
+    if (out.taxRate === null) { const hv = Object.keys(hsnRates).map((k) => hsnRates[k]); if (hv.length) out.taxRate = hv[0]; }
 
     // ---- Grand total
-    for (let i = lines.length - 1; i >= 0; i--) {
+    // Prefer the first "Total" row that carries exactly one amount (the invoice total);
+    // the HSN summary "Total" row carries several amounts and is skipped.
+    for (let i = 0; i < lines.length; i++) {
       if (!/^(?:Grand\s+)?Total\b/i.test(lines[i])) continue;
-      const m = lines[i].match(/([\d,]+\.\d{2})\s*$/) || (lines[i + 1] || "").match(/([\d,]+\.\d{2})\s*$/);
-      if (m) { out.pdfTotal = pdfImpNum(m[1]); break; }
+      const am = lines[i].match(/[\d,]+\.\d{2}/g);
+      if (am && am.length === 1) { out.pdfTotal = pdfImpNum(am[0]); break; }
+    }
+    if (!out.pdfTotal) {
+      for (let i = lines.length - 1; i >= 0; i--) {
+        if (!/^(?:Grand\s+)?Total\b/i.test(lines[i])) continue;
+        const m = lines[i].match(/([\d,]+\.\d{2})\s*$/) || (lines[i + 1] || "").match(/([\d,]+\.\d{2})\s*$/);
+        if (m) { out.pdfTotal = pdfImpNum(m[1]); break; }
+      }
     }
 
     // ---- Line items
-    let hi = lines.findIndex((l) => /^Sl\.?\b.*\bParticulars\b/i.test(l) || /^Particulars\b/i.test(l) || /^(Sr|S)\.?\s*No\.?\b.*(Description|Particulars)/i.test(l));
+    let hi = lines.findIndex((l) => /^Sl\.?\b.*\b(Particulars|Description)\b/i.test(l) || /^Particulars\b/i.test(l) || /^(Sr|S)\.?\s*No\.?\b.*(Description|Particulars)/i.test(l));
     if (hi < 0) hi = lines.findIndex((l) => /Description of (Goods|Services)/i.test(l));
     const stop = /^(Output|Input|Total\b|CGST|SGST|IGST|UTGST|Less\b|Add\b|Round|Amount Chargeable|Tax(able)?\b)/i;
     const unitRe = /^(nos?|pcs?|kgs?|kg|mt|mtr|ltr|ltrs?|l|box|bag|bags|sqm|sqft|set|doz|ton|tons|bdl|unit|units|cum|rmt|rft|sft)\.?$/i;
+    let taxLedgerSum = 0;
     if (hi >= 0) {
       let cur = null;
       const flush = () => {
@@ -28288,6 +29227,13 @@ if (typeof module !== "undefined") {
       };
       for (let i = hi + 1; i < lines.length; i++) {
         const l = lines[i];
+        // Tax ledger rows inside the item table ("2 CGST A/c 13,050.00") are not items
+        if (/^(\d{1,3}\s+)?(Output\s+|Input\s+)?(CGST|SGST|UTGST|IGST)\b/i.test(l)) {
+          flush();
+          const tam = l.match(/([\d,]+\.\d{2})\s*$/);
+          if (tam) taxLedgerSum += pdfImpNum(tam[1]);
+          continue;
+        }
         if (stop.test(l)) break;
         const m = l.match(/^(\d{1,3})\s+(.+)$/);
         if (m) { flush(); cur = { text: m[2] }; }
@@ -28296,8 +29242,12 @@ if (typeof module !== "undefined") {
       flush();
     }
     if (!out.items.length) out.warnings.push("No line items were recognised — add them manually.");
-    const rateForAll = out.taxRate;
-    out.items.forEach((it) => { if (it.gst_rate === null) it.gst_rate = rateForAll !== null ? rateForAll : 18; });
+    let rateForAll = out.taxRate;
+    if (rateForAll === null && taxLedgerSum > 0) {
+      const base = out.items.reduce((a, it) => a + (it.amount || 0), 0);
+      if (base > 0) rateForAll = Math.round(taxLedgerSum / base * 100);
+    }
+    out.items.forEach((it) => { if (it.gst_rate === null) it.gst_rate = (hsnRates[it.code] !== undefined) ? hsnRates[it.code] : (rateForAll !== null ? rateForAll : 18); });
     const allowed = [0, 3, 5, 12, 18, 28];
     out.items.forEach((it) => { if (allowed.indexOf(it.gst_rate) < 0) { out.warnings.push("GST " + it.gst_rate + "% isn't in the dropdown; set to nearest."); it.gst_rate = allowed.reduce((a, b) => Math.abs(b - it.gst_rate) < Math.abs(a - it.gst_rate) ? b : a); } });
     if (!out.buyer_name) out.warnings.push("Buyer name not found.");
@@ -28404,7 +29354,8 @@ if (typeof module !== "undefined") {
         (sl.bank_name || sl.bank_account_no || sl.bank_ifsc ?
           '<div class="field"><label>Bank name</label><input type="text" id="pdfi_s_bank_name" value="' + escapeHtml(sl.bank_name) + '"></div>' +
           '<div class="two-col"><div class="field"><label>Account no.</label><input type="text" id="pdfi_s_bank_account_no" value="' + escapeHtml(sl.bank_account_no) + '"></div>' +
-          '<div class="field"><label>IFSC</label><input type="text" id="pdfi_s_bank_ifsc" value="' + escapeHtml(sl.bank_ifsc) + '"></div></div>' : "") +
+          '<div class="field"><label>IFSC</label><input type="text" id="pdfi_s_bank_ifsc" value="' + escapeHtml(sl.bank_ifsc) + '"></div></div>' +
+          '<div class="field"><label>Bank branch</label><input type="text" id="pdfi_s_bank_branch" value="' + escapeHtml(sl.bank_branch || "") + '"></div>' : "") +
         "</div>" : "";
       const f = (id, label, val) => '<div class="field"><label>' + label + '</label><input type="text" id="pdfi_' + id + '" value="' + escapeHtml(val || "") + '"></div>';
       prev.innerHTML = warn +
@@ -28430,13 +29381,14 @@ if (typeof module !== "undefined") {
       let sellerMsg = "";
       const useSeller = document.getElementById("pdfi_useSeller");
       if (useSeller && useSeller.checked) {
-        const keys = ["company_name", "address_line1", "address_line2", "gstin", "state", "email", "phone", "bank_name", "bank_account_no", "bank_ifsc"];
+        const keys = ["company_name", "address_line1", "address_line2", "gstin", "state", "email", "phone", "bank_name", "bank_account_no", "bank_ifsc", "bank_branch"];
         let n = 0;
         keys.forEach((k) => {
           const el = document.getElementById("pdfi_s_" + k);
           const v = el ? el.value.trim() : "";
           if (v) { seller[k] = k === "gstin" ? v.toUpperCase() : v; n++; }
         });
+        seller.invoice_layout = "tally";   // generate invoices in the same Tally format as the imported PDF
         saveSeller(seller);
         fillSettingsForm();   // refreshes Settings tab + company badge (also resets buyer state, so buyer is filled after)
         syncActiveCompanyRegistryName(seller.company_name);
